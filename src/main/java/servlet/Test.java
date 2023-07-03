@@ -17,6 +17,8 @@ public class Test extends HttpServlet {
         list.add("message2");
         list.add("message3");
         list.add("message4");
+        list.add("message5");
+        list.add("message6");
         request.setAttribute("list", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/test.jsp");
         dispatcher.forward(request, response);
