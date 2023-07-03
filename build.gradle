@@ -1,0 +1,35 @@
+plugins {
+    id 'war'
+}
+
+group = 'project'
+version = '1.0'
+
+sourceCompatibility = 17
+
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://repo1.maven.org/maven2/"
+    }
+}
+
+dependencies {
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+    implementation 'javax.servlet:jstl:1.2'
+    implementation 'org.apache.tomcat:tomcat-dbcp:9.0.30'
+    implementation 'com.oracle.database.jdbc:ojdbc10:19.18.0.0'
+    implementation 'com.oracle.database.security:oraclepki:23.2.0.0'
+    implementation 'com.oracle.database.security:osdt_cert:21.10.0.0'
+    implementation 'com.oracle.database.security:osdt_core:21.10.0.0'
+}
+
+war {
+    webAppDirectory = file('src/main/WebContent')
+}
+
+test {
+    useJUnitPlatform()
+}
