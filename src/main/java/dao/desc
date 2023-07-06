@@ -1,0 +1,6 @@
+도메인별로 클래스파일 생성
+ex
+직원에 관한 DB작업 -> EmpDAO 클래스 내부에 메서드로 정의
+ EmpDAO -> insert, insertEmp
+
+주문에 관한 DB작업 -> OrderDAO 클래스 내부에 메서드로 정의
