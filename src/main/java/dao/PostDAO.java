@@ -67,10 +67,10 @@ public class PostDAO {
 		} catch (Exception e) {
 			System.out.println("목록 보여주기 실패");
 		} finally {	
-			try {
+			try { // 반환 부분 
 				pstmt.close();
 				rs.close();
-				conn.close(); // 반환 ?
+				conn.close(); 
 			} catch (Exception e2) {
 
 			}	
@@ -78,6 +78,53 @@ public class PostDAO {
 		return list;
 		
 	}
+	
+	
+	//게시글 작성하기 
+	
+	public int insertPost(PostVO vo) {	
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		int row = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			StringBuffer sb = new StringBuffer();
+			
+			sb.append("INSERT INTO POST (NO, STORENAME, TITLE, CONTENT, TIME, ");
+			sb.append("STATUS, RENO) VALUES(post_seq.nextval, ?, ?, ?, SYSDATE, 0, 0) " ); 
+			/*여기서 storename 은 가맹점 테이블에 값이 있어야 들어 갈 수 있음 */			
+			/*postno가  sequence! */
+			
+			pstmt = conn.prepareStatement(sb.toString()); // 쿼리문 담기 
+			/* System.out.println(sb); */
+			pstmt.setString(1, vo.getStorename());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			
+			row = pstmt.executeUpdate();
+			
+						
+		} catch (Exception e) {
+			
+		} finally {	
+			try {
+				pstmt.close();
+				conn.close(); 
+			} catch (Exception e2) {
+
+			}
+		}
+		
+		return row;
+	}
+
+
+	
+	
 	
 }
 
