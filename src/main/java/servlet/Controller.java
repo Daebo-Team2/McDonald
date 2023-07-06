@@ -28,7 +28,7 @@ public class Controller extends HttpServlet {
     	Action action = null;
     	String forward = null;
     	
-    	if(url_Command.equals("/StockList.do")) {
+    	if(url_Command.equals("/StockList.do")) { //재고조회
     		System.out.println("요까지는 왔음");
     		String storeno = request.getParameter("storeno");
     		System.out.println(storeno);
@@ -37,13 +37,13 @@ public class Controller extends HttpServlet {
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);
     		
-    	}else if(url_Command.equals("/StockAdd.do")) { 
+    	}else if(url_Command.equals("/StockAdd.do")) { //재고수량변경
     		action = new StockAddService();
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);
 			
-    	}else if(url_Command.equals("/StockOrderList.do")) { 
+    	}else if(url_Command.equals("/StockOrderList.do")) { //발주요청확인
     		action = new StockOrderSearchService();
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
