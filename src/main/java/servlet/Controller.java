@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.Action;
 import service.StockAddService;
+import service.StockOrderSearchService;
 import service.StoreStockSearchService;
 
 public class Controller extends HttpServlet {
@@ -41,6 +42,13 @@ public class Controller extends HttpServlet {
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);
+			
+    	}else if(url_Command.equals("/StockOrderList.do")) { 
+    		action = new StockOrderSearchService();
+    		forward = action.execute(request, response);
+    		RequestDispatcher dis  = request.getRequestDispatcher(forward);
+			dis.forward(request, response);
+    	
     	}
 		
 	}
