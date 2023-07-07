@@ -12,6 +12,7 @@ import service.Action;
 import service.StockAddService;
 import service.StockConfrimService;
 import service.StockOrderSearchService;
+import service.StockOrderService;
 import service.StoreStockSearchService;
 
 public class Controller extends HttpServlet {
@@ -53,6 +54,13 @@ public class Controller extends HttpServlet {
     	}else if(url_Command.equals("/StockOrderConprim.do")) { //발주요청확인
     		
     		action = new StockConfrimService();
+    		forward = action.execute(request, response);
+    		RequestDispatcher dis  = request.getRequestDispatcher(forward);
+			dis.forward(request, response);
+    	
+    	}else if(url_Command.equals("/StockOrderAdd.do")) { //발주요청확인
+    		
+    		action = new StockOrderService();
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);

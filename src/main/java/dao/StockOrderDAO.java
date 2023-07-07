@@ -86,6 +86,31 @@ public class StockOrderDAO { //발주
 		
 		return result;
 	} //end confrimeStockOder
+
+
+	public int insertStockOrder(String foodname, int storeno, int quantity) { //가맹점발주요청
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		System.out.println("요기는 insertStockOrder!!");
+		
+		try {
+			conn = getConnection();
+			String sql = "INSERT INTO STOCKORDER (NO, STORENO, FOODNAME, QUANTITY, TIME, STATUS ) VALUES (STOCKORDER_SEQ.NEXTVAL, ?, ?, ?, CURRENT_TIMESTAMP, 0)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storeno);
+			pstmt.setString(2, foodname);
+			pstmt.setInt(3, quantity);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	} //end insertStockOrder
 	
 
 	
