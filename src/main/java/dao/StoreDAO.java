@@ -75,5 +75,28 @@ public class StoreDAO { //가맹점
 		return result;
 	}
 
+	public int storeDelete(int no) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		try {
+			conn = getConnection();
+			System.out.println("여기는 storeDelete !!");
+			String sql = "UPDATE STORE SET STATUS = 1 WHERE NO = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 
 }
