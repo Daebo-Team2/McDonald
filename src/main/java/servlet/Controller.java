@@ -15,6 +15,7 @@ import service.StockOrderSearchService;
 import service.StockOrderService;
 import service.StoreAddService;
 import service.StoreDeleteService;
+import service.StoreSearchService;
 import service.StoreStockSearchService;
 import service.StoreUpdateService;
 
@@ -64,6 +65,13 @@ public class Controller extends HttpServlet {
     	}else if(url_Command.equals("/StockOrderAdd.do")) { //가맹점발주요청
     		
     		action = new StockOrderService();
+    		forward = action.execute(request, response);
+    		RequestDispatcher dis  = request.getRequestDispatcher(forward);
+			dis.forward(request, response);
+    	
+    	}else if(url_Command.equals("/StoreList.do")) { //가맹점조회
+    		
+    		action = new StoreSearchService();
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);

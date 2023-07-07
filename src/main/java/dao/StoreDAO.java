@@ -3,10 +3,14 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import vo.StoreVO;
 
 public class StoreDAO { //가맹점
 
@@ -16,6 +20,40 @@ public class StoreDAO { //가맹점
 		Context initCtx = new InitialContext();
 		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc:projectDB");
 		return ds.getConnection();
+	}
+	
+	public List<StoreVO> selectAllStore() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<StoreVO> list = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			String sql ="SELECT * FROM STORE ";
+//			String sql ="SELECT * FROM STORE WHERE STATUS = 0 ";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next() ) {
+				StoreVO vo = new StoreVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setName(rs.getString("name"));
+				vo.setId(rs.getString("id"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setTel(rs.getString("tel"));
+				vo.setStatus(rs.getInt("status"));
+				
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		
+		return list;
 	}
 
 
@@ -97,6 +135,9 @@ public class StoreDAO { //가맹점
 		
 		return result;
 	}
+
+
+
 
 
 }
