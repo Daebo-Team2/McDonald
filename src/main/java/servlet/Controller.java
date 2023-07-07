@@ -15,6 +15,7 @@ import service.StockOrderSearchService;
 import service.StockOrderService;
 import service.StoreAddService;
 import service.StoreStockSearchService;
+import service.StoreUpdateService;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -66,15 +67,23 @@ public class Controller extends HttpServlet {
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);
     	
-    	}else if(url_Command.equals("/StoreAdd.do")) { //가맹점추가
+    	}else if(url_Command.equals("/StoreAdd.do")) { //가맹점등록
     		
     		action = new StoreAddService();
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);
     	
+    	}else if(url_Command.equals("/StoreUpdate.do")) { //가맹점 정보 수정
+    		
+    		action = new StoreUpdateService();
+    		forward = action.execute(request, response);
+    		RequestDispatcher dis  = request.getRequestDispatcher(forward);
+			dis.forward(request, response);
+    	
     	}
-	
+    	
+    	
     	
     	
 	}
