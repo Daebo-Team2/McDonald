@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.Action;
 import service.StockAddService;
+import service.StockConfrimService;
 import service.StockOrderSearchService;
 import service.StoreStockSearchService;
 
@@ -43,8 +44,15 @@ public class Controller extends HttpServlet {
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);
 			
-    	}else if(url_Command.equals("/StockOrderList.do")) { //발주요청확인
+    	}else if(url_Command.equals("/StockOrderList.do")) { //발주요청조회
     		action = new StockOrderSearchService();
+    		forward = action.execute(request, response);
+    		RequestDispatcher dis  = request.getRequestDispatcher(forward);
+			dis.forward(request, response);
+    	
+    	}else if(url_Command.equals("/StockOrderConprim.do")) { //발주요청확인
+    		
+    		action = new StockConfrimService();
     		forward = action.execute(request, response);
     		RequestDispatcher dis  = request.getRequestDispatcher(forward);
 			dis.forward(request, response);

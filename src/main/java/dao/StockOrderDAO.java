@@ -62,6 +62,30 @@ public class StockOrderDAO { //발주
 		return list;
 	} //end selectAllStockOrder
 	
+	public int confrimStockOder(int stockorderno) { //본사발주확인->가맹점재고추가
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		System.out.println("요기는 confrimStockOde!!");
+		
+		try {
+			conn = getConnection();
+			String sql = "UPDATE STOCKORDER SET STATUS = 1 WHERE NO = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, stockorderno);
+			result = pstmt.executeUpdate();
+			System.out.println("result : " + result);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			//pstmt.close();
+			//conn.close();
+		}
+		
+		return result;
+	} //end confrimeStockOder
 	
 
 	
