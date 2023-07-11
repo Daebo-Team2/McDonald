@@ -12,24 +12,30 @@ import vo.PostVO;
 public class PostDetailService implements Action {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward forward = null;
+		
 		try {
 
 			PostDAO dao = new PostDAO();
-			String title = request.getParameter("title"); //게시물 번호를 매개변수로 받음 
-			
-			PostVO vo = dao.selectDetailPost(title); //게시물 내용 가져옴
-
-			
+			int no = Integer.parseInt(request.getParameter("no"));
+	
+			PostVO vo = dao.selectDetailPost(no); //게시물 내용 가져옴
+	
 			//게시물 저장 
 			request.setAttribute("vo", vo);
-			/* System.out.println(vo);  확인 코드 */ 
+			System.out.println(vo); /* 확인 코드 */
+			
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/WEB-INF/views/admin/postmodal.jsp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/*no=2*/
 		
-		return "/WEB-INF/views/post/postDetail.jsp";
+		return forward;
 	}
 
 }
