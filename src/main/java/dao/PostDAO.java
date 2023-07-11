@@ -126,19 +126,19 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		try {
 			conn = ConnectionPool.getConnection();
 			
-			StringBuffer sb = new StringBuffer(); // 쿼리문이 넘 길어서 sb 에 담음 
+			StringBuffer sb = new StringBuffer(); 
 			
 			sb.append("INSERT INTO POST (NO, STORENO, TITLE, CONTENT, TIME, ");
 			sb.append("STATUS, RENO) VALUES(post_seq.nextval, ?, ?, ?, SYSDATE, 0, 0) " ); 
 			/*여기서 storename 은 가맹점 테이블에 값이 있어야 들어 갈 수 있음!! 주의 !!  */			
-			/*postno가  sequence! */
 			
 			pstmt = conn.prepareStatement(sb.toString()); // 쿼리문 생성  
 			
 			/* System.out.println(sb); 쿼리문이 정상적으로 들어갔는지 확인 하는 코드 */
 			
 			//storename 도 같이 작성하도록 하긴 했는데 로그인 하면 어차피 가맹점이 정해져있는데 ..음 ..
-			pstmt.setInt(1, vo.getStoreno()); // 사용자가 입력한 값을 대입 하는 코드 
+		   // 사용자가 입력한 값을 대입 하는 코드 
+			pstmt.setInt(1, vo.getStoreno());
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
 			
