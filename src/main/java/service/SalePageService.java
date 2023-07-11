@@ -22,7 +22,7 @@ public class SalePageService implements Action {
             SaleDAO dao = new SaleDAO();
             List<OrderVO> orders = dao.orderSelect(start.equals("") ? "2000-01-01" : start,
                                                    end.equals("") ? "2099-12-31" : end,
-                                                   storeNo == null ? 0 : Integer.parseInt(storeNo));
+                                                   storeNo.equals("") ? 0 : Integer.parseInt(storeNo));
 
             for (OrderVO order : orders) {
                 List<OrderListVO> orderList = dao.orderListSelect(order.getNo());
@@ -45,7 +45,7 @@ public class SalePageService implements Action {
             int totalCnt = orders.size();
             int totalPageCnt = (int) Math.ceil((double) totalCnt / onePageCnt);
             int pageNo = Math.min(reqPageNo.equals("") ? 1 : Integer.parseInt(reqPageNo), totalPageCnt);
-            int startCnt = (pageNo - 1) * onePageCnt;
+            int startCnt = Math.max((pageNo - 1) * onePageCnt, 0);
             int endCnt = Math.min(pageNo * onePageCnt, totalCnt);
 
             List<OrderVO> pagingOrders = orders.subList(startCnt, endCnt);
