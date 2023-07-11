@@ -12,29 +12,43 @@ import vo.PostVO;
 public class PostListService implements Action {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward forward = null;
+		int total =0;
 		
 		try {
-			PostDAO dao = new PostDAO();		
-			/*
-			 * //게시물 총 갯수 
-			 * int countpost = dao.selectCountPost();
-			 */
 			
-			String storename = request.getParameter("storename");
-			List<PostVO> list = dao.selectListPost(storename);
-			System.out.println(list);
-			//list 저장 
-			request.setAttribute("list",list);
+			PostDAO dao = new PostDAO();		
+			/*게시물 총 개수 */
+			
+			/*
+			 * int total = dao.selectCountPost(); System.out.println(total);
+			 */
 
+			int storeno = Integer.parseInt(request.getParameter("storeno")); 
+			System.out.println(storeno);
+			List<PostVO> list = dao.selectListPost(storeno);
+
+			//전달할 객체를 list 에 저장 
+			request.setAttribute("list",list);
+			
+			forward = new ActionForward();
+			forward.setRedirect(false); // forward
+			forward.setPath("/WEB-INF/views/admin/postpage.jsp");
+	
+		
 		}
 		
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return "/WEB-INF/views/post/postList.jsp";
+		
+		//Postlist.jsp로 이동 
+		//storename=혜화
+		
+		return forward;
 	}
+	
+	
 
 }
