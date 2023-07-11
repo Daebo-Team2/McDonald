@@ -17,22 +17,23 @@ public class AdminServlet extends HttpServlet {
         String[] url_Command = requestURI.substring(contextPath.length() + 1).split("/");
         System.out.println(Arrays.toString(url_Command));
 
+        String cmd = url_Command[1];
         Action action;
         ActionForward forward = new ActionForward();
 
-        if (url_Command[1].equals("emppage.do")) {
+        if (cmd.equals("emppage.do")) {
             action = new EmpPageService();
             forward = action.execute(request, response);
-        } else if (url_Command[1].equals("empadd.do")) {
+        } else if (cmd.equals("empadd.do")) {
             action = new EmpAddService();
             forward = action.execute(request, response);
-        } else if (url_Command[1].equals("empmodal.do")) {
+        } else if (cmd.equals("empmodal.do")) {
             action = new EmpModalService();
             forward = action.execute(request, response);
-        } else if (url_Command[1].equals("empupdate.do")) {
+        } else if (cmd.equals("empupdate.do")) {
             action = new EmpUpdateService();
             forward = action.execute(request, response);
-        } else if (url_Command[1].equals("empinout.do")) {
+        } else if (cmd.equals("empinout.do")) {
             action = new EmpInOutService();
             forward = action.execute(request, response);
         } else {
