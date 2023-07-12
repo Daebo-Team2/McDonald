@@ -17,7 +17,7 @@ import vo.PostVO;
 
 public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음 
 	
-	//게시글 전체 목록 보기  : 로그인된 가맹점의 게시글 갯수만 보여줘야 하니까  sql에 where 절 추가 ! 
+	//(1) 게시글 전체 목록 보기 selectListPost(int storeno )
 	
 	public List<PostVO> selectListPost(int storeno){
 
@@ -25,7 +25,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		List<PostVO> list = new ArrayList<>();
+		List<PostVO> adminlist = new ArrayList<>();
 		
 		try {
 			
@@ -40,7 +40,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			
 			rs = pstmt.executeQuery(); // 쿼리문 실행 
 			
-			list = new ArrayList<PostVO>();
+			adminlist = new ArrayList<PostVO>();
 			System.out.println(rs);
 			while(rs.next()) {	//결과를 순회하며 한행(게시물 하나)의 내용을 vo에 저장 ( list 에 담는 것임 ) 
 				
@@ -54,7 +54,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 				vo.setStatus(rs.getInt("status"));
 				vo.setReno(rs.getInt("reno"));
 				
-				list.add(vo); // 결과 목록에 저장 
+				adminlist.add(vo); // 결과 목록에 저장 
 
 			}
 			
@@ -72,12 +72,12 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			}	
 		}
 		
-		System.out.println(list);
-		return list;
+		System.out.println(adminlist);
+		return adminlist;
 		
 	}
 	
-	// 게시글 총 게시물 몇개인지 구하기 ..? 할지 말지 
+	//(2)  게시글 총 게시물 몇개인지 구하기 ..? -- 보류 
 	public int selectCountPost(String storeno) { 	
 		Connection conn = null; 
 		PreparedStatement pstmt = null;
@@ -114,7 +114,8 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 	}
 	
 	
-	//게시글 작성하기 ( 1개의 행이 업데이트 되었습니다 . . 이런식으로 결과가 뜨니까 성공한 행의 개수를 정수(int로 반환 )
+	//(3) 게시글 작성하기 : insertPost(PostVO vo)
+	// ( 1개의 행이 업데이트 되었습니다 . . 이런식으로 결과가 뜨니까 성공한 행의 개수를 정수(int로 반환 )
 	
 	public int insertPost(PostVO vo) {	
 		
@@ -127,12 +128,13 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			conn = ConnectionPool.getConnection();
 			
 			StringBuffer sb = new StringBuffer(); 
+			String[] cols = new String[]{"no"}; //쿼리문을 실행시키고 글 no을 가져 갈 수 있음 
 			
 			sb.append("INSERT INTO POST (NO, STORENO, TITLE, CONTENT, TIME, ");
 			sb.append("STATUS, RENO) VALUES(post_seq.nextval, ?, ?, ?, SYSDATE, 0, 0) " ); 
 			/*여기서 storename 은 가맹점 테이블에 값이 있어야 들어 갈 수 있음!! 주의 !!  */			
 			
-			pstmt = conn.prepareStatement(sb.toString()); // 쿼리문 생성  
+			pstmt = conn.prepareStatement(sb.toString(), cols); // 쿼리문 생성  
 			
 			/* System.out.println(sb); 쿼리문이 정상적으로 들어갔는지 확인 하는 코드 */
 			
@@ -141,6 +143,11 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			pstmt.setInt(1, vo.getStoreno());
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {	
+				vo.setNo(rs.getInt(1));
+			}
 			
 			row = pstmt.executeUpdate(); // 쿼리문 실행 
 			
@@ -160,7 +167,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		return row; // 성공적으로 추가한 행의 개수를 돌려줌 
 	}
 		
-	//글 상세보기 
+	//(4) 글 상세보기 : selectDetailPost(int no)
 	
 	public PostVO selectDetailPost(int no) {	/*글번호 no */
 		Connection conn = null;
@@ -204,12 +211,13 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 
 			}
 		}		
+		
 		return vo; 
 	}
 	
-	//가맹점 본사가 답글을 달았을때 status 값이 1로 변경, 답글 번호 생성   -- 1개의 행이 업데이트 되었습니다 
+	//(5) 가맹점 본사가 답글을 달았을때 status 값이 1로 변경  : updateStatus1(PostVO vo ) -- 보류 
 	
-	public int updateStatus(PostVO vo ) {	
+	public int updateStatus1(PostVO vo ) {	
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -219,15 +227,12 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		try {
 			conn = ConnectionPool.getConnection();
 			
-			String sql = "update post set status = 1 , reno = ? where no =?";		
+			String sql = "update post set status = 1 where no =?";		
 			//답글이 달린 게시글의 Status = 1 , 답글 번호 = 답글로 작성된 글 no 
-			
-			
+				
 			pstmt = conn.prepareStatement(sql); //쿼리문 생성
-			pstmt.setInt(1,vo.getReno()); // 답글 번호 
-			pstmt.setInt(2,vo.getNo()); //  글번호 
-
-			
+			pstmt.setInt(1,vo.getNo()); //  글번호 
+			   
 			row = pstmt.executeUpdate();
 			
 			
@@ -245,73 +250,100 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		return row;
 	}
 	
-
-	//*********본사*************************
 	
-
-	//답글을 달면 status가 2 인 상태로 글이 insert - 답변 달기 
-	
-	public int insertPost2(PostVO vo) {	
-		
+	//(6) 가맹점 본사가 답글을 달았을때 reno값이 postno 로 변경 : updateReno(PostVO vo) -- 보류 
+	public int updateReno(PostVO vo ) {	
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
-		int row = 0;
+		ResultSet rs = null;
+
+		int row =0;
 		
 		try {
 			conn = ConnectionPool.getConnection();
 			
-			StringBuffer sb = new StringBuffer(); // 쿼리문이 넘 길어서 sb 에 담음 
+			String sql = "update post set reno = ? where no =?";		
+			//답글이 달린 게시글의 Status = 2 , 답글 번호 = 답글로 작성된 글 no 
+				
+			pstmt = conn.prepareStatement(sql); //쿼리문 생성
+			pstmt.setInt(1,vo.getReno()); //  글번호 
+			pstmt.setInt(2,vo.getNo()); //  글번호 
+			   
+			row = pstmt.executeUpdate();
 			
-			sb.append("INSERT INTO POST (NO, STORENO, TITLE, CONTENT, TIME, ");
-			sb.append("STATUS, RENO) VALUES(post_seq.nextval, ?, ?, ?, SYSDATE, 2, 0) " ); 
 			
-			pstmt = conn.prepareStatement(sb.toString()); // 쿼리문 생성  
-			
-			/* System.out.println(sb); 쿼리문이 정상적으로 들어갔는지 확인 하는 코드 */
-			
-			pstmt.setInt(1, vo.getStoreno()); // 사용자가 입력한 값을 대입 하는 코드 
-			pstmt.setString(2, vo.getTitle());
-			pstmt.setString(3, vo.getContent());
-			
-			row = pstmt.executeUpdate(); // 쿼리문 실행 
-			
-						
 		} catch (Exception e) {
 			
-		} finally {	
+		}finally {	
 			try {
 				ConnectionPool.close(pstmt);
+				ConnectionPool.close(rs);
 				ConnectionPool.close(conn);
-				
 			} catch (Exception e2) {
-
 			}
 		}
 		
-		return row; // 성공적으로 추가한 행의 개수를 돌려줌 
+		return row;
+	}
+	
+	
+	
+	//*********본사*************************
+	
+	//(1)  본사가 처음에 답글 쓰는 건 위에 insertPost()메소드로 이용 
+ 	//(2)  답글 작성 후  status가 2 인 상태로 변경 
+	
+	public int updateStatus2(PostVO vo ) {	
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int row =0;
+		
+		try {
+			conn = ConnectionPool.getConnection();
+			
+			String sql = "update post set status = 2 where no =?";		
+			//답글이 달린 게시글의 Status = 2 , 답글 번호 = 답글로 작성된 글 no 
+				
+			pstmt = conn.prepareStatement(sql); //쿼리문 생성
+			pstmt.setInt(1,vo.getNo()); //  글번호 
+			   
+			row = pstmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			
+		}finally {	
+			try {
+				ConnectionPool.close(pstmt);
+				ConnectionPool.close(rs);
+				ConnectionPool.close(conn);
+			} catch (Exception e2) {
+			}
+		}
+		
+		return row;
 	}
 		
 	
-	// 답변의 유무에 따라 게시글 출력 
-	public List<PostVO> selectStatusPost(int storeno, int status) {
+	// 답변의 유무에 따라 문의 게시글 전체 출력 
+	public List<PostVO> selectAllPost() {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		List<PostVO> list = new ArrayList<>();
+		List<PostVO> superlist = new ArrayList<>();
 		
 		try {
 			conn = ConnectionPool.getConnection();
-			String sql = "select * from post where storeno =? and status = ?";
+			String sql = "select * from post order by no desc ";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, storeno);
-			pstmt.setInt(2, status);
 			
 			rs = pstmt.executeQuery();
-			list = new ArrayList<PostVO>();
+			superlist = new ArrayList<PostVO>();
 			
 			while(rs.next()) {
 				
@@ -325,7 +357,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 				vo.setStatus(rs.getInt("status"));
 				vo.setReno(rs.getInt("reno"));
 				
-				list.add(vo); // 결과 목록에 저장 
+				superlist.add(vo); // 결과 목록에 저장 
 					
 			}
 			
@@ -341,7 +373,8 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			}
 		}
 		
-		return list;
+		System.out.println(superlist);
+		return superlist;
 	}
 
 
