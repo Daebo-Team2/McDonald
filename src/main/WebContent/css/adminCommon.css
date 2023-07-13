@@ -1,0 +1,118 @@
+.header {
+  width: 100%;
+  min-width: 1336px;
+  height: 100px;
+  position: fixed;
+  background-color: #fef9eb;
+  z-index: 100;
+}
+
+.section {
+  width: 100%;
+  min-width: 1336px;
+  padding-top: 100px;
+  height: 100vh;
+  display: flex;
+}
+
+.side {
+  width: 18%;
+  height: 100%;
+  border: 1px solid black;
+  padding: 10px 5px;
+  overflow: auto;
+  text-align: center;
+}
+
+#content {
+  width: 82%;
+  height: 100%;
+  padding: 5px;
+}
+
+.title {
+  width: 80%;
+  height: 56px;
+  margin: auto;
+}
+
+.wrapper {
+  width: 80%;
+  height: calc(100% - 56px);
+  margin: auto;
+  overflow: auto;
+}
+
+#content > .footer {
+  width: 80%;
+  margin: auto;
+  height: 46px;
+  padding: 4px 0px;
+}
+
+.header ul.nav {
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #fef9eb;
+}
+
+.header .nav-link {
+  border: none !important;
+  color: black;
+}
+
+.header .nav-link:focus {
+  color: black;
+}
+
+.header .nav-link:hover {
+  color: grey;
+}
+
+.header .nav-link.active {
+  background-color: #fef9eb !important;
+  color: black !important;
+}
+
+.inout-table > tbody > tr:first-child > td {
+  border-top-width: 1px;
+}
+
+.inout-table > tbody > tr > td:first-child {
+  font-size: 1.3rem;
+}
+
+.inout-table > tbody > tr > td > button {
+  padding: 3px 6px;
+}
+
+.inout-table > tbody > tr > td:nth-child(2) {
+  text-align: right;
+}
+
+.green {
+  color: #198754;
+}
+
+.yellow {
+  color: #ffc107;
+}
+
+.modal-body label {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.accordion-item:first-of-type {
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+}
+
+.accordion-item:last-of-type {
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+}

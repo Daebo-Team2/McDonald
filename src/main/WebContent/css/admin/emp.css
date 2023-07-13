@@ -1,0 +1,21 @@
+/*
+  header: 56px;
+  footer: 46px
+*/
+.wrapper {
+  height: calc(100% - 102px);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+table[page="emp"] {
+  font-size: 1.2rem;
+}
+
+/* table[page="emp"] button {
+  line-height: 1;
+} */
