@@ -1,0 +1,77 @@
+/*
+  footer: 46px
+*/
+#content {
+  height: calc(100% - 46px);
+}
+
+div.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+div.footer > div.empty {
+  width: 67px;
+}
+
+.table[page="menu"] {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+.table[page="menu"] tr > td:first-child {
+  text-align: center;
+}
+
+.table[page="menu"] tr > td:nth-child(2) {
+  text-align: center;
+}
+
+.table[page="menu"] tr > th:first-child {
+  text-align: center;
+}
+
+.table[page="menu"] tr > th:nth-child(2) {
+  text-align: center;
+}
+
+#menu-detail-modal {
+  font-size: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#menu-detail-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+#menu-detail-modal label {
+  font-size: 1.5rem;
+}
+
+#menu-add-modal label {
+  font-size: 1.5rem;
+}
+
+#menu-detail-modal p,
+#menu-detail-modal li {
+  font-size: 1.2rem;
+}
+
+.form-check > label {
+  margin-top: 0;
+  font-size: 1rem !important;
+}
+
+.form-check {
+  width: 33%;
+}
+
+#recipe {
+  display: flex;
+  flex-wrap: wrap;
+}
