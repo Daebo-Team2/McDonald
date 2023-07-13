@@ -18,6 +18,9 @@ public class PageServlet extends HttpServlet {
         if (uri.equals("/page/admin")) {
             forward.setPath("/WEB-INF/pages/adminPage.jsp");
         }
+        if (uri.equals("/page/super")) {
+            forward.setPath("/WEB-INF/pages/superPage.jsp");
+        }
 
         if (forward.getPath() == null) {
             response.sendError(404);

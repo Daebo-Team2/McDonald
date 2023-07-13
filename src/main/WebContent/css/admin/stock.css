@@ -1,0 +1,83 @@
+/*
+  header: 56px;
+  footer: 46px
+*/
+.wrapper {
+  height: calc(100% - 102px);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+table[page="stock"] {
+  font-size: 1.5rem;
+}
+
+table[page="stock"] tr > td,
+th {
+  width: 25%;
+  text-align: center;
+}
+
+table[page="stock"] tr > td:first-child,
+th:first-child {
+  width: 50%;
+  text-align: left;
+}
+
+input.quantity {
+  width: 30%;
+  display: inline-block;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  margin: 0px 2px;
+}
+
+td > button.minusBtn,
+button.plusBtn {
+  border-radius: 50%;
+  /* font-size: 2rem; */
+  border: none;
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+}
+
+td > button.minusBtn {
+  background-image: url("/image/minus.svg");
+  background-position: center;
+}
+
+td > button.plusBtn {
+  background-image: url("/image/plus.svg");
+  background-position: center;
+}
+
+.table[page="stock-modal"] {
+  font-size: 1.5rem;
+}
+
+.table[page="stock-modal"] th {
+  text-align: center;
+}
+
+.table[page="stock-modal"] td {
+  text-align: center;
+}
+
+.table[page="stock-modal"] td > .form-control {
+  width: 70%;
+  display: inline-block;
+}
+
+input.stock-cnt {
+  width: 60%;
+}
+
+/* button.stockDelBtn {
+  padding: 3px 6px;
+} */

@@ -1,0 +1,49 @@
+.accordion-button[page="order"] {
+  justify-content: space-around;
+  font-size: 1.5rem;
+}
+
+.accordion-button[page="order"]::after {
+  content: none !important;
+}
+
+table[page="order"] {
+  width: 80%;
+  margin: auto;
+}
+
+.accordion-item {
+  border-radius: 0 !important;
+}
+
+.accordion-body[page="order"] {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+span[type="delBtn"] {
+  background-color: grey;
+}
+
+table[page="order"] tr > td:first-child {
+  width: 60%;
+  text-align: left;
+}
+
+table[page="order"] tr > th:first-child {
+  width: 60%;
+  text-align: left;
+}
+
+table[page="order"] tr > td:nth-child(2) {
+  width: 40%;
+  text-align: center;
+}
+
+table[page="order"] tr > th:first-child {
+  width: 40%;
+  text-align: center;
+}
+
+.accordion-button[page="order"] {
+  padding: 0.8rem 1.25rem;
+}
