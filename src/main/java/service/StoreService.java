@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import dao.StoreDAO;
 import vo.StoreVO;
 
-public class StoreSearchService implements Action {
+public class StoreService implements Action {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward forward = new ActionForward();
 		
 		StoreDAO dao = new StoreDAO();
 		List<StoreVO> storelist = new ArrayList<>();
@@ -20,7 +21,11 @@ public class StoreSearchService implements Action {
 		request.setAttribute("list", storelist);
 		
 		
-		return "storetest.jsp"; /* 가맹점조회페이지 */
+		//forward.setPath("/super/storepage.do");
+		forward.setPath("/storetest.jsp");
+		
+		
+		return forward;
 	}
 
 }

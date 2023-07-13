@@ -10,29 +10,30 @@ import dao.StoreDAO;
 public class StoreUpdateService implements Action {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward forward = new ActionForward();
+		
 		try {
 			request.setCharacterEncoding("UTF-8");
 			int no = Integer.parseInt(request.getParameter("no"));
-			String name = request.getParameter("name");
 			String id = request.getParameter("id");
-			String pwd = request.getParameter("pwd");
+			String owner = request.getParameter("owner");
 			String tel = request.getParameter("tel");
+			String address = request.getParameter("address");
 			
 			
 			StoreDAO dao = new StoreDAO();
-			int su = dao.storeUpdate(no, name, id, pwd, tel);
+			int su = dao.storeUpdate(id, tel, owner, address);
 			System.out.println("su : " + su);
 			
-			
-			
+			forward.setPath("/super/storepage.do");
 			
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		
-		return "index.html"; /*"가맹점조회 페이지";*/
+		return forward;
 	}
 
 }

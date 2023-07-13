@@ -5,12 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.StockOrderDAO;
 
-public class StockConfrimService implements Action {
+public class SuperStockUpdate implements Action {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward forward = new ActionForward();
 		
-		System.out.println("서비스까지는 들어왔다!");
+		System.out.println("SuperStockUpdate !!");
 		
 		int no = Integer.parseInt(request.getParameter("no"));
 		System.out.println(no);
@@ -18,12 +19,14 @@ public class StockConfrimService implements Action {
 		
 		StockOrderDAO dao = new StockOrderDAO();
 		int su = dao.confrimStockOder(no);
-		
 		System.out.println("su : " + su);
 		
+		forward.setPath("super/stockpage.do");
+		forward.setRedirect(false);
 		
 		
-		return "StockOrderList.do"; /* 본사발주조회실행 */
+		
+		return forward; /* 본사발주조회실행 */
 	}
 
 }

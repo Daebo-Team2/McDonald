@@ -1,5 +1,7 @@
 package vo;
 
+import java.sql.Timestamp;
+
 /*STORE
 NO     NOT NULL NUMBER       
 NAME   NOT NULL VARCHAR2(60) 
@@ -15,6 +17,9 @@ public class StoreVO {
 	private String id;
 	private String pwd;
 	private String tel;
+	private String owner;
+	private String address;
+	private Timestamp openingday;
 	private int status;
 	
 	//생성자함수
@@ -68,6 +73,22 @@ public class StoreVO {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
-
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public Timestamp getOpeningday() {
+		return openingday;
+	}
+	public void setOpeningday(Timestamp openingday) {
+		this.openingday = openingday;
+	}
 }
