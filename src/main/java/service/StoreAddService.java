@@ -13,7 +13,7 @@ public class StoreAddService implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = new ActionForward();
-		
+
 		try {
 			request.setCharacterEncoding("UTF-8");
 			String name = request.getParameter("name");
@@ -22,18 +22,16 @@ public class StoreAddService implements Action {
 			String tel = request.getParameter("tel");
 			String owner = request.getParameter("owner");
 			String address = request.getParameter("address");
-			
+
 			StoreDAO dao = new StoreDAO();
-			int su = dao.storeAdd(name, id, pwd, tel, owner, address);
-			System.out.println("su : " + su);
-			
-			forward.setPath("/super/storepage.do");
-			
-			
+			dao.storeAdd(name, id, pwd, tel, owner, address);
+			forward.setPath("/super/storeContent.do");
+
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
+
 		return forward;
 	}
 

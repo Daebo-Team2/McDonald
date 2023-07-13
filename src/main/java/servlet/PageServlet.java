@@ -1,12 +1,13 @@
 package servlet;
 
-import service.ActionForward;
+import service.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-import service.Action;
+
 import service.ActionForward;
-import service.LoginCheckService;
+import vo.UserVO;
+
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
@@ -26,6 +27,14 @@ public class PageServlet extends HttpServlet {
             forward.setPath("/WEB-INF/pages/adminPage.jsp");
         }
         if (url.equals("/page/super")) {
+            HttpSession session = request.getSession();
+            UserVO vo = (UserVO)session.getAttribute("login");
+            if (vo == null || vo.getNo() != 0) {
+                response.sendRedirect("/page/login");
+                return;
+            }
+            action = new StoreService();
+            forward = action.execute(request, response);
             forward.setPath("/WEB-INF/pages/superPage.jsp");
         }
         if (url.equals("/page/login")){
