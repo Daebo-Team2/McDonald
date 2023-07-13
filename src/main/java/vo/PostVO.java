@@ -5,7 +5,7 @@ import java.util.Date;
 public class PostVO { // Model 
 	
 	private int no; // 글번호 	
-	private String storename; // 작성 가맹점 
+	private int storeno; // 작성 가맹점 번호 
 	private String title; // 제목 
 	private String	content; // 작성 내용 
 	private Date time; // 작성 시간  
@@ -23,12 +23,12 @@ public class PostVO { // Model
 		this.no = no;
 	}
 
-	public String getStorename() {
-		return storename;
+	public int getStoreno() {
+		return storeno;
 	}
 
-	public void setStorename(String storename) {
-		this.storename = storename;
+	public void setStoreno(int storeno) {
+		this.storeno = storeno;
 	}
 
 	public String getTitle() {
@@ -74,7 +74,7 @@ public class PostVO { // Model
 
 	@Override
 	public String toString() {
-		return "PostVO [no=" + no + ", storename=" + storename + ", title=" + title + ", content=" + content + ", time="
+		return "PostVO [no=" + no + ", storeno=" + storeno + ", title=" + title + ", content=" + content + ", time="
 				+ time + ", status=" + status + ", reno=" + reno + "]";
 	}
 	

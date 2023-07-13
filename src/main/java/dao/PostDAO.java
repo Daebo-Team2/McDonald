@@ -145,6 +145,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			pstmt.setString(3, vo.getContent());
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
+			
 			if(rs.next()) {	
 				vo.setNo(rs.getInt(1));
 			}
@@ -176,7 +177,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		
 		PostVO vo = new PostVO();
 		
-		String sql = "SELECT * FROM POST WHERE NO=?";
+		String sql = "SELECT * FROM POST WHERE NO=? ";
 				
 		try {	
 			conn = ConnectionPool.getConnection();
@@ -263,7 +264,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			conn = ConnectionPool.getConnection();
 			
 			String sql = "update post set reno = ? where no =?";		
-			//답글이 달린 게시글의 Status = 2 , 답글 번호 = 답글로 작성된 글 no 
+			//답글이 달린 게시글의 Status = 2 , 답글 번호 = 답글로 작성된 글 no 이 ? 안에 들어가야함 ..
 				
 			pstmt = conn.prepareStatement(sql); //쿼리문 생성
 			pstmt.setInt(1,vo.getReno()); //  글번호 
@@ -298,18 +299,19 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		int row =0;
+		int updaterow =0;
 		
 		try {
 			conn = ConnectionPool.getConnection();
 			
 			String sql = "update post set status = 2 where no =?";		
-			//답글이 달린 게시글의 Status = 2 , 답글 번호 = 답글로 작성된 글 no 
+			//답글이 달린 게시글의 Status = 2 로 변경 
+			//그럴려면 no가 본사가 쓴 글인지를 확인해야 하는데 storeno가 1 인지를 알아야하는데 .
 				
 			pstmt = conn.prepareStatement(sql); //쿼리문 생성
 			pstmt.setInt(1,vo.getNo()); //  글번호 
 			   
-			row = pstmt.executeUpdate();
+			updaterow = pstmt.executeUpdate();
 			
 			
 		} catch (Exception e) {
@@ -323,11 +325,11 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			}
 		}
 		
-		return row;
+		return updaterow;
 	}
 		
 	
-	// 답변의 유무에 따라 문의 게시글 전체 출력 
+	// 전체 문의 게시글 출력 근데 storeno가 0인 게시글은 모달 안에서 보여야할텐데,,  
 	public List<PostVO> selectAllPost() {
 		
 		Connection conn = null;
