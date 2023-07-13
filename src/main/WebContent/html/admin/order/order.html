@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주문관리</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="../common.css" rel="stylesheet"/>
+    <link href="../../../css/admin/order.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../adminCommon.js" defer></script>
+  </head>
+  <body>
+    <!-- header component/admin/adminHeader.jsp-->
+    <div class="header">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <img src="../../../logo2.jpg" width="80" height="70" />
+        </li>
+        <li class="nav-item">
+          <button class="nav-link">주문관리</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link">매출관리</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link">직원관리</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link">재고관리</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link">문의게시판</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link">Logout</button>
+        </li>
+      </ul>
+    </div>
+    <!-- header -->
+    <div class="section">
+      <!-- side바 component/admin/adminSide.jsp -->
+      <div class="side">
+        <h2>출퇴근 관리</h2>
+        <table class="table inout-table">
+          <tr>
+            <td><span class="emp-name">직원1</span></td>
+            <td><button type="button" class="btn btn-success">출근</button></td>
+          </tr>
+          <tr>
+            <td>직원2</td>
+            <td><button type="button" class="btn btn-success">출근</button></td>
+          </tr>
+          <tr>
+            <td>직원3</td>
+            <td><button type="button" class="btn btn-danger">퇴근</button></td>
+          </tr>
+          <tr>
+            <td>직원4</td>
+            <td><button type="button" class="btn btn-success">출근</button></td>
+          </tr>
+          <tr>
+            <td>직원5</td>
+            <td><button type="button" class="btn btn-danger">퇴근</button></td>
+          </tr>
+        </table>
+      </div>
+      <!-- side바 -->
+      <div class="content">
+        <!-- content /component/admin/orderContent.jsp -->
+        <div class="title">
+          <h1>주문관리</h1>
+        </div>
+        
+        <div class="wrapper">
+
+          <!-- 주문없을때 -->
+          <!-- <h2 id="no-oreder">등록된 주문이 없습니다.</h2> -->
+  
+          <!-- 주문 있을때-->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <div class="accordion-button collapsed" type="button" page="order">
+                <span>34</span>
+                <span>07/06 10:18:14</span>
+                <span>16,500</span>
+                <span>포장</span>
+                <button type="button" class="btn btn-primary delBtn" onclick="orderDelBtnHandler(event)">확인</button>
+              </div>
+            </h2>
+            <div class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <table class="table" page="order">
+                  <thead>
+                    <tr>
+                      <th>제품명</th>
+                      <th>수량</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <div class="accordion-button collapsed" type="button" page="order">
+                <span>35</span>
+                <span>07/06 10:21:14</span>
+                <span>14,500</span>
+                <span>매장</span>
+                <button type="button" class="btn btn-primary delBtn" onclick="orderDelBtnHandler(event)">확인</button>
+              </div>
+            </h2>
+            <div class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <table class="table" page="order">
+                  <thead>
+                    <tr>
+                      <th>제품명</th>
+                      <th>수량</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <div class="accordion-button collapsed" type="button" page="order">
+                <span>36</span>
+                <span>07/06 10:23:14</span>
+                <span>14,540</span>
+                <span>매장</span>
+                <button type="button" class="btn btn-primary delBtn" onclick="orderDelBtnHandler(event)">확인</button>
+              </div>
+            </h2>
+            <div class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <table class="table" page="order">
+                  <thead>
+                    <tr>
+                      <th>제품명</th>
+                      <th>수량</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <div class="accordion-button collapsed" type="button" page="order">
+                <span>37</span>
+                <span>07/06 10:28:14</span>
+                <span>13,500</span>
+                <span>포장</span>
+                <button type="button" class="btn btn-primary delBtn" onclick="orderDelBtnHandler(event)">확인</button>
+              </div>
+            </h2>
+            <div class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <table class="table" page="order">
+                  <thead>
+                    <tr>
+                      <th>제품명</th>
+                      <th>수량</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>빅맥 세트</td>
+                      <td>4</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <div class="accordion-button collapsed" type="button" page="order">
+                <span>35</span>
+                <span>07/06 10:21:14</span>
+                <span>14,500</span>
+                <span>매장</span>
+                <button type="button" class="btn btn-primary delBtn" onclick="orderDelBtnHandler(event)">확인</button>
+              </div>
+            </h2>
+            <div class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <table class="table" page="order">
+                  <thead>
+                    <tr>
+                      <th>제품명</th>
+                      <th>수량</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>맥크리스피 디럭스 버거 세트</td>
+                      <td>4</td>
+                    </tr>
+                  </tbody>
+                </table>
+        </div>
+            </div>
+          </div>
+        </div>
+        <!-- content /component/admin/orderContent.jsp -->
+      </div>
+    </div>
+    <script src="../adminCommon.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+.title {
+  height: 145px;
+}
+
+/*
+  header: 145px
+  footer: 46px
+*/
+.wrapper {
+  padding-top: 4px;
+  height: calc(100% - 191px);
+}
+
+table[page="sale"] {
+  font-size: 1.5rem;
+}
+
+div.form-container {
+  display: flex;
+  padding: 4px;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+div.form-container > div {
+  width: 30%;
+}
+
+div.form-container input {
+  height: 1.2rem;
+  line-height: 1.2;
+  display: inline-block;
+  width: 60%;
+}
+
+.order-info {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+table[page="sale"] {
+  width: 80%;
+  margin: auto;
+  font-size: 1rem;
+}
+
+div.footer {
+  display: flex;
+  justify-content: center;
+}
+
+div.accordion-button {
+  padding: 0.8rem 1.25rem;
+}
