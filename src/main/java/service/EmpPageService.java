@@ -24,7 +24,7 @@ public class EmpPageService implements Action {
 
             forward = new ActionForward();
             forward.setRedirect(false);
-            forward.setPath("/WEB-INF/EmpList.jsp");
+            forward.setPath("/WEB-INF/emp.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();

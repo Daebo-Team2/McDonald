@@ -20,7 +20,7 @@ public class EmpModalService implements Action {
 
             forward = new ActionForward();
             forward.setRedirect(false);
-            forward.setPath("/WEB-INF/EmpUpdate.jsp");
+            forward.setPath("/WEB-INF/empSelect.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
