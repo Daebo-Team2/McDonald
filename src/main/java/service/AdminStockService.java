@@ -17,9 +17,8 @@ public class AdminStockService implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) { //재고 조회
 		
 		ActionForward forward = new ActionForward();
-		
-		System.out.println("AdminStockService !!");
-		
+
+		// 세션에서 찾아오기
 		int no = Integer.parseInt(request.getParameter("storeno"));
 		List <StockVO> stocklist = new ArrayList<>();
 		StockDAO dao = new StockDAO();

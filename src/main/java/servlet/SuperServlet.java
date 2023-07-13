@@ -26,6 +26,8 @@ public class SuperServlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         String uri = request.getRequestURI();
         ActionForward forward = new ActionForward();
+        Action action = null;
+
         if (uri.equals("/super/storeContent.do")) {
             forward.setPath("/WEB-INF/component/super/storeContent.jsp");
         }
@@ -58,9 +60,7 @@ public class SuperServlet extends HttpServlet {
     	String contextPath = request.getContextPath();
     	String url_Command = requestURI.substring(contextPath.length());
     	System.out.println(url_Command);
-    	
-    	Action action = null;
-    	ActionForward forward = null;
+
     	
     	if(url_Command.equals("/super/stockpage.do")) { //재고관리페이지 (발주조회)
     		action = new SuperStockService();
