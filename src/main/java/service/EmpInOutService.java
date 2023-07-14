@@ -8,27 +8,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 
 public class EmpInOutService implements Action {
+    final int timeUnit = 60000;
+//    final int timeUnit = 3600000;
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
         //직원 no. storeName, time
-        System.out.println("EmpInOutService");
         ActionForward forward = null;
         try {
-            request.setCharacterEncoding("UTF-8");
             int empNo = Integer.parseInt(request.getParameter("no"));
-            System.out.println(empNo);
 
             EmpDAO dao = new EmpDAO();
             EmpVO emp = dao.empSelect(empNo);
             Date onTime = new Date(System.currentTimeMillis());
             int row = dao.empInOutInsert(emp, onTime);
-            System.out.println("empInOutAdd : " + row);
 
             if (emp.getInTime() == null) {
                 emp.setInTime(onTime);
             } else {
-                long workTime = (onTime.getTime() - emp.getInTime().getTime()) / 60000;
-                System.out.println("workTime : " + workTime);
+                long workTime = (onTime.getTime() - emp.getInTime().getTime()) / timeUnit;
 
                 emp.setwTime(emp.getwTime() + (int) workTime);
                 emp.setInTime(null);
@@ -37,7 +34,7 @@ public class EmpInOutService implements Action {
 
             forward = new ActionForward();
             forward.setRedirect(false);
-            forward.setPath("/WEB-INF/EmpResult.jsp");
+            forward.setPath("/admin/sidebar.do");
 
         } catch (Exception e) {
             e.printStackTrace();

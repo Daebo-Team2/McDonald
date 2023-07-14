@@ -2,31 +2,30 @@ package service;
 
 import dao.EmpDAO;
 import vo.EmpVO;
+import vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
 public class EmpPageService implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("EmpPageService");
         ActionForward forward = null;
+        HttpSession session = request.getSession();
+        UserVO user = (UserVO)session.getAttribute("login");
+        int storeNo = user.getNo();
+
         try {
-            request.setCharacterEncoding("UTF-8");
-            int storeNo = Integer.parseInt(request.getParameter("storeNo"));
-            System.out.println(storeNo);
-
-            List<EmpVO> list = null;
             EmpDAO dao = new EmpDAO();
-            list = dao.empSelectAll(storeNo);
+            List<EmpVO> list = dao.empSelectAll(storeNo);
             request.setAttribute("list", list);
-
             forward = new ActionForward();
             forward.setRedirect(false);
-            forward.setPath("/WEB-INF/emp.jsp");
-
-        } catch (Exception e) {
+            forward.setPath("/WEB-INF/component/admin/empContent.jsp");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return forward;

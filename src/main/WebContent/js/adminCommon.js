@@ -35,8 +35,21 @@ function pageMove(url) {
 }
 
 // 좌측 출퇴근 관리 버튼눌렀을 때
-function inoutBtnHandler(event) {
+function empInoutBtnHandler(num) {
 	// ajax요청보내기
+	// url: /admin/empinout.do
+	// data: {no: num}
+	$.ajax({
+		url: "/admin/empinout.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		$("#sideBar").html(text);
+		//   <table className="table" page="emp">
+		if (document.querySelector("table[page='emp']") !== null) {
+			pageMove("/admin/empContent.do");
+		}
+	})
 }
 
 // order페이지 렌더링, sse
@@ -54,28 +67,59 @@ function orderDelBtnHandler(event) {
 }
 
 // emp페이지 직원정보 수정모달
-function empUpdateBtnHandler(event) {
-	// ajax를 통해 받아와야하는 직원정보가 적힌 모달
-	const updateModalHTML = `
-		<div class="modal-header">
-			<h5 class="modal-title" id="staticBackdropLabel">직원수정</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body" id="modal-body">
-			<label class="form-label">이름</label>
-			<input type="text" class="form-control" value="직원2">
-			<label class="form-label">시급</label>
-			<input type="text" class="form-control" value="9400">
-			<label class="form-label">전화번호</label>
-			<input type="text" class="form-control" value="010-2222-2222">
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">수정하기</button>
-			<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-		</div>
-	`;
-	document.querySelector("div#update-modal-content").innerHTML = updateModalHTML;
-	empUpdateModal.open();
+function empUpdateModalOpener(num) {
+	$.ajax({
+		url: "/admin/empupdatemodal.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		$("#update-modal-content").html(text);
+		empUpdateModal.open();
+	})
+}
+
+function empUpdateBtnHandler(num) {
+	// ajax
+	// url: /admin/empupdate.do
+	// data: {no, tel, pay}
+
+	const name = document.querySelector("#empUpdateNameInput").value;
+	const tel = document.querySelector("#empUpdateTelInput").value;
+	const pay = document.querySelector("#empUpdatePayInput").value;
+
+	$.ajax({
+		url: "/admin/empupdate.do",
+		method: "post",
+		data: {no: num, tel, pay},
+		dataType: "text"
+	}).done((text) => {
+		alert(`${name}직원이 수정되었습니다.`);
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+	})
+}
+
+function empAddBtnHandler() {
+	const name = document.querySelector("#empAddNameInput").value;
+	const tel = document.querySelector("#empAddTelInput").value;
+	const pay = document.querySelector("#empAddPayInput").value;
+
+	$.ajax({
+		url: "/admin/empadd.do",
+		data: {name, tel, pay},
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		alert(`${name}직원이 추가되었습니다.`);
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+		$.ajax({
+			url: "/admin/sidebar.do",
+			dataType: "text"
+		}).done((text) => {
+			$("#sideBar").html(text);
+		})
+	})
 }
 
 // stock 페이지
