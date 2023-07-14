@@ -36,19 +36,13 @@ public class StockVO {
 	public void setStoreno(int storeno) {
 		this.storeno = storeno;
 		this.storeName = StoreName.getStoreName(storeno);
-		System.out.println("storeName: " + this.storeName);
 	}
 	public String getFoodName() {
 		return foodName;
 	}
-//	public void setFoodName(String foodName) {
-//		this.foodName = foodName;
-//	}
+
 	public String getStoreName() {
 		return storeName;
 	}
-//	public void setStoreName(String storeName) {
-//		this.storeName = storeName;
-//	}
-	
+
 }

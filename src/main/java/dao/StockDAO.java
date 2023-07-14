@@ -16,20 +16,18 @@ import vo.StockVO;
 public class StockDAO {
 
 
-	public List selectAllStoreStock(int storeno) { //가맹점 : 재고 조회
+	public List<StockVO> selectAllStoreStock(int storeno) { //가맹점 : 재고 조회
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<StockVO> list = new ArrayList<>();
 		
 		try {
-			int no = storeno;
 			conn = ConnectionPool.getConnection();
-			System.out.println("StockDAO selectAllStoreStock !!");
-			
+
 			String sql = "SELECT * FROM STOCK WHERE STORENO = ? ORDER BY FOODNO ";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setInt(1, storeno);
 			rs = pstmt.executeQuery();
 
 			while( rs.next() ) {
@@ -40,7 +38,6 @@ public class StockDAO {
 					
 					list.add(vo);
 				}
-			//System.out.println("selectAllStoreStock : " + list);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,9 +59,7 @@ public class StockDAO {
 		try {
 			
 			conn = ConnectionPool.getConnection();
-			System.out.println("StockDAO updateStock !!");
-			System.out.println(foodno + ", " + quantity + ", " + storeno);
-			
+
 			String sql = "UPDATE STOCK SET QUANTITY = ? WHERE FOODNO = ?  AND STORENO = ?  ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, quantity);
@@ -72,7 +67,6 @@ public class StockDAO {
 			pstmt.setInt(3, storeno);
 			
 			result = pstmt.executeUpdate();
-			System.out.println("result : " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -11,15 +11,13 @@ loginButton.addEventListener("click", (event) => {
 	
 	const id = loginForm.id.value;
 	const pwd = loginForm.password.value;
-	
+
 	if ( !id || id.trim().length == 0 ){
 		alert("아이디가 입력되지 않았습니다.");
-		id.focus();
-		/*location.reload();*/
+		document.getElementById("floatingInput").focus();
 	} else 	if ( !pwd || pwd.trim().length ==0 ) {
 		alert("비밀번호를 입력해주세요.");
-		pwd.focus();
-		/*location.reload();*/
+		document.getElementById("floatingPassword").focus();
 	} else {
 		loginForm.submit();
 	}

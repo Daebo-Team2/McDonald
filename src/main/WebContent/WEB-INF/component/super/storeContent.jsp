@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="${pageContext.request.contextPath}/css/super/store.css" rel="stylesheet" />
 <div class="title">
   <h1>가맹점관리</h1>
@@ -17,30 +18,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr store-num="1">
-        <td>혜화점</td>
-        <td>홍길동</td>
-        <td>010-1234-4567</td>
-        <td>2023/07/12</td>
-        <td>서울특별시 종로구 창경궁로 241-1</td>
-        <td>
-          <button class="btn btn-danger btn-sm" onclick="storeDelBtnHandler(event)">
-            삭제
-          </button>
-        </td>
-      </tr>
-      <tr store-num="2">
-        <td>한성대점</td>
-        <td>홍길동</td>
-        <td>999-9999-9999</td>
-        <td>8888/99/99</td>
-        <td>서울특별시 성북구 성북구 성북구 성북구 성북구 성북구 성북구</td>
-        <td>
-          <button class="btn btn-danger btn-sm" onclick="storeDelBtnHandler(event)">
-            삭제
-          </button>
-        </td>
-      </tr>
+      <c:forEach var="store" items="${list}">
+        <tr store-num="${store.no}">
+          <td>${store.name}</td>
+          <td>${store.owner}</td>
+          <td>${store.tel}</td>
+          <td>${store.openingday}</td>
+          <td>${store.address}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="storeDelBtnHandler(${store.no})">
+              삭제
+            </button>
+          </td>
+        </tr>
+      </c:forEach>
     </tbody>
   </table>
 </div>
@@ -90,19 +81,17 @@ aria-hidden="true"
       </div>
       <div class="modal-body">
         <label class="form-label">지점명</label>
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" id="storeName"/>
         <label class="form-label">ID</label>
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" id="storeId"/>
         <label class="form-label">비밀번호</label>
-        <input type="password" class="form-control" />
-        <label class="form-label">비밀번호 확인</label>
-        <input type="password" class="form-control" />
+        <input type="password" class="form-control" id="storePwd"/>
         <label class="form-label">점주명</label>
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" id="storeOwner"/>
         <label class="form-label">전화번호</label>
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" id="storeTel"/>
         <label class="form-label">주소</label>
-        <input type="text" class="form-control" />
+        <input type="text" class="form-control" id="storeAddress"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="storeAddBtnHandler()">

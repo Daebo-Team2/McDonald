@@ -19,12 +19,7 @@ public class StoreService implements Action {
 		List<StoreVO> storelist = new ArrayList<>();
 		storelist = dao.selectAllStore();
 		request.setAttribute("list", storelist);
-		
-		
-		//forward.setPath("/super/storepage.do");
-		forward.setPath("/storetest.jsp");
-		
-		
+		forward.setPath("/WEB-INF/component/super/storeContent.jsp");
 		return forward;
 	}
 

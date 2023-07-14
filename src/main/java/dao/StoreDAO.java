@@ -20,7 +20,7 @@ public class StoreDAO { //가맹점
 		
 		try {
 			conn = ConnectionPool.getConnection();
-			String sql ="SELECT * FROM STORE WHERE STATUS = 1 ORDER BY NO ";
+			String sql ="SELECT * FROM STORE WHERE STATUS = 1 ORDER BY NAME";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -60,7 +60,6 @@ public class StoreDAO { //가맹점
 		try {
 			conn = ConnectionPool.getConnection();
 
-			System.out.println("storeAdd !!");
 			String sql = "INSERT INTO STORE (NO, NAME, ID, PWD, TEL, OWNER, ADDRESS, OPENINGDAY ) VALUES (STORE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP) ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
@@ -71,8 +70,6 @@ public class StoreDAO { //가맹점
 			pstmt.setString(6, address);
 
 			result = pstmt.executeUpdate();
-			System.out.println("result : " + result);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -124,15 +121,11 @@ public class StoreDAO { //가맹점
 
 		try {
 			conn = ConnectionPool.getConnection();
-			System.out.println("storeDelete !!");
-			
+
 			String sql = "UPDATE STORE SET STATUS = 0 WHERE NO = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
-
 			result = pstmt.executeUpdate();
-			System.out.println("result : " + result);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

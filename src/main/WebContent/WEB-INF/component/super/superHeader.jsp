@@ -20,7 +20,7 @@
       <button class="nav-link" onclick="pageMove('${pageContext.request.contextPath}/super/postContent.do')">문의게시판</button>
     </li>
     <li class="nav-item">
-      <button class="nav-link">Logout</button>
+      <button class="nav-link" onclick="location.href='${pageContext.request.contextPath}/auth/logout.do'">Logout</button>
     </li>
   </ul>
 </div>
