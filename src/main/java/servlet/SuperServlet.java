@@ -1,22 +1,25 @@
 package servlet;
 
-import service.ActionForward;
+import java.io.IOException;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.Action;
 import service.ActionForward;
-import service.SuperStockUpdate;
-import service.SuperStockService;
 import service.StoreAddService;
 import service.StoreDeleteService;
 import service.StoreService;
 import service.StoreUpdateService;
+import service.SuperMenuServie;
+import service.SuperStockService;
+import service.SuperStockUpdate;
 import vo.UserVO;
-
-import javax.servlet.annotation.*;
-import java.io.IOException;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
 public class SuperServlet extends HttpServlet {
@@ -46,7 +49,8 @@ public class SuperServlet extends HttpServlet {
             forward.setPath("/WEB-INF/component/super/saleContent.jsp");
         }
         if (url.equals("/super/menuContent.do")) {
-            forward.setPath("/WEB-INF/component/super/menuContent.jsp");
+        	action = new SuperMenuServie();
+        	forward = action.execute(request, response);
         }
         if (url.equals("/super/stockContent.do")) {
             action = new SuperStockService();

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="${pageContext.request.contextPath}/css/super/menu.css" rel="stylesheet" />
 <div class="title">
   <h1>메뉴관리</h1>
@@ -17,7 +18,24 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <c:forEach var="menulist" items="${ list }">
+    <tr>
+        <td>${ menulist.no }</td>
+        <td><img src="${ menulist.image }" width="50" height="50" /></td>
+        <td>${ menulist.category }</td>
+        <td>${ menulist.name }</td>
+        <td>${ menulist.price }₩</td>
+        <td>
+          <button class="btn btn-secondary btn-sm" onclick="menuViewBtnHandler(event)">
+            상세정보
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="menuDelBtnHandler(event)">
+            삭제
+          </button>
+        </td>
+      </tr>
+    </c:forEach>
+      <!-- <tr>
         <td>1</td>
         <td><img src="../../../image/001.png" width="50" height="50" /></td>
         <td>버거</td>
@@ -31,22 +49,7 @@
             삭제
           </button>
         </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td><img src="../../../image/001.png" width="50" height="50" /></td>
-        <td>버거</td>
-        <td>맥 크리스피 핫앤치즈</td>
-        <td>6,000₩</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="menuViewBtnHandler(event)">
-            상세정보
-          </button>
-          <button class="btn btn-danger btn-sm" onclick="menuDelBtnHandler(event)">
-            삭제
-          </button>
-        </td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
 </div>
