@@ -10,14 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import service.Action;
 import service.ActionForward;
 import service.AdminPostAddService;
-import service.AdminPostDetailService;
 import service.AdminPostListService;
 import service.SuperPostAddService;
 import service.SuperPostListService;
-import service.SuperPostReplyUpdateService;
 import service.AdminStockOderService;
 import service.AdminStockService;
 import service.AdminStockUpdateService;
+import service.PostDetailService;
 
 @WebServlet(name = "AdminServlet", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
@@ -58,7 +57,6 @@ public class AdminServlet extends HttpServlet {
 
     	
 		if(url.equals("/admin/postContent.do")){	/*가맹점 문의 페이지 첫화면 */
-			/* action = new PostUpdateStatusService(); */
 			action = new AdminPostListService(); /*문의 내역 전체 조회 서비스 */
 			forward = action.execute(request, response);  	
     	
@@ -67,7 +65,7 @@ public class AdminServlet extends HttpServlet {
     		forward = action.execute(request, response);
 
     	}else if(url.equals("/admin/postmodal.do")){ /*문의글 상세 조회 (답변글 전체 확인) */
-    	    action = new AdminPostDetailService();
+    	    action = new PostDetailService();
     		forward = action.execute(request, response);   	    		
     	}
     	

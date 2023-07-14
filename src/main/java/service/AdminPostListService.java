@@ -26,7 +26,7 @@ public class AdminPostListService implements Action {
 
 			forward = new ActionForward();
 			forward.setRedirect(false); // forward
-			forward.setPath("/WEB-INF/views/admin/postpage.jsp");
+			forward.setPath("/WEB-INF/views/admin/postContent.jsp");
 
 		} catch (Exception e) {
 			e.printStackTrace();

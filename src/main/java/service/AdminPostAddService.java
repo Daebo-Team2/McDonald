@@ -34,7 +34,7 @@ public class AdminPostAddService implements Action {
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setPath("/admin/postpage.do");  /*session에 저장된 id가 admin 계정이면 page에 보여주기*/
+				forward.setPath("/admin/postContent.do");  /*session에 저장된 id가 admin 계정이면 page에 보여주기*/
 				
 									
 		 } catch (Exception e) {
