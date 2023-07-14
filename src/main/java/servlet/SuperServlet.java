@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.Action;
 import service.ActionForward;
+import service.PostDetailService;
 import service.SuperStockUpdate;
 import service.SuperStockService;
 import service.StoreAddService;
@@ -18,7 +19,6 @@ import service.StoreUpdateService;
 import vo.UserVO;
 import service.SuperPostAddService;
 import service.SuperPostListService;
-import service.SuperPostReplyUpdateService;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
@@ -43,7 +43,7 @@ public class SuperServlet extends HttpServlet {
     		forward = action.execute(request, response);
     		
     	}else if(url.equals("/super/postmodal.do")){ /*문의내역 상세 정보 */	
-    		
+    		action = new PostDetailService();
     		forward = action.execute(request, response);
     	 
     	}
