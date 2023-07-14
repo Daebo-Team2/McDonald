@@ -25,7 +25,8 @@ public class AdminServlet extends HttpServlet {
             forward.setPath("/WEB-INF/component/admin/saleContent.jsp");
         }
         if (url.equals("/admin/empContent.do")) {
-            forward.setPath("/WEB-INF/component/admin/empContent.jsp");
+            action = new EmpPageService();
+            forward = action.execute(request, response);
         }
         if (url.equals("/admin/stockContent.do")) {
             action = new AdminStockService();
@@ -44,22 +45,28 @@ public class AdminServlet extends HttpServlet {
     		forward = action.execute(request, response);
     	}
       
-              if (url.equals("/admin/emppage.do")) {
-            action = new EmpPageService();
-            forward = action.execute(request, response);
-        } else if (url.equals("/admin/empadd.do")) {
+        if (url.equals("/admin/empadd.do")) {
             action = new EmpAddService();
             forward = action.execute(request, response);
-        } else if (url.equals("/admin/empmodal.do")) {
+        }
+        if (url.equals("/admin/empupdatemodal.do")) {
             action = new EmpModalService();
             forward = action.execute(request, response);
-        } else if (url.equals("/admin/empupdate.do")) {
+        }
+        if (url.equals("/admin/empupdate.do")) {
             action = new EmpUpdateService();
             forward = action.execute(request, response);
-        } else if (url.equals("/admin/empinout.do")) {
+        }
+        if (url.equals("/admin/sidebar.do")) {
+            action = new EmpPageService();
+            forward = action.execute(request, response);
+            forward.setPath("/WEB-INF/component/admin/adminSide.jsp");
+        }
+        if (url.equals("/admin/empinout.do")) {
             action = new EmpInOutService();
             forward = action.execute(request, response);
-        } else if (url.equals("/admin/salepage.do")) {
+        }
+        if (url.equals("/admin/salepage.do")) {
             action = new SalePageService();
             forward = action.execute(request, response);
         }

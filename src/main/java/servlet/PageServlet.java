@@ -6,7 +6,6 @@ import javax.servlet.http.*;
 import vo.UserVO;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Arrays;
 
 @WebServlet(name = "PageServlet", value = "/page/*")
 public class PageServlet extends HttpServlet {
@@ -21,6 +20,8 @@ public class PageServlet extends HttpServlet {
         Action action = null;
 
         if (url.equals("/page/admin")) {
+            action = new EmpPageService();
+            forward = action.execute(request, response);
             forward.setPath("/WEB-INF/pages/adminPage.jsp");
         }
         if (url.equals("/page/super")) {

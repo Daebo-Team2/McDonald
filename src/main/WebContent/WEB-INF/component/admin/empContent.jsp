@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="${pageContext.request.contextPath}/css/admin/emp.css" rel="stylesheet" />
 <div class="title">
   <h1>직원관리</h1>
@@ -16,171 +17,19 @@
       </tr>
     </thead>
     <tbody>
+    <c:forEach items="${list}" var="emp">
       <tr>
-        <td>1</td>
-        <td>직원1</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
+        <td>${emp.no}</td>
+        <td>${emp.name}</td>
+        <td>${emp.hireDate}</td>
+        <td>${emp.tel}</td>
+        <td>${emp.wTime}</td>
         <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
+          <button class="btn btn-secondary btn-sm" onclick="empUpdateModalOpener(${emp.no})">수정</button>
           <button class="btn btn-danger btn-sm">삭제</button>
         </td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>직원2</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>직원3</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>직원4</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>직원5</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>직원1</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>직원2</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>직원3</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>직원4</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>직원5</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>직원1</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>직원2</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>직원3</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>직원4</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>직원5</td>
-        <td>23/01/15</td>
-        <td>010-1111-1111</td>
-        <td>50시간</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="empUpdateBtnHandler()">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
-        </td>
-      </tr>
+    </c:forEach>
     </tbody>
   </table>
 </div>
@@ -206,14 +55,14 @@
       </div>
       <div class="modal-body" id="modal-body">
         <label class="form-label">이름</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" id="empAddNameInput">
         <label class="form-label">시급</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" id="empAddPayInput">
         <label class="form-label">전화번호</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" id="empAddTelInput">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">등록하기</button>
+        <button type="button" class="btn btn-primary" onclick="empAddBtnHandler()">등록하기</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
       </div>
     </div>

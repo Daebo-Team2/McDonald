@@ -19,7 +19,7 @@
   <body>
     <jsp:include page="/WEB-INF/component/admin/adminHeader.jsp" />
     <div class="section">
-      <div class="side">
+      <div class="side" id="sideBar">
         <jsp:include page="/WEB-INF/component/admin/adminSide.jsp" />
       </div>
       <div id="content">
