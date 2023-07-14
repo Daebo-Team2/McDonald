@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.Action;
 import service.ActionForward;
-import service.PostAddService;
-import service.PostDetailService;
-import service.PostListService;
-import service.PostReplyService;
 import service.SuperStockUpdate;
 import service.SuperStockService;
 import service.StoreAddService;
@@ -20,6 +16,10 @@ import service.StoreDeleteService;
 import service.StoreService;
 import service.StoreUpdateService;
 import vo.UserVO;
+import service.SuperPostAddService;
+import service.SuperPostListService;
+import service.SuperPostReplyUpdateService;
+import javax.servlet.annotation.*;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
 public class SuperServlet extends HttpServlet {
@@ -35,17 +35,15 @@ public class SuperServlet extends HttpServlet {
 		Action action = null;
     
     	if(url.equals("/super/postpage.do")){/*본사 문의페이지 첫 화면 */
-			/* action = new PostUpdateStatusService(); */
-    		action = new PostListService(); /*전체 조회 */ 
+    		action = new SuperPostListService(); /*status에 따라 게시글글 출력 하는 서비스*/
     		forward = action.execute(request, response);  	   	
 
-    	}else if(url.equals("/super/postreply.do")){ /*본사에 답글이 달리면 status 상태 2 업데이트 */
-    		action = new PostReplyService();
+    	}else if(url.equals("/super/postreply.do")){ /*status2인 상태로 답글 작성해 주는 서비스  */
+    		action = new SuperPostAddService();
     		forward = action.execute(request, response);
     		
-    	}else if(url.equals("/super/postmodal.do")){/*reno 가 null이 아닐때는 문의내역 조회 + 답변 작성  */
-    	    /*문의내역 상세보기 */	
-    		action = new PostDetailService();
+    	}else if(url.equals("/super/postmodal.do")){ /*문의내역 상세 정보 */	
+
     		forward = action.execute(request, response);
     	 
     	}
