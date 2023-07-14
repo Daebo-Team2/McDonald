@@ -34,20 +34,6 @@ public class SuperServlet extends HttpServlet {
         ActionForward forward = new ActionForward();
 		Action action = null;
     
-    	if(url.equals("/super/postContent.do")){/*본사 문의페이지 첫 화면 */
-    		action = new SuperPostListService(); /*status에 따라 게시글글 출력 하는 서비스*/
-    		forward = action.execute(request, response);  	   	
-
-    	}else if(url.equals("/super/postreply.do")){
-    		action = new SuperPostAddService();  /*status2인 상태로 답글 + update reno  */
-    		forward = action.execute(request, response);
-    		
-    	}else if(url.equals("/super/postmodal.do")){ /*문의내역 상세 정보 */	
-    		action = new PostDetailService();
-    		forward = action.execute(request, response);
-    	 
-    	}
-
         if (url.equals("/super/storeContent.do")) {
             action = new StoreService();
             forward = action.execute(request, response);
@@ -64,7 +50,8 @@ public class SuperServlet extends HttpServlet {
             forward.setPath("/WEB-INF/component/super/stockContent.jsp");
         }
         if (url.equals("/super/postContent.do")) {
-            forward.setPath("/WEB-INF/component/super/postContent.jsp");
+        	action = new SuperPostListService(); /*status에 따라 게시글 출력 하는 서비스*/
+    		forward = action.execute(request, response);
         }
 
         if(url.equals("/super/stockupdate.do")) { //발주 주문 확인
@@ -80,6 +67,16 @@ public class SuperServlet extends HttpServlet {
     		action = new StoreDeleteService();
     		forward = action.execute(request, response);
     	}
+        if(url.equals("/super/postmodal.do")){ /*문의내역 상세 정보 */	
+    		action = new PostDetailService();
+    		forward = action.execute(request, response);
+    		forward.setPath("/WEB-INF/component/super/postModal.jsp");
+    	}
+		if(url.equals("/super/postreply.do")){
+    		action = new SuperPostAddService();  /*status2인 상태로 답글 + update reno, status=1  */
+    		forward = action.execute(request, response);
+    	}
+
 
         if (forward.getPath() == null) {
             response.sendError(404);

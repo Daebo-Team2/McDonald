@@ -31,7 +31,7 @@ public class SuperPostAddService implements Action {
 		 vo.setContent(content);
 		 
 		 try { 
-			//DAO를 통해 db에 작성한 게시글 저장 				
+			 //DAO를 통해 db에 작성한 게시글 저장 				
 				PostDAO dao = new PostDAO();
 				postno = dao.insertReplyPost(vo);/*답변 작성*/
 				

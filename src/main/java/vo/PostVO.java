@@ -6,6 +6,7 @@ public class PostVO { // Model
 	
 	private int no; // 글번호 	
 	private int storeno; // 작성 가맹점 번호 
+	private String storename;
 	private String title; // 제목 
 	private String	content; // 작성 내용 
 	private Date time; // 작성 시간  
@@ -29,6 +30,7 @@ public class PostVO { // Model
 
 	public void setStoreno(int storeno) {
 		this.storeno = storeno;
+		this.storename = StoreName.getStoreName(storeno);
 	}
 
 	public String getTitle() {
@@ -69,6 +71,10 @@ public class PostVO { // Model
 
 	public void setReno(int reno) {
 		this.reno = reno;
+	}
+	
+	public String getStorename() {
+		return this.storename;
 	}
 
 

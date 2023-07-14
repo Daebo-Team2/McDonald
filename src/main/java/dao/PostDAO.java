@@ -178,16 +178,10 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		} catch (Exception e) {
 
 		} finally {
-			try {
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(rs);
-				ConnectionPool.close(conn);
-			} catch (Exception e2) {
-
-			}
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(rs);
+			ConnectionPool.close(conn);
 		}
-
-		System.out.println(superlist);
 		return superlist;
 	}
 
@@ -220,14 +214,10 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			}
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
-			try {
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(conn);
-			} catch (Exception e2) {
-
-			}
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
 		}
 		return postno;
 
@@ -253,14 +243,11 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			updaterow = pstmt.executeUpdate();
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
-			try {
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(rs);
-				ConnectionPool.close(conn);
-			} catch (Exception e2) {
-			}
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(rs);
+			ConnectionPool.close(conn);
 		}
 
 		return updaterow;
