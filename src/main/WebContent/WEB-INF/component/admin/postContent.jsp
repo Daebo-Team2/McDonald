@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="${pageContext.request.contextPath}/css/admin/post.css" rel="stylesheet" />
 <div class="title">
   <h1>문의게시판</h1>
