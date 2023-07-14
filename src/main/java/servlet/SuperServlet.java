@@ -12,11 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import service.Action;
 import service.ActionForward;
+import service.MenuDeleteService;
+import service.MenuServie;
 import service.StoreAddService;
 import service.StoreDeleteService;
 import service.StoreService;
 import service.StoreUpdateService;
-import service.SuperMenuServie;
 import service.SuperStockService;
 import service.SuperStockUpdate;
 import vo.UserVO;
@@ -41,23 +42,23 @@ public class SuperServlet extends HttpServlet {
             return;
         }
 
-        if (url.equals("/super/storeContent.do")) {
+        if (url.equals("/super/storeContent.do")) { //가맹점 관리 페이지
             action = new StoreService();
             forward = action.execute(request, response);
         }
-        if (url.equals("/super/saleContent.do")) {
+        if (url.equals("/super/saleContent.do")) { //매출 관리 페이지
             forward.setPath("/WEB-INF/component/super/saleContent.jsp");
         }
-        if (url.equals("/super/menuContent.do")) {
-        	action = new SuperMenuServie();
+        if (url.equals("/super/menuContent.do")) { //메뉴 관리 페이지
+        	action = new MenuServie();
         	forward = action.execute(request, response);
         }
-        if (url.equals("/super/stockContent.do")) {
+        if (url.equals("/super/stockContent.do")) { //재고 관리 페이지
             action = new SuperStockService();
             forward = action.execute(request, response);
             forward.setPath("/WEB-INF/component/super/stockContent.jsp");
         }
-        if (url.equals("/super/postContent.do")) {
+        if (url.equals("/super/postContent.do")) { //문의 게시판
             forward.setPath("/WEB-INF/component/super/postContent.jsp");
         }
 
@@ -78,6 +79,11 @@ public class SuperServlet extends HttpServlet {
     		action = new StoreDeleteService();
     		forward = action.execute(request, response);
     	}
+        
+        if(url.equals("/super/menudelete.do")) { //메뉴 삭제
+        	action = new MenuDeleteService();
+        	forward = action.execute(request, response);
+        }
 
         if (forward.getPath() == null) {
             response.sendError(404);

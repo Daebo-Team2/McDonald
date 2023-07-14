@@ -103,9 +103,16 @@ function menuViewBtnHandler(event) {
 }
 
 // 삭제버튼을 누르면 삭제요청 보내야함
-function menuDelBtnHandler(event) {
+function menuDelBtnHandler(num) {
 	// ajax를 통해 삭제요청을 보내고 #content를 받아와 화면 변경
-	alert("삭제요청");
+	$.ajax({
+		url: "/super/menudelete.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		alert(`${ num }번 메뉴가 삭제되었습니다.`);
+		$("#content").html(text);
+	});
 }
 
 // stock페이지

@@ -1,23 +1,19 @@
 package service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MenuDAO;
-import vo.MenuVO;
 
-public class SuperMenuServie implements Action {
+public class MenuDeleteService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		
 		ActionForward forward = new ActionForward();
+		int menuno = Integer.parseInt(request.getParameter("no"));
 		MenuDAO dao = new MenuDAO();
-		List<MenuVO> menulist = dao.selectAllMenu();
-		request.setAttribute("list", menulist);
-		forward.setPath("/WEB-INF/component/super/menuContent.jsp");
+		dao.deleteMenu(menuno);
+		forward.setPath("/super/menuContent.do");
 		return forward;
 	}
 

@@ -29,7 +29,7 @@
           <button class="btn btn-secondary btn-sm" onclick="menuViewBtnHandler(event)">
             상세정보
           </button>
-          <button class="btn btn-danger btn-sm" onclick="menuDelBtnHandler(event)">
+          <button class="btn btn-danger btn-sm" onclick="menuDelBtnHandler(${ menulist.no })">
             삭제
           </button>
         </td>
