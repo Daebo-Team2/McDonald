@@ -167,7 +167,6 @@ public class StockOrderDAO {
             rs = pstmt.getGeneratedKeys(); //no
             if (rs.next()) {
                 result = rs.getInt(1);
-                System.out.println("result : " + result);
             }
 
         } catch (Exception e) {
@@ -177,33 +176,8 @@ public class StockOrderDAO {
             ConnectionPool.close(pstmt);
             ConnectionPool.close(conn);
         }
-
         return result;
     } //end insertStockOrder
-
-    /*
-     * public int selectAllStockOrder(int storeno) { //가맹점 : 발주 주문 2) select * from
-     * stockorder -> stockorderno
-     *
-     * Connection conn = null; PreparedStatement pstmt = null; ResultSet rs = null;
-     * int stockorderno = 0;
-     *
-     * try { conn = ConnectionPool.getConnection();
-     * //System.out.println("insertStockOrder !!");
-     *
-     * String sql =
-     * "SELECT * FROM STOCKORDER WHERE STORENO = ? AND STATUS = 0 ORDER BY NO DESC "
-     * ; pstmt = conn.prepareStatement(sql); pstmt.setInt(1, storeno);
-     *
-     * rs = pstmt.executeQuery(); if ( rs.next() ) { stockorderno = rs.getInt("no");
-     * }
-     *
-     * } catch (Exception e) { e.printStackTrace(); } finally {
-     * ConnectionPool.close(pstmt); ConnectionPool.close(conn); }
-     *
-     * return stockorderno; } //end selectAllStockOrder
-     */
-
 
     public int insertStockOrderList(int stockorderno, int foodno, int quantity) { //가맹점 :  발주 주문 2) inset into stockorderlist
         Connection conn = null;
@@ -213,7 +187,6 @@ public class StockOrderDAO {
 
         try {
             conn = ConnectionPool.getConnection();
-            //System.out.println("insertStockOrderList !!!");
 
             String sql = "INSERT INTO STOCKORDERLIST (STOCKORDERNO, FOODNO, QUANTITY ) VALUES (?, ?, ?) ";
             pstmt = conn.prepareStatement(sql);
