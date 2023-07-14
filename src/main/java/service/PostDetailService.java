@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.PostDAO;
 import vo.PostVO;
 
-public class AdminPostDetailService implements Action {
+public class PostDetailService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
