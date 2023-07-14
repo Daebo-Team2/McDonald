@@ -5,9 +5,11 @@ import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.PostDAO;
 import vo.PostVO;
+import vo.UserVO;
 
 public class AdminPostListService implements Action {
 
@@ -15,7 +17,9 @@ public class AdminPostListService implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		// session에서 얻는 storeno
-		int storeno = 1;
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO)session.getAttribute("login");
+		int storeno = user.getNo();
 
 		try {
 			PostDAO dao = new PostDAO();
@@ -26,7 +30,7 @@ public class AdminPostListService implements Action {
 
 			forward = new ActionForward();
 			forward.setRedirect(false); // forward
-			forward.setPath("/WEB-INF/views/admin/postContent.jsp");
+			forward.setPath("/WEB-INF/component/admin/postContent.jsp");
 
 		} catch (Exception e) {
 			e.printStackTrace();

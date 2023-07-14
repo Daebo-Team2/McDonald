@@ -41,7 +41,7 @@
         <th>작성시간</th>
         <th></th>
       </tr>
-    </thead>
+    </thead>   
     <tbody>
       <tr onclick="openViewModal(1)">
         <td>1</td>

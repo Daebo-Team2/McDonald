@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.PostDAO;
 import vo.PostVO;
+import vo.UserVO;
 
 public class AdminPostAddService implements Action {
 
@@ -16,7 +18,10 @@ public class AdminPostAddService implements Action {
 		ActionForward forward = null;
 		 /*getParameter : storeno, title, content */
 			
-		 int storeno = 1; // 작성 가맹점 -- session	 		
+		 HttpSession session = request.getSession();
+		 UserVO user = (UserVO)session.getAttribute("login");
+		 int storeno = user.getNo();
+
 		 String title = request.getParameter("title"); // 제목 
 		 String	content = request.getParameter("content"); // 작성 내용 을 받아와야함  
 		 
@@ -29,8 +34,7 @@ public class AdminPostAddService implements Action {
 		 
 		 try { 
 				PostDAO dao = new PostDAO();	
-				int row = dao.insertAdminPost(vo); /*게시글 작성*/
-				System.out.println(row);
+				dao.insertAdminPost(vo); /*게시글 작성*/
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);

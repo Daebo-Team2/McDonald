@@ -42,8 +42,8 @@ public class AdminServlet extends HttpServlet {
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/postContent.do")) {
-            // 조회 서비스
-            forward.setPath("/WEB-INF/component/admin/postContent.jsp");
+			action = new AdminPostListService(); /*문의 내역 전체 조회 서비스 */
+            forward = action.execute(request, response);
         }
         if(url.equals("/admin/stockupdate.do")) { //재고수량변경
     		action = new AdminStockUpdateService();
@@ -53,18 +53,17 @@ public class AdminServlet extends HttpServlet {
     		action = new AdminStockOderService();
     		forward = action.execute(request, response);
     	}
-
-
-    	
-		if(url.equals("/admin/postContent.do")){	/*가맹점 문의 페이지 첫화면 */
-			action = new AdminPostListService(); /*문의 내역 전체 조회 서비스 */
-			forward = action.execute(request, response);  	
-    	
-		}else if(url.equals("/admin/postadd.do")){ /*문의글 작성 */    	    		
+//
+//		if(url.equals("/admin/postContent.do")){	/*가맹점 문의 페이지 첫화면 */
+//			action = new AdminPostListService(); /*문의 내역 전체 조회 서비스 */
+//			forward = action.execute(request, response);  	
+//    	
+//		}else 
+			if(url.equals("/admin/postadd.do")){ /*문의글 작성 */    	    		
     		action = new AdminPostAddService();
     		forward = action.execute(request, response);
 
-    	}else if(url.equals("/admin/postmodal.do")){ /*문의글 상세 조회 (답변글 전체 확인) */
+    	}else if(url.equals("/admin/postmodal.do")){ // 특정 글의 상세내역을 담은 모달을 반환해야함.
     	    action = new PostDetailService();
     		forward = action.execute(request, response);   	    		
     	}

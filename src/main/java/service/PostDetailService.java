@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.PostDAO;
 import vo.PostVO;
+import vo.UserVO;
 
 public class PostDetailService implements Action {
 
@@ -15,19 +17,22 @@ public class PostDetailService implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		
-		int storeno = 1;/* 세션에서 받아와야하는 storeno 가맹점 */
 		int no = Integer.parseInt(request.getParameter("no"));
 		
 		try {
 				PostDAO dao = new PostDAO();
-				PostVO vo =dao.selectDetailPost(no);
+				PostVO post =dao.selectDetailPost(no);
 				
 				// 게시물 저장
-				request.setAttribute("vo", vo);
+				request.setAttribute("post", post);
+				if (post.getReno() != 0) {
+					PostVO reply = dao.selectDetailPost(post.getReno());
+					request.setAttribute("reply", reply);
+				}
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setPath("/admin/postmodal.jsp");
+				forward.setPath("/WEB-INF/component/admin/postViewModal.jsp");
 
 		} catch (Exception e) {
 			e.printStackTrace();

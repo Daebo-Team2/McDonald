@@ -25,7 +25,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		List<PostVO> adminlist = new ArrayList<>();
+		List<PostVO> adminlist = null;
 
 		try {
 
@@ -56,20 +56,12 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			}
 
 		} catch (Exception e) {
-			System.out.println("목록 보여주기 실패");
+			e.printStackTrace();
 		} finally {
-			try { // 반환 부분
-
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(rs);
-				ConnectionPool.close(conn);
-
-			} catch (Exception e2) {
-
-			}
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(rs);
+			ConnectionPool.close(conn);
 		}
-
-		System.out.println(adminlist);
 		return adminlist;
 
 	}
@@ -87,17 +79,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		try {
 			conn = ConnectionPool.getConnection();
 
-			StringBuffer sb = new StringBuffer();
-
-			sb.append("INSERT INTO POST (NO, STORENO, TITLE, CONTENT, TIME, ");
-			sb.append("STATUS, RENO) VALUES(post_seq.nextval, ?, ?, ?, SYSDATE, 0, 0) ");
-			/* 여기서 storename 은 가맹점 테이블에 값이 있어야 들어 갈 수 있음!! 주의 !! */
-
-			pstmt = conn.prepareStatement(sb.toString()); // 쿼리문 생성
-
-			/* System.out.println(sb); 쿼리문이 정상적으로 들어갔는지 확인 하는 코드 */
-
-			// ? 안에 들어가야 하는 값
+			pstmt = conn.prepareStatement("INSERT INTO POST VALUES(post_seq.nextval, ?, ?, ?, SYSDATE, 0, 0) "); // 쿼리문 생성
 			pstmt.setInt(1, vo.getStoreno());
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
@@ -107,13 +89,8 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		} catch (Exception e) {
 
 		} finally {
-			try {
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(conn);
-
-			} catch (Exception e2) {
-
-			}
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
 		}
 
 		return row; // 성공적으로 추가한 행의 개수를 돌려줌
@@ -133,7 +110,6 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			conn = ConnectionPool.getConnection();
 
 			pstmt = conn.prepareStatement(sql); // 쿼리문 생성
-			System.out.println(pstmt);
 			pstmt.setInt(1, no); // 인파라미터?로 no 설정
 			rs = pstmt.executeQuery(); // 쿼리 실행
 
@@ -154,13 +130,9 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		} catch (Exception e) {
 
 		} finally {
-			try {
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(rs);
-				ConnectionPool.close(conn);
-			} catch (Exception e2) {
-
-			}
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(rs);
+			ConnectionPool.close(conn);
 		}
 
 		return vo;
@@ -259,11 +231,8 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		}
 		return postno;
 
-	}
-	//문의내역 조회 -- selectDeatilPost
+	}	
 	
-	
-
 	// reno값에에 답글로 달린 게시글번호 값을 업데이트 해주고 싶음 ,, insert 문에서 no 값을 같이 가져오게 했음
 	public int updateReno(int reno, int no ) {
 		Connection conn = null;
@@ -275,7 +244,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		try {
 			conn = ConnectionPool.getConnection();
 
-			String sql = "update post set reno=? , status = 1 where no =?";
+			String sql = "update post set reno= ? , status = 1 where no =?";
 
 			pstmt = conn.prepareStatement(sql); // 쿼리문 생성
 			pstmt.setInt(1, reno); // 답글 번호

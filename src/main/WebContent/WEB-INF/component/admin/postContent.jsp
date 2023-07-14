@@ -8,33 +8,32 @@
   <table class="table" page="post">
     <thead>
       <tr>
-        <th>글번호</th>
+        <th>글번호 </th>
         <th>제목</th>
         <th>작성시간</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr onclick="openViewModal(1)">
-        <td>1</td>
-        <td>문의글 제목 1문의글 제목 1문의글 제목 1문의글 제목 1문의글 제목 1문의글 제목 1문의글 제목 1</td>
-        <td>2023/07/07 11:44:43</td>
-        <td><span class="yellow">답변대기</span></td>
-      </tr>
-      <tr onclick="openViewModal(2)">
-        <td>2</td>
-        <td>문의글 제목 2</td>
-        <td>2023/07/06 11:44:43</td>
-        <td><span class="green">답변완료</span></td>
-      </tr>
-      <tr onclick="openViewModal(3)">
-        <td>5</td>
-        <td>문의글 제목 5</td>
-        <td>2023/07/05 11:44:43</td>
-        <td><span class="yellow">답변대기</span></td>
-      </tr>
+<!--     반복문 한번 추가해봄  -->
+    <c:forEach var="post" items="${list}">
+    	<tr onclick="openViewModal(${post.no})">
+    		<td>${post.no}</td>
+    		<td>${post.title}</td>
+    		<td>${post.time}</td>
+    		<td>
+    			<c:if test="${post.reno == 0}">
+    				<span class="yellow">답변대기</span>
+    			</c:if>
+    			<c:if test="${post.reno != 0}">
+    				<span class="green">답변완료</span>
+    			</c:if>
+    		</td>
+    	</tr>
+	</c:forEach>
     </tbody>
   </table>
+
 </div>
 <div class="footer">
   <div class="empty"></div>
@@ -72,9 +71,9 @@
       </div>
       <div class="modal-body">
         <h5>제목</h5>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" id="post-add-title">
         <h5>내용</h5>
-        <textarea class="form-control"></textarea>
+        <textarea class="form-control" id="post-add-content"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="writePostBtnHandler(event)">작성</button>
