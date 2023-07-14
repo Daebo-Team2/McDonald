@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.Action;
 import service.ActionForward;
-import service.PostAddService;
-import service.PostDetailService;
-import service.PostListService;
-import service.PostReplyService;
+import service.AdminPostAddService;
+import service.AdminPostDetailService;
+import service.AdminPostListService;
+import service.SuperPostAddService;
+import service.SuperPostListService;
+import service.SuperPostReplyUpdateService;
 import service.AdminStockOderService;
 import service.AdminStockService;
 import service.AdminStockUpdateService;
@@ -53,6 +55,23 @@ public class AdminServlet extends HttpServlet {
     		forward = action.execute(request, response);
     	}
 
+
+    	
+		if(url.equals("/admin/postContent.do")){	/*가맹점 문의 페이지 첫화면 */
+			/* action = new PostUpdateStatusService(); */
+			action = new AdminPostListService(); /*문의 내역 전체 조회 서비스 */
+			forward = action.execute(request, response);  	
+    	
+		}else if(url.equals("/admin/postadd.do")){ /*문의글 작성 */    	    		
+    		action = new AdminPostAddService();
+    		forward = action.execute(request, response);
+
+    	}else if(url.equals("/admin/postmodal.do")){ /*문의글 상세 조회 (답변글 전체 확인) */
+    	    action = new AdminPostDetailService();
+    		forward = action.execute(request, response);   	    		
+    	}
+    	
+    	
         if (forward.getPath() == null) {
             response.sendError(404);
             return;
@@ -64,29 +83,6 @@ public class AdminServlet extends HttpServlet {
             RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
             dis.forward(request, response);
         }
-    	
-		if(url.equals("/admin/postpage.do")){	/*가맹점 문의 페이지 첫화면 */
-			/* action = new PostUpdateStatusService(); */
-			action = new PostListService(); /*문의 내역 전체 조회 서비스 */
-			forward = action.execute(request, response);  	
-    	}else if(url.equals("/admin/postadd.do")){ /*문의글 작성 */    	    		
-    		action = new PostAddService();
-    		forward = action.execute(request, response);
-    	    	
-    	}else if(url.equals("/admin/postmodal.do")){ /*문의글 상세 조회 (답변글 전체 확인) */
-    	    action = new PostDetailService();
-    		forward = action.execute(request, response);   	    		
-    	}
-    	
-    	
-    	if(forward != null) {	
-    		if(forward.isRedirect()) {	
-    			response.sendRedirect(forward.getPath());
-    		}else {	
-    			RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
-    			dis.forward(request,response);
-    		}
-    	}
     }
 
 	@Override

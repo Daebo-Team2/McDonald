@@ -34,16 +34,16 @@ public class SuperServlet extends HttpServlet {
         ActionForward forward = new ActionForward();
 		Action action = null;
     
-    	if(url.equals("/super/postpage.do")){/*본사 문의페이지 첫 화면 */
+    	if(url.equals("/super/postContent.do")){/*본사 문의페이지 첫 화면 */
     		action = new SuperPostListService(); /*status에 따라 게시글글 출력 하는 서비스*/
     		forward = action.execute(request, response);  	   	
 
-    	}else if(url.equals("/super/postreply.do")){ /*status2인 상태로 답글 작성해 주는 서비스  */
-    		action = new SuperPostAddService();
+    	}else if(url.equals("/super/postreply.do")){
+    		action = new SuperPostAddService();  /*status2인 상태로 답글 + update reno  */
     		forward = action.execute(request, response);
     		
     	}else if(url.equals("/super/postmodal.do")){ /*문의내역 상세 정보 */	
-
+    		
     		forward = action.execute(request, response);
     	 
     	}

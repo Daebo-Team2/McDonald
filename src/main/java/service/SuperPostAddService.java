@@ -19,13 +19,9 @@ public class SuperPostAddService implements Action {
 		 /*insert 했을때 받아야 하는 값들 */		
 		 String title = request.getParameter("title"); // 제목 
 		 String	content = request.getParameter("content"); // 작성 내용 을 받아와야함  
-		 
-			/*
-			 * int no = Integer.parseInt(request.getParameter("no")); int reno =
-			 * Integer.parseInt(request.getParameter("reno"));
-			 */
-		 
-		 int row= 0; /*insert 행*/
+		 int no = Integer.parseInt(request.getParameter("no")); 
+
+		 int postno= 0; /*insert 행*/
 		 
 		 PostVO vo = new PostVO();
 		 
@@ -37,18 +33,17 @@ public class SuperPostAddService implements Action {
 		 try { 
 			//DAO를 통해 db에 작성한 게시글 저장 				
 				PostDAO dao = new PostDAO();
-				row = dao.insertReplyPost(vo);/*답변 작성*/
+				postno = dao.insertReplyPost(vo);/*답변 작성*/
 				
-				System.out.println(row);
+				dao.updateReno(postno, no);
 				
 				forward = new ActionForward();
 				forward.setRedirect(false);
-				forward.setPath("/super/postpage.do");
+				forward.setPath("/super/postContent.do");
 								
 		 } catch (Exception e) {
 			e.printStackTrace();
 		}
-		 /*서비스 실행된후 page.do로 넘어가야 하니까 ! */
 		 return forward;
 	}
 

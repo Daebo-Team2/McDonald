@@ -257,8 +257,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 	public int insertReplyPost(PostVO vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
-		int row = 0;
+		int postno = 0;
 
 		try {
 			conn = ConnectionPool.getConnection();
@@ -274,15 +273,13 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			pstmt.setInt(1, vo.getStoreno()); /* storeno 본사인 0으로 들어가야함 ? 안에 넣는 값 */
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
-			row = pstmt.executeUpdate(); // 쿼리문 실행
+			pstmt.executeUpdate(); // 쿼리문 실행
 			
 			ResultSet rs = pstmt.getGeneratedKeys();
-
+					
 			if (rs.next()) {
-				vo.setNo(rs.getInt(1)); // no
+				postno = rs.getInt(1);// no -- 답글insert 했을때 생성된 글번호가 postno 에 들어감			
 			}
-
-
 
 		} catch (Exception e) {
 
@@ -294,7 +291,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 
 			}
 		}
-		return row;
+		return postno;
 
 	}
 	//문의내역 조회 -- selectDeatilPost
@@ -302,7 +299,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 	
 
 	// reno값에에 답글로 달린 게시글번호 값을 업데이트 해주고 싶음 ,, insert 문에서 no 값을 같이 가져오게 했음
-	public int updateReno(PostVO vo) {
+	public int updateReno(int reno, int no ) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -315,8 +312,8 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			String sql = "update post set reno=? where no =?";
 
 			pstmt = conn.prepareStatement(sql); // 쿼리문 생성
-			pstmt.setInt(1, vo.getReno()); // 답글 번호
-			pstmt.setInt(2, vo.getNo()); // 글번호
+			pstmt.setInt(1, reno); // 답글 번호
+			pstmt.setInt(2, no); // 글번호
 
 			updaterow = pstmt.executeUpdate();
 
