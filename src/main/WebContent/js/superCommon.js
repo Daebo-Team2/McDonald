@@ -130,16 +130,44 @@ function stockConfirmBtnHandler(num) {
 // post페이지
 
 // 문의글 상세보기
-function openViewModal() {
-	// ajax를 통해 모달의 내용을 응답받고 #modal-content에 내용을 변경한다.
-	postViewModal.open();
+function openViewModal(num) {
+	$.ajax({
+		url: "/super/postmodal.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		$("#modal-content").html(text);
+		postViewModal.open();
+	})
 }
 
 // 탭버튼 눌렀을 때
 function tabBtnClick(num) {
 	// num -> post테이블에서 조회해야할 status
 	// ajax를 통해 알맞은 post들만 조회하여 #content 화면 변경
-	alert("탭 변경");
-
+	$.ajax({
+		url: "/super/postContent.do",
+		data: {status: num},
+		dataType: "text"
+	}).done((text) => {
+		$("#content").html(text);
+	})
 }
 
+function postAddBtnHandler(num) {
+	// ajax 통해 게시물 등록 요청
+	// url: "/super/postreply.do"
+	// data: {title, content, no}
+	const title = document.querySelector("input#reply-title").value;
+	const content = document.querySelector("textarea#reply-content").value;
+	$.ajax({
+		url: "/super/postreply.do",
+		data: {no: num, title, content},
+		dataType: "text"
+	}).done((text) => {
+		alert("답변 등록완료!");
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+		
+	})
+}

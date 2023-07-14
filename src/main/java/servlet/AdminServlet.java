@@ -1,19 +1,12 @@
 package servlet;
 
-import service.ActionForward;
+import service.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Arrays;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import service.Action;
-import service.ActionForward;
-import service.AdminStockOderService;
-import service.AdminStockService;
-import service.AdminStockUpdateService;
 
 @WebServlet(name = "AdminServlet", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
@@ -32,15 +25,16 @@ public class AdminServlet extends HttpServlet {
             forward.setPath("/WEB-INF/component/admin/saleContent.jsp");
         }
         if (url.equals("/admin/empContent.do")) {
-            forward.setPath("/WEB-INF/component/admin/empContent.jsp");
+            action = new EmpPageService();
+            forward = action.execute(request, response);
         }
         if (url.equals("/admin/stockContent.do")) {
             action = new AdminStockService();
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/postContent.do")) {
-            // 조회 서비스
-            forward.setPath("/WEB-INF/component/admin/postContent.jsp");
+			action = new AdminPostListService(); /*문의 내역 전체 조회 서비스 */
+            forward = action.execute(request, response);
         }
         if(url.equals("/admin/stockupdate.do")) { //재고수량변경
     		action = new AdminStockUpdateService();
@@ -50,8 +44,43 @@ public class AdminServlet extends HttpServlet {
     		action = new AdminStockOderService();
     		forward = action.execute(request, response);
     	}
+      
+        if (url.equals("/admin/empadd.do")) {
+            action = new EmpAddService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/empupdatemodal.do")) {
+            action = new EmpModalService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/empupdate.do")) {
+            action = new EmpUpdateService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/sidebar.do")) {
+            action = new EmpPageService();
+            forward = action.execute(request, response);
+            forward.setPath("/WEB-INF/component/admin/adminSide.jsp");
+        }
+        if (url.equals("/admin/empinout.do")) {
+            action = new EmpInOutService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/salepage.do")) {
+            action = new SalePageService();
+            forward = action.execute(request, response);
+        }
+		if(url.equals("/admin/postadd.do")){ /*문의글 작성 */    	    		
+    		action = new AdminPostAddService();
+    		forward = action.execute(request, response);
 
-        if (forward.getPath() == null) {
+    	}
+		if(url.equals("/admin/postmodal.do")){ // 특정 글의 상세내역을 담은 모달을 반환해야함.
+    	    action = new PostDetailService();
+    		forward = action.execute(request, response);   	    		
+    	}
+
+  if (forward.getPath() == null) {
             response.sendError(404);
             return;
         }
@@ -66,6 +95,6 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	this.doGet(request, response);
+        this.doGet(request, response);
     }
 }

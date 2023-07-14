@@ -35,8 +35,21 @@ function pageMove(url) {
 }
 
 // 좌측 출퇴근 관리 버튼눌렀을 때
-function inoutBtnHandler(event) {
+function empInoutBtnHandler(num) {
 	// ajax요청보내기
+	// url: /admin/empinout.do
+	// data: {no: num}
+	$.ajax({
+		url: "/admin/empinout.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		$("#sideBar").html(text);
+		//   <table className="table" page="emp">
+		if (document.querySelector("table[page='emp']") !== null) {
+			pageMove("/admin/empContent.do");
+		}
+	})
 }
 
 // order페이지 렌더링, sse
@@ -54,28 +67,59 @@ function orderDelBtnHandler(event) {
 }
 
 // emp페이지 직원정보 수정모달
-function empUpdateBtnHandler(event) {
-	// ajax를 통해 받아와야하는 직원정보가 적힌 모달
-	const updateModalHTML = `
-		<div class="modal-header">
-			<h5 class="modal-title" id="staticBackdropLabel">직원수정</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body" id="modal-body">
-			<label class="form-label">이름</label>
-			<input type="text" class="form-control" value="직원2">
-			<label class="form-label">시급</label>
-			<input type="text" class="form-control" value="9400">
-			<label class="form-label">전화번호</label>
-			<input type="text" class="form-control" value="010-2222-2222">
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">수정하기</button>
-			<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-		</div>
-	`;
-	document.querySelector("div#update-modal-content").innerHTML = updateModalHTML;
-	empUpdateModal.open();
+function empUpdateModalOpener(num) {
+	$.ajax({
+		url: "/admin/empupdatemodal.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		$("#update-modal-content").html(text);
+		empUpdateModal.open();
+	})
+}
+
+function empUpdateBtnHandler(num) {
+	// ajax
+	// url: /admin/empupdate.do
+	// data: {no, tel, pay}
+
+	const name = document.querySelector("#empUpdateNameInput").value;
+	const tel = document.querySelector("#empUpdateTelInput").value;
+	const pay = document.querySelector("#empUpdatePayInput").value;
+
+	$.ajax({
+		url: "/admin/empupdate.do",
+		method: "post",
+		data: {no: num, tel, pay},
+		dataType: "text"
+	}).done((text) => {
+		alert(`${name}직원이 수정되었습니다.`);
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+	})
+}
+
+function empAddBtnHandler() {
+	const name = document.querySelector("#empAddNameInput").value;
+	const tel = document.querySelector("#empAddTelInput").value;
+	const pay = document.querySelector("#empAddPayInput").value;
+
+	$.ajax({
+		url: "/admin/empadd.do",
+		data: {name, tel, pay},
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		alert(`${name}직원이 추가되었습니다.`);
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+		$.ajax({
+			url: "/admin/sidebar.do",
+			dataType: "text"
+		}).done((text) => {
+			$("#sideBar").html(text);
+		})
+	})
 }
 
 // stock 페이지
@@ -225,58 +269,34 @@ function stockOrderElement() {
 	return tr;
 }
 
-// post페이지
-// 문의내역 조회 모달 (문의글 클릭했을 때)
 function openViewModal(num) {
-	// num -> Post테이블의 no
-	// ajax로 num보내고 모달 내용 응답받기
-	const modalHTML = `
-	<div class="modal-header">
-		<h3 class="modal-title" id="staticBackdropLabel">문의 내역 조회</h3>
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	</div>
-	<div class="modal-body">
-		<h3>문의 내용</h3>
-		<h5>제목</h5>
-		<p>문의글 제목${num}</p>
-		<h5>내용</h5>
-		<p class="post-content">알림 기능은 공지사항, 이벤트, 업데이트와 같은 제품 및 서비스 소식을 알리는 기능을 말합니다.
-			일반적으로 리스트형 게시판을 이용하며 긴급한 내용은 팝업으로 띄우기도 합니다.
-			알림 기능은 새로운 소식을 알리는 것 외에 또 하나의 중요한 역할이 있습니다.
-			서비스에 문제가 생겼을 때 공개적으로 선제 대응과 후속 조치를 할 수 있다는 점입니다.
-			그러면 실제로 문제가 닥쳐도 고객이 느끼는 부정적인 인식이 한결 줄어들며 신뢰도를 높일 수 있습니다.
-			영문 모르는 고객들의 문의가 반복적으로 쇄도하는 것도 막을 수 있고요.
-			그리고 정기적인 공지나 업데이트는 서비스가 활성화되어 있다는 것을 알려줄 수도 있습니다.
-
-			공지사항을 최상단에 둔 모바일 게임 ‘앨리스클로젯’, ‘가디언테일즈’(카카오게임즈) 고객센터 (카카오게임즈도 오큐파이로 고객센터를 만들고 운영 중입니다)
-		</p>
-		<hr>
-		<h3>답변</h3>
-		<h5>제목</h5>
-		<p>답변 제목${num}</p>
-		<h5>내용</h5>
-		<p class="post-content">알림 기능은 공지사항, 이벤트, 업데이트와 같은 제품 및 서비스 소식을 알리는 기능을 말합니다.
-			일반적으로 리스트형 게시판을 이용하며 긴급한 내용은 팝업으로 띄우기도 합니다.
-			알림 기능은 새로운 소식을 알리는 것 외에 또 하나의 중요한 역할이 있습니다.
-			서비스에 문제가 생겼을 때 공개적으로 선제 대응과 후속 조치를 할 수 있다는 점입니다.
-			그러면 실제로 문제가 닥쳐도 고객이 느끼는 부정적인 인식이 한결 줄어들며 신뢰도를 높일 수 있습니다.
-			영문 모르는 고객들의 문의가 반복적으로 쇄도하는 것도 막을 수 있고요.
-			그리고 정기적인 공지나 업데이트는 서비스가 활성화되어 있다는 것을 알려줄 수도 있습니다.
-
-			공지사항을 최상단에 둔 모바일 게임 ‘앨리스클로젯’, ‘가디언테일즈’(카카오게임즈) 고객센터 (카카오게임즈도 오큐파이로 고객센터를 만들고 운영 중입니다)
-		</p>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
-	</div>
-	`
-	document.querySelector("div#post-view-modal-content").innerHTML = modalHTML;
-	postViewModal.open();
+	$.ajax({
+		url: "/admin/postmodal.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		$("div#post-view-modal-content").html(text);
+		postViewModal.open();
+	})
 }
 
 // 문의글 작성 모달에서 작성버튼 눌렀을 때
 function writePostBtnHandler() {
 	// 작성 내용긁어서 등록 요청보내기
-	alert("작성요청 보내기")
+	// ajax
+	// url: /admin/postadd.do
+	// data: {title, content}
+	const title = document.querySelector("input#post-add-title").value;
+	const content = document.querySelector("textarea#post-add-content").value;
+	$.ajax({
+		url: "/admin/postadd.do",
+		data: {title, content},
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		alert("문의등록완료!");
+		$("#content").html(text);
+	});
 }
 

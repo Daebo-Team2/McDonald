@@ -1,7 +1,7 @@
 package servlet;
 
 import java.io.IOException;
-
+import service.PostDetailService;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +20,8 @@ import service.StoreAddService;
 import service.StoreDeleteService;
 import service.StoreService;
 import service.StoreUpdateService;
-import service.SuperStockService;
-import service.SuperStockUpdate;
+import service.SuperPostAddService;
+import service.SuperPostListService;
 import vo.UserVO;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
@@ -60,41 +60,36 @@ public class SuperServlet extends HttpServlet {
             forward = action.execute(request, response);
             forward.setPath("/WEB-INF/component/super/stockContent.jsp");
         }
-        if (url.equals("/super/postContent.do")) { //문의 게시판
-            forward.setPath("/WEB-INF/component/super/postContent.jsp");
+        if (url.equals("/super/postContent.do")) {
+        	action = new SuperPostListService(); /*status에 따라 게시글 출력 하는 서비스*/
+    		forward = action.execute(request, response);
         }
 
-//    	if(url.equals("/super/stockpage.do")) { //재고관리페이지 (발주조회)
-//    		action = new SuperStockService();
-//    		forward = action.execute(request, response);
-//    	}else
         if(url.equals("/super/stockupdate.do")) { //발주 주문 확인
     		action = new SuperStockUpdate();
     		forward = action.execute(request, response);
-    	}else if(url.equals("/super/storeadd.do")) { //가맹점등록
+    	}
+        if(url.equals("/super/storeadd.do")) { //가맹점등록
     		action = new StoreAddService();
     		forward = action.execute(request, response);
-    	}else if(url.equals("/super/storeupdate.do")) { //가맹점 정보 수정
+    	}
+    	if(url.equals("/super/storeupdate.do")) { //가맹점 정보 수정
     		action = new StoreUpdateService();
     		forward = action.execute(request, response);
-    	}else if(url.equals("/super/storedelete.do")) { //가맹점 삭제
+    	}
+    	if(url.equals("/super/storedelete.do")) { //가맹점 삭제
     		action = new StoreDeleteService();
     		forward = action.execute(request, response);
     	}
-        
-        if(url.equals("/super/menuadd.do")) { //메뉴 추가
-        	action = new MenuAddService();
-        	forward = action.execute(request, response);
-        }
-        
-        if(url.equals("/super/menudelete.do")) { //메뉴 삭제
-        	action = new MenuDeleteService();
-        	forward = action.execute(request, response);
-        }
-        if(url.equals("/super/menudetail.do")) { //메뉴 상세조회
-        	action = new MenuDetailService();
-        	forward = action.execute(request, response);
-        }
+        if(url.equals("/super/postmodal.do")){ /*문의내역 상세 정보 */	
+    		action = new PostDetailService();
+    		forward = action.execute(request, response);
+    		forward.setPath("/WEB-INF/component/super/postModal.jsp");
+    	}
+		if(url.equals("/super/postreply.do")){
+    		action = new SuperPostAddService();  /*status2인 상태로 답글 + update reno, status=1  */
+    		forward = action.execute(request, response);
+    	}
 
         if (forward.getPath() == null) {
             response.sendError(404);
@@ -112,6 +107,5 @@ public class SuperServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doGet(request, response);
-
     }
 }
