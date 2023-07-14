@@ -32,19 +32,48 @@ function pageMove(url) {
 	}).done((text) => {
 		$("div#content").html(text);
 	})
-}
+};
 
 // store페이지
 // 가맹점 삭제버튼
-function storeDelBtnHandler(event) {
+function storeDelBtnHandler(num) {
 	// 가맹점삭제하는 요청보내야함.
-	alert("가맹점삭제요청");
+	// ajax url: /super/storedelete.do
+	// data {no : num}
+	const tr = document.querySelector(`tr[store-num="${num}"]`);
+	const name = tr.firstElementChild.textContent;
+	$.ajax({
+		url: "/super/storedelete.do",
+		data: {'no': num},
+		dataType: "text"
+	}).done((text) => {
+		alert(`가맹점 ${name} 삭제`);
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+	})
 }
 
 // 가맹점 추가모달의 등록버튼
 function storeAddBtnHandler() {
-	// 가맹점 추가하는 요청보내야함
-	alert("가맹점추가")
+	// 유효성검사
+	const name = document.querySelector("input#storeName").value;
+	$.ajax({
+		url:"/super/storeadd.do",
+		data: {
+			name: name,
+			id: document.querySelector("input#storeId").value,
+			pwd: document.querySelector("input#storePwd").value,
+			tel: document.querySelector("input#storeTel").value,
+			owner: document.querySelector("input#storeOwner").value,
+			address: document.querySelector("input#storeAddress").value
+		},
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		alert(`가맹점 ${name} 추가`)
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+	})
 }
 
 //sale페이지
@@ -81,9 +110,14 @@ function menuDelBtnHandler(event) {
 
 // stock페이지
 function stockConfirmBtnHandler(num) {
-	// num -> Stockorder테이블의 primary key jsp에서 같이 넣어주기
-	// ajax를 통해 재고주문 확인 요청
-	alert("확인요청 " + num);
+	$.ajax({
+		url: "/super/stockupdate.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		alert(`${num}번 주문이 발주되었습니다.`);
+		$("#content").html(text);
+	});
 }
 
 // post페이지

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="${pageContext.request.contextPath}/css/admin/stock.css" rel="stylesheet" />
+
 <div class="title">
   <h1>재고관리</h1>
 </div>
@@ -13,133 +15,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>햄버거 빵</td>
-        <td>2</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>양상추</td>
-        <td>2</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-          <!-- <button class="btn btn-danger cancelBtn">취소</button> -->
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
-      <tr>
-        <td>치즈</td>
-        <td>15</td>
-        <td>
-          <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
-        </td>
-      </tr>
+      <c:forEach items="${list}" var="stock">
+        <tr food-num="${stock.foodno}">
+          <td>${stock.foodName}</td>
+          <td>${stock.quantity}</td>
+          <td>
+            <button class="btn btn-secondary updateBtn" onclick="stockUpdateBtnHandler(event)">수정</button>
+          </td>
+        </tr>
+      </c:forEach>
     </tbody>
   </table>
 </div>
@@ -163,7 +47,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr class="stockOrder">
               <td>
                 <select class="form-select" aria-label="재료선택">
                   <option value = "0" selected>재료선택</option>

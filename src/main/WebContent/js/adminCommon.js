@@ -89,12 +89,18 @@ function stockUpdateBtnHandler(event) {
 	// 이미 수정중일때
 	if (isUpdating) {
 		const cnt = quantityTd.querySelector("input").value;
-		// ajax로 요청보내기
-		// 성공시 갱신
-		tr.removeAttribute("prev");
-		quantityTd.innerHTML = cnt;
-		buttonTd.lastChild.remove();
-		// 실패시 취소버튼 누른거
+		const foodNum = tr.getAttribute("food-num");
+		$.ajax({
+			url: "/admin/stockupdate.do",
+			data: {
+				foodno: foodNum,
+				quantity: cnt,
+			},
+			dataType: "text"
+		}).done((text) => {
+			$("#content").html(text);
+		})
+
 	}
 	else {
 		const cnt = quantityTd.textContent;
@@ -137,7 +143,32 @@ function stockPlusBtnHandler(event) {
 // 주문하기 버튼 눌렀을 때
 function stockOrderBtnHandler() {
 	// ajax요청보내기
-	alert("발주주문 완료");
+	// url: /admin/stockorder.do
+	// foodno, quantity
+	$.ajax({
+		url: "/admin/stockorder.do",
+		data: getStockOrderData(),
+		dataType: "text",
+		contentType: "application/x-www-form-urlencoded",
+		method: "post"
+	}).done((text) => {
+		alert("발주주문 완료");
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+	})
+}
+
+function getStockOrderData() {
+	let words = [];
+	const trs = document.querySelectorAll("tr.stockOrder");
+	for (const tr of trs) {
+		const foodNo = tr.querySelector("select.form-select").value;
+		const quantity = tr.querySelector("input.stock-cnt").value;
+		words.push(`foodno=${foodNo}`);
+		words.push(`quantity=${quantity}`);
+	}
+	console.log(words.join("&"));
+	return words.join("&");
 }
 
 // 발주주문 항목 삭제버튼 눌럿을 때
@@ -152,6 +183,7 @@ function addStockOrderBtnHandler() {
 
 function stockOrderElement() {
 	const tr = document.createElement("tr");
+	tr.classList.add("stockOrder");
 	tr.innerHTML = `
 	<td>
 		<select class="form-select" aria-label="재료선택">

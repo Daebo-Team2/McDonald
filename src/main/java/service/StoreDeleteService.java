@@ -15,20 +15,16 @@ public class StoreDeleteService implements Action {
 
 		try {
 			request.setCharacterEncoding("UTF-8");
-			//String id = request.getParameter("id");
 			int no = Integer.parseInt(request.getParameter("no"));
 
 			StoreDAO dao= new StoreDAO();
 			int su = dao.storeDelete(no);
-			System.out.println("su : " + su);
 
-
-			forward.setPath("/super/storepage.do");
+			forward.setPath("/super/storeContent.do");
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
 		return forward;
 	}
 
