@@ -60,7 +60,7 @@ public class SuperStockService implements Action {
 		request.setAttribute("pageStart", pageStart);
 		request.setAttribute("pageEnd", pageEnd);
 		request.setAttribute("pageCurrent", pageCurrent);
-		forward.setPath("/WEB-INF/component/super/saleContent.jsp");
+		forward.setPath("/WEB-INF/component/super/stockContent.jsp");
 
 		return forward;
 	}
