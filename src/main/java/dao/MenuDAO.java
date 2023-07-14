@@ -12,7 +12,7 @@ import vo.MenuVO;
 public class MenuDAO {
 	
 	
-	public List<MenuVO> selectAllMenu() {
+	public List<MenuVO> selectAllMenu() { //판매 중인 메뉴전체조회 (valid = 1)
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -45,6 +45,28 @@ public class MenuDAO {
 			ConnectionPool.close(conn);
 		}
 		return list;
+	}
+	
+	public int deleteMenu(int no) { //메뉴 삭제
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			conn = ConnectionPool.getConnection();
+			String sql = "UPDATE MENU SET VALID = 0 WHERE NO = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return result;
 	}
 	
 
