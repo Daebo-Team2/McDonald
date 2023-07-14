@@ -1,44 +1,35 @@
 package servlet;
 
-import service.*;
+import service.Action;
+import service.ActionForward;
+import service.LoginCheckService;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
-import vo.UserVO;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Arrays;
 
-@WebServlet(name = "PageServlet", value = "/page/*")
-public class PageServlet extends HttpServlet {
+@WebServlet("/auth/*")
+public class AuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
+        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("utf-8");
         String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestURI.substring(contextPath.length());
-        ActionForward forward = new ActionForward();
+        ActionForward forward = null;
         Action action = null;
 
-        if (url.equals("/page/admin")) {
-            forward.setPath("/WEB-INF/pages/adminPage.jsp");
-        }
-        if (url.equals("/page/super")) {
-            HttpSession session = request.getSession();
-            UserVO vo = (UserVO)session.getAttribute("login");
-            if (vo == null || vo.getNo() != 0) {
-                response.sendRedirect("/page/login");
-                return;
-            }
-            action = new StoreService();
+        if (url.equals("/auth/login.do")){
+            action = new LoginCheckService();
             forward = action.execute(request, response);
-            forward.setPath("/WEB-INF/pages/superPage.jsp");
         }
-        if (url.equals("/page/login")){
-            forward.setPath("/WEB-INF/pages/loginPage.jsp");
-        }
-        if (url.equals("/page/store")) {
-            forward.setPath("/WEB-INF/pages/storePage.jsp");
+        if (url.equals("/auth/logout.do")) {
+            request.getSession().invalidate();
+            forward = new ActionForward();
+            forward.setRedirect(true);
+            forward.setPath("/page/login");
         }
 
         if (forward.getPath() == null) {
@@ -56,6 +47,6 @@ public class PageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	this.doGet(request, response);
+        this.doGet(request, response);
     }
 }
