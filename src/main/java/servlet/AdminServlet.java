@@ -1,19 +1,12 @@
 package servlet;
 
-import service.ActionForward;
+import service.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Arrays;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import service.Action;
-import service.ActionForward;
-import service.AdminStockOderService;
-import service.AdminStockService;
-import service.AdminStockUpdateService;
 
 @WebServlet(name = "AdminServlet", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
@@ -50,8 +43,28 @@ public class AdminServlet extends HttpServlet {
     		action = new AdminStockOderService();
     		forward = action.execute(request, response);
     	}
+      
+              if (url.equals("/admin/emppage.do")) {
+            action = new EmpPageService();
+            forward = action.execute(request, response);
+        } else if (url.equals("/admin/empadd.do")) {
+            action = new EmpAddService();
+            forward = action.execute(request, response);
+        } else if (url.equals("/admin/empmodal.do")) {
+            action = new EmpModalService();
+            forward = action.execute(request, response);
+        } else if (url.equals("/admin/empupdate.do")) {
+            action = new EmpUpdateService();
+            forward = action.execute(request, response);
+        } else if (url.equals("/admin/empinout.do")) {
+            action = new EmpInOutService();
+            forward = action.execute(request, response);
+        } else if (url.equals("/admin/salepage.do")) {
+            action = new SalePageService();
+            forward = action.execute(request, response);
+        }
 
-        if (forward.getPath() == null) {
+  if (forward.getPath() == null) {
             response.sendError(404);
             return;
         }
@@ -66,6 +79,6 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	this.doGet(request, response);
+        this.doGet(request, response);
     }
 }
