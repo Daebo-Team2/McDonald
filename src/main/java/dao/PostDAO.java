@@ -125,10 +125,9 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
-		PostVO vo = new PostVO();
-
+		
 		String sql = "SELECT * FROM POST WHERE NO=? ";
+		PostVO vo = new PostVO(); //vo에 담아서 return 해야 하니까 밖으로 뺌 
 
 		try {
 			conn = ConnectionPool.getConnection();
@@ -141,7 +140,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 			// 결과 처리
 
 			if (rs.next()) { // /rs에서 반환된 행을 next() 메서드로 확인한후 vo 에 저장
-
+				
 				vo.setNo(rs.getInt(1));
 				vo.setStoreno(rs.getInt(2));
 				vo.setTitle(rs.getString(3));
@@ -165,39 +164,6 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		}
 
 		return vo;
-	}
-
-	// (5) 가맹점 본사가 답글을 달았을때 status 값이 1로 변경 : updateStatus1(PostVO vo ) -- 보류
-	public int updateStatus1(PostVO vo) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		int row = 0;
-
-		try {
-			conn = ConnectionPool.getConnection();
-
-			String sql = "update post set status = 1 where no =?";
-			// 답글이 달린 게시글의 Status = 1 , 답글 번호 = 답글로 작성된 글 no
-
-			pstmt = conn.prepareStatement(sql); // 쿼리문 생성
-			pstmt.setInt(1, vo.getNo()); // 글번호
-
-			row = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-
-		} finally {
-			try {
-				ConnectionPool.close(pstmt);
-				ConnectionPool.close(rs);
-				ConnectionPool.close(conn);
-			} catch (Exception e2) {
-			}
-		}
-
-		return row;
 	}
 
 	// *********본사*************************
@@ -309,7 +275,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 		try {
 			conn = ConnectionPool.getConnection();
 
-			String sql = "update post set reno=? where no =?";
+			String sql = "update post set reno=? , status = 1 where no =?";
 
 			pstmt = conn.prepareStatement(sql); // 쿼리문 생성
 			pstmt.setInt(1, reno); // 답글 번호
