@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import service.Action;
 import service.ActionForward;
+import service.MenuAddService;
 import service.MenuDeleteService;
 import service.MenuDetailService;
 import service.MenuServie;
@@ -80,6 +81,11 @@ public class SuperServlet extends HttpServlet {
     		action = new StoreDeleteService();
     		forward = action.execute(request, response);
     	}
+        
+        if(url.equals("/super/menuadd.do")) { //메뉴 추가
+        	action = new MenuAddService();
+        	forward = action.execute(request, response);
+        }
         
         if(url.equals("/super/menudelete.do")) { //메뉴 삭제
         	action = new MenuDeleteService();
