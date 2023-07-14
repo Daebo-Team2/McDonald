@@ -49,16 +49,19 @@ public class SuperServlet extends HttpServlet {
             forward.setPath("/WEB-INF/component/super/menuContent.jsp");
         }
         if (url.equals("/super/stockContent.do")) {
+            action = new SuperStockService();
+            forward = action.execute(request, response);
             forward.setPath("/WEB-INF/component/super/stockContent.jsp");
         }
         if (url.equals("/super/postContent.do")) {
             forward.setPath("/WEB-INF/component/super/postContent.jsp");
         }
 
-    	if(url.equals("/super/stockpage.do")) { //재고관리페이지 (발주조회)
-    		action = new SuperStockService();
-    		forward = action.execute(request, response);
-    	}else if(url.equals("/super/stockupdate.do")) { //발주 주문 확인
+//    	if(url.equals("/super/stockpage.do")) { //재고관리페이지 (발주조회)
+//    		action = new SuperStockService();
+//    		forward = action.execute(request, response);
+//    	}else
+        if(url.equals("/super/stockupdate.do")) { //발주 주문 확인
     		action = new SuperStockUpdate();
     		forward = action.execute(request, response);
     	}else if(url.equals("/super/storeadd.do")) { //가맹점등록

@@ -32,7 +32,7 @@ function pageMove(url) {
 	}).done((text) => {
 		$("div#content").html(text);
 	})
-}
+};
 
 // store페이지
 // 가맹점 삭제버튼
@@ -110,9 +110,14 @@ function menuDelBtnHandler(event) {
 
 // stock페이지
 function stockConfirmBtnHandler(num) {
-	// num -> Stockorder테이블의 primary key jsp에서 같이 넣어주기
-	// ajax를 통해 재고주문 확인 요청
-	alert("확인요청 " + num);
+	$.ajax({
+		url: "/super/stockupdate.do",
+		data: {no: num},
+		dataType: "text"
+	}).done((text) => {
+		alert(`${num}번 주문이 발주되었습니다.`);
+		$("#content").html(text);
+	});
 }
 
 // post페이지
