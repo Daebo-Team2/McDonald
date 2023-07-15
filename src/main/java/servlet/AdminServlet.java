@@ -70,15 +70,18 @@ public class AdminServlet extends HttpServlet {
             action = new SalePageService();
             forward = action.execute(request, response);
         }
-		if(url.equals("/admin/postadd.do")){ /*문의글 작성 */    	    		
-    		action = new AdminPostAddService();
-    		forward = action.execute(request, response);
-
-    	}
-		if(url.equals("/admin/postmodal.do")){ // 특정 글의 상세내역을 담은 모달을 반환해야함.
-    	    action = new PostDetailService();
-    		forward = action.execute(request, response);   	    		
-    	}
+        if (url.equals("/admin/postadd.do")) { /*문의글 작성 */
+            action = new AdminPostAddService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/postmodal.do")) { // 특정 글의 상세내역을 담은 모달을 반환해야함.
+            action = new PostDetailService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/empdelete.do")) {
+            action = new EmpDeleteService();
+            forward = action.execute(request, response);
+        }
 
   if (forward.getPath() == null) {
             response.sendError(404);
