@@ -76,6 +76,9 @@ public class AdminServlet extends HttpServlet {
     	    action = new PostDetailService();
     		forward = action.execute(request, response);   	    		
     	}
+        if (url.equals("/admin/kioskorder.do")) {
+            
+        }
 
         if (forward.getPath() == null) {
             response.sendError(404);

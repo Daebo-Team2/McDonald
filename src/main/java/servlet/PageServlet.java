@@ -44,6 +44,10 @@ public class PageServlet extends HttpServlet {
         if (url.equals("/page/enterkiosk")) {
             forward.setPath("/WEB-INF/pages/enterkioskPage.jsp");
         }
+        if (url.equals("/page/kiosk")) {
+            KioskPageService kioskPageService = new KioskPageService();
+            forward = kioskPageService.execute(request, response);
+        }
 
         if (forward.getPath() == null) {
             response.sendError(404);

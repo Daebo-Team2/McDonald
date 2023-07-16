@@ -16,7 +16,7 @@
 		<br /><br />
 
 		<div class="bt">
-			<button type="button" class="btn btn-primary btn-lg">주문하기 <br />화면을 터치하세요</button>
+			<button type="button" class="btn btn-primary btn-lg" onclick="location.href='${pageContext.request.contextPath}/page/kiosk'">주문하기 <br />화면을 터치하세요</button>
 		</div>
 	</body>
 </html>
