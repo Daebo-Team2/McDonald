@@ -125,6 +125,7 @@ function orderRequest() {
 		method: "post"
 	}).done(() => {
 		alert("주문이 완료되었습니다.");
+		location.replace("/page/enterkiosk");
 	});
 }
 

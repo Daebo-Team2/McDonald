@@ -77,7 +77,10 @@ public class AdminServlet extends HttpServlet {
     		forward = action.execute(request, response);   	    		
     	}
         if (url.equals("/admin/kioskorder.do")) {
-            
+            action = new KioskOrderService();
+            action.execute(request, response);
+            response.setStatus(200);
+            return;
         }
 
         if (forward.getPath() == null) {

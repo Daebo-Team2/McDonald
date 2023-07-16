@@ -11,6 +11,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous"
     />
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" defer integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <link href="${pageContext.request.contextPath}/css/adminCommon.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/css/kiosk.css" rel="stylesheet" />
     <script
@@ -116,7 +117,7 @@
               <input type="radio" class="form-check-input" name="place" value="take-out"/><label>포장</label>
             </div>
           </div>
-          <button class="btn btn-primary btn-lg">주문하기</button>
+          <button class="btn btn-primary btn-lg" onclick="orderRequest()">주문하기</button>
         </div>
       </div>
 
