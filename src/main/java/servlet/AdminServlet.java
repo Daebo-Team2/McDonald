@@ -5,8 +5,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Arrays;
-
 
 @WebServlet(name = "AdminServlet", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
@@ -44,7 +42,6 @@ public class AdminServlet extends HttpServlet {
     		action = new AdminStockOderService();
     		forward = action.execute(request, response);
     	}
-      
         if (url.equals("/admin/empadd.do")) {
             action = new EmpAddService();
             forward = action.execute(request, response);
@@ -80,7 +77,7 @@ public class AdminServlet extends HttpServlet {
     		forward = action.execute(request, response);   	    		
     	}
 
-  if (forward.getPath() == null) {
+        if (forward.getPath() == null) {
             response.sendError(404);
             return;
         }
