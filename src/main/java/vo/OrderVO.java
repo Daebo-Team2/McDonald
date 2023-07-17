@@ -44,14 +44,11 @@ public class OrderVO {
 
     public void setStoreNo(int storeNo) {
         this.storeNo = storeNo;
+        this.storeName = StoreName.getStoreName(storeNo);
     }
 
     public String getStoreName() {
         return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
     }
 
     public List<OrderListVO> getMenuList() {

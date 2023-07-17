@@ -34,6 +34,20 @@ function pageMove(url) {
 	})
 }
 
+function saleSearchBtnHandler() {
+	const start = document.querySelector("#saleStartInput").value;
+	const end = document.querySelector("#saleEndInput").value;
+	const menuName = document.querySelector("#saleMenuNameInput").value;
+
+	$.ajax({
+		url: "/admin/saleContent.do",
+		method: "post",
+		data: {start, end, menuName},
+		dataType: "text"
+	}).done((text) => {
+		$("#content").html(text);
+	})
+}
 // 좌측 출퇴근 관리 버튼눌렀을 때
 function empInoutBtnHandler(num) {
 	// ajax요청보내기

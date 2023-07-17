@@ -1,21 +1,11 @@
 package servlet;
 
-import service.ActionForward;
-import service.PostDetailService;
+import service.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import service.Action;
 import service.ActionForward;
-import service.SuperStockUpdate;
-import service.SuperStockService;
-import service.StoreAddService;
-import service.StoreDeleteService;
-import service.StoreService;
-import service.StoreUpdateService;
-import service.SuperPostAddService;
-import service.SuperPostListService;
 import vo.UserVO;
 
 import javax.servlet.annotation.*;
@@ -46,7 +36,8 @@ public class SuperServlet extends HttpServlet {
             forward = action.execute(request, response);
         }
         if (url.equals("/super/saleContent.do")) {
-            forward.setPath("/WEB-INF/component/super/saleContent.jsp");
+            action = new SuperSalePageService();
+            forward = action.execute(request, response);
         }
         if (url.equals("/super/menuContent.do")) {
             forward.setPath("/WEB-INF/component/super/menuContent.jsp");
