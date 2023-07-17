@@ -33,10 +33,10 @@ public class MenuDetailService implements Action {
 		System.out.println("name : " +  menuvo.getName());
 		System.out.println("image : " + menuvo.getImage());
 		System.out.println("price : " + menuvo.getPrice());
-		System.out.println(recipevo);                              
+		System.out.println(recipevo);                
 		
 		
-		//forward.setPath("/super/menuContent.do");
+		forward.setPath("/WEB-INF/component/super/menuDetailModal.jsp");
 		return forward;
 	}
 

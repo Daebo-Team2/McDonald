@@ -22,6 +22,8 @@ import service.StoreService;
 import service.StoreUpdateService;
 import service.SuperPostAddService;
 import service.SuperPostListService;
+import service.SuperStockService;
+import service.SuperStockUpdate;
 import vo.UserVO;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
@@ -90,6 +92,15 @@ public class SuperServlet extends HttpServlet {
     		action = new SuperPostAddService();  /*status2인 상태로 답글 + update reno, status=1  */
     		forward = action.execute(request, response);
     	}
+		if(url.equals("/super/menudetail.do")){ //메뉴 상세조회
+			action = new MenuDetailService();
+			forward = action.execute(request, response);
+		}
+		if(url.equals("/super/menudelete.do")){ //메뉴 삭제
+			action = new MenuDeleteService();
+			forward = action.execute(request, response);
+		}
+		
 
         if (forward.getPath() == null) {
             response.sendError(404);

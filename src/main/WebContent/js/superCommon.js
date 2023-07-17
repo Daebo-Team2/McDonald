@@ -97,9 +97,17 @@ function fileChangeHandler() {
 }
 
 // 상세보기 누르면 요청을 보내고 모달을 응답받아 메뉴상세보기 모달을 채워줘야한다.
-function menuViewBtnHandler(event) {
+function menuViewBtnHandler(num) {
 	// ajax를 통해 모달의 내용을 받아와 #modal-content에 채워준다
-	menuViewModal.open();
+	$.ajax({
+		url: "/super/menudetail.do",
+		data: {no: num},
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		$("div#menu-detail-modal-content").html(text);
+		menuViewModal.open();
+	})
 }
 
 // 삭제버튼을 누르면 삭제요청 보내야함
@@ -115,59 +123,72 @@ function menuDelBtnHandler(num) {
 	});
 }
 
+// 메뉴 추가모달의 등록버튼
+function menuAddBtnHandler() {
+	// 유효성검사
+	const name = document.querySelector("input#menuname").value;
+	$.ajax({
+		url: "/super/menuadd.do",
+		data: {
+			name: name,
+			category: document.querySelector("input#category").value,
+			price: document.querySelector("input#price").value
+		},
+		dataType: "text",
+	}).done((text) => {
+		alert(`${ name } 메뉴가 추가되었습니다.`);
+		$("#content").html(text);
+	});
+}
+
+/*
+function getRecipeData() {
+	let words = [];
+	const 
+	
+}
+*/
+
+
 // stock페이지
-function stockConfirmBtnHandler(num) {
+function stockConfirmBtnHandler(num, snum) {
 	$.ajax({
 		url: "/super/stockupdate.do",
-		data: {no: num},
+		data: {no: num,
+		storeno : snum
+		},
 		dataType: "text"
 	}).done((text) => {
 		alert(`${num}번 주문이 발주되었습니다.`);
 		$("#content").html(text);
 	});
 }
+/*
+function getStockOrderlistDate() {
+	let words = [];
+	const trs = document.querySelectorAll("tr.order-info");
+	for ( const tr of trs ){
+		const foodNo = tr.querySelector("td#foodno");
+		const quantity = tr.querySelector("td.quantity").value;
+		words.push(`foodno=${foodNo}`);
+		words.push(`quantity=${quantity}`);
+	}
+}
+*/
 
 // post페이지
 
 // 문의글 상세보기
-function openViewModal(num) {
-	$.ajax({
-		url: "/super/postmodal.do",
-		data: {no: num},
-		dataType: "text"
-	}).done((text) => {
-		$("#modal-content").html(text);
-		postViewModal.open();
-	})
+function openViewModal() {
+	// ajax를 통해 모달의 내용을 응답받고 #modal-content에 내용을 변경한다.
+	postViewModal.open();
 }
 
 // 탭버튼 눌렀을 때
 function tabBtnClick(num) {
 	// num -> post테이블에서 조회해야할 status
 	// ajax를 통해 알맞은 post들만 조회하여 #content 화면 변경
-	$.ajax({
-		url: "/super/postContent.do",
-		data: {status: num},
-		dataType: "text"
-	}).done((text) => {
-		$("#content").html(text);
-	})
+	alert("탭 변경");
+
 }
 
-function postAddBtnHandler(num) {
-	// ajax 통해 게시물 등록 요청
-	// url: "/super/postreply.do"
-	// data: {title, content, no}
-	const title = document.querySelector("input#reply-title").value;
-	const content = document.querySelector("textarea#reply-content").value;
-	$.ajax({
-		url: "/super/postreply.do",
-		data: {no: num, title, content},
-		dataType: "text"
-	}).done((text) => {
-		alert("답변 등록완료!");
-		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
-		$("#content").html(text);
-		
-	})
-}
