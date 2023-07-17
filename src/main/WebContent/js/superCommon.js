@@ -269,6 +269,24 @@ function tabBtnClick(num) {
 	})
 }
 
+function postAddBtnHandler(num) {
+	// ajax 통해 게시물 등록 요청
+	// url: "/super/postreply.do"
+	// data: {title, content, no}
+	const title = document.querySelector("input#reply-title").value;
+	const content = document.querySelector("textarea#reply-content").value;
+	$.ajax({
+		url: "/super/postreply.do",
+		data: {no: num, title, content},
+		dataType: "text"
+	}).done((text) => {
+		alert("답변 등록완료!");
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+		
+	})
+}
+
 function saleSearchBtnHandler() {
 	const start = document.querySelector("#saleStartInput").value;
 	const end = document.querySelector("#saleEndInput").value;
