@@ -20,7 +20,7 @@ public class LoginCheckService implements Action {
 		StoreVO vo = dao.checkId(id);
 
 		if ( vo == null || vo.getStatus() == 0) {
-			request.setAttribute("msg", "로그인에 실패햐였습니다.");
+			request.setAttribute("msg", "로그인에 실패하였습니다.");
 			forward.setPath("/page/login");
 		} else {
 			if (vo.getPwd().equals(password)) {
