@@ -13,8 +13,8 @@ public class MenuAddService implements Action {
 		MenuDAO dao = new MenuDAO();
 		
 		String category = request.getParameter("category");
-		String name = request.getParameter("name");
-		int price = Integer.parseInt(request.getParameter("price"));
+		String name = request.getParameter("name").trim();
+		int price = Integer.parseInt(request.getParameter("price").trim());
 		String[] foodnos = request.getParameterValues("foodno");
 		
 		int menuno = dao.addMenu(category, name, price);
