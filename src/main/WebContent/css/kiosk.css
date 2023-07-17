@@ -1,0 +1,130 @@
+.side {
+  width: 30%;
+  height: 100%;
+  border: 1px solid black;
+  padding: 10px 5px;
+  overflow: auto;
+}
+
+.side > .side-header {
+  height: 47px;
+}
+
+.side > .side-footer {
+  height: 131px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.side > .side-content {
+  height: calc(100% - 178px);
+  overflow: auto;
+}
+
+.content {
+  width: 70%;
+  height: 100%;
+  overflow: auto;
+}
+
+.side > div {
+  text-align: center;
+}
+
+/* 장바구니 테이블 */
+h2.empty {
+  margin-top: 10px;
+}
+
+table.cart {
+  font-size: 0.8rem;
+  font-weight: bold;
+  table-layout: fixed;
+}
+
+.cart tr > td {
+  padding: 4px 2px;
+}
+
+.cart tr > td:first-child {
+  width: 30%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cart tr > td:nth-child(2) {
+  width: 25%;
+}
+
+.cart tr > td:nth-child(3) {
+  width: 35%;
+}
+
+.cart tr > th:last-child {
+  width: 10%;
+}
+
+.cart input.quantity {
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+  line-height: 1rem;
+  margin: 0px 2px;
+}
+
+.cart td > button.minusBtn,
+button.plusBtn {
+  border-radius: 50%;
+  border: none;
+  width: 25px;
+  height: 25px;
+  background-repeat: no-repeat;
+}
+
+td > button.minusBtn {
+  background-image: url("/image/minus.svg");
+  background-position: center;
+}
+
+td > button.plusBtn {
+  background-image: url("/image/plus.svg");
+  background-position: center;
+}
+
+td {
+  vertical-align: middle;
+}
+
+/* 사이드하단 */
+
+.radio-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.side-footer > button {
+  width: 80%;
+  font-size: 24px;
+}
+
+/* 상품페이지 */
+.tab-content > .active {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 6.6%;
+  align-items: flex-start;
+  margin: 0;
+  padding: 10px;
+}
+
+.card {
+  width: 20%;
+  height: auto;
+}
+
+.card-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -1,6 +1,7 @@
 package vo;
 
 public class MenuVO {
+
 	private int no;
 	private String category;
 	private String name;
@@ -9,8 +10,6 @@ public class MenuVO {
 	private int valid;
 	
 	public MenuVO() {	} //생성자함수
-
-	
 	
 	public int getNo() {
 		return no;

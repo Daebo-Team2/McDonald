@@ -67,7 +67,7 @@
         </div>
       </div>
       <div class="buttons">
-        <button type="button" class="btn btn-primary btn-lg">키오스크</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="location.href='${pageContext.request.contextPath}/page/enterkiosk'">키오스크</button>
         <button type="button" class="btn btn-primary btn-lg" onclick="location.href='${pageContext.request.contextPath}/page/admin'">관리자</button>
       </div>
     </div>
