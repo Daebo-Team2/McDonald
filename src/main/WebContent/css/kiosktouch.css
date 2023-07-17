@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 body{	
-	/* margin:73px; */
 	background-image: linear-gradient(to bottom, #fffad7, #fff5d7, #fff1d9, #ffeddb, #ffeadd);
 	display: flex;
 	flex-direction: column;
