@@ -258,3 +258,18 @@ function tabBtnClick(num) {
 
 }
 
+function saleSearchBtnHandler() {
+	const start = document.querySelector("#saleStartInput").value;
+	const end = document.querySelector("#saleEndInput").value;
+	const menuName = document.querySelector("#saleMenuNameInput").value;
+	const storeName = document.querySelector("#saleStoreNameInput").value;
+
+	$.ajax({
+		url: "/super/saleContent.do",
+		method: "post",
+		data: {start, end, menuName, storeName},
+		dataType: "text"
+	}).done((text) => {
+		$("#content").html(text);
+	})
+}

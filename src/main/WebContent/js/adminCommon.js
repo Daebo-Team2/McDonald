@@ -34,6 +34,20 @@ function pageMove(url) {
 	})
 }
 
+function saleSearchBtnHandler() {
+	const start = document.querySelector("#saleStartInput").value;
+	const end = document.querySelector("#saleEndInput").value;
+	const menuName = document.querySelector("#saleMenuNameInput").value;
+
+	$.ajax({
+		url: "/admin/saleContent.do",
+		method: "post",
+		data: {start, end, menuName},
+		dataType: "text"
+	}).done((text) => {
+		$("#content").html(text);
+	})
+}
 // 좌측 출퇴근 관리 버튼눌렀을 때
 function empInoutBtnHandler(num) {
 	// ajax요청보내기
@@ -112,6 +126,24 @@ function empAddBtnHandler() {
 	}).done((text) => {
 		alert(`${name}직원이 추가되었습니다.`);
 		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+		$("#content").html(text);
+		$.ajax({
+			url: "/admin/sidebar.do",
+			dataType: "text"
+		}).done((text) => {
+			$("#sideBar").html(text);
+		})
+	})
+}
+
+function empDeleteBtnHandler(num) {
+	$.ajax({
+		url: "/admin/empdelete.do",
+		data: {no: num},
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		alert('삭제가 완료되었습니다.');
 		$("#content").html(text);
 		$.ajax({
 			url: "/admin/sidebar.do",

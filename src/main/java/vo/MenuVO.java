@@ -1,12 +1,5 @@
 package vo;
 
-/*NO       NOT NULL NUMBER        
-CATEGORY NOT NULL VARCHAR2(60)  
-NAME     NOT NULL VARCHAR2(60)  
-IMAGE             VARCHAR2(100) 
-PRICE    NOT NULL NUMBER        
-VALID             NUMBER */
-
 public class MenuVO {
 	private int no;
 	private String category;
@@ -66,5 +59,4 @@ public class MenuVO {
 	public void setValid(int valid) {
 		this.valid = valid;
 	}
-
 }

@@ -2,10 +2,6 @@ package dao;
 
 import vo.EmpVO;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,6 +94,20 @@ public class EmpDAO {
         pstmt.setInt(3, emp.getwTime());
         pstmt.setDate(4, emp.getInTime());
         pstmt.setInt(5, emp.getNo());
+        row = pstmt.executeUpdate();
+
+        ConnectionPool.close(pstmt);
+        ConnectionPool.close(conn);
+        return row;
+    }
+
+    public int empDelete(int no) throws SQLException {
+        int row = 0;
+        String sql = "delete from emp where no = ?";
+        Connection conn = ConnectionPool.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, no);
         row = pstmt.executeUpdate();
 
         ConnectionPool.close(pstmt);

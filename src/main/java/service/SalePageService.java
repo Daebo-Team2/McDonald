@@ -3,66 +3,86 @@ package service;
 import dao.SaleDAO;
 import vo.OrderListVO;
 import vo.OrderVO;
+import vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class SalePageService implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-
         ActionForward forward = null;
-        try {
-            request.setCharacterEncoding("UTF-8");
-            String start = request.getParameter("start");
-            String end = request.getParameter("end");
-            String menuName = request.getParameter("menuName");
-            String storeNo = request.getParameter("storeNo");
-            System.out.println(menuName);
+        HttpSession session = request.getSession();
+        UserVO user = (UserVO) session.getAttribute("login");
+        int storeNo = user.getNo();
 
+        String start = request.getParameter("start");
+        String end = request.getParameter("end");
+        String menuName = request.getParameter("menuName");
+        if (start == null || end == null || menuName == null) {
+            forward = new ActionForward();
+            forward.setPath("/WEB-INF/component/admin/saleContent.jsp");
+            return forward;
+        }
+
+        String reqPageNo = request.getParameter("pageNo");
+        int pageNo = 1;
+        if (reqPageNo != null && !reqPageNo.equals("")) {
+            pageNo = Integer.parseInt(reqPageNo);
+        }
+
+        try {
             SaleDAO dao = new SaleDAO();
-            List<OrderVO> orders = dao.orderSelect(start.equals("") ? "2000-01-01" : start,
-                    end.equals("") ? "2099-12-31" : end,
-                    storeNo.equals("") ? 0 : Integer.parseInt(storeNo));
+            int totalCount = 0;
+            boolean isMenuName = false;
+            if (menuName.equals("")) {
+                totalCount = dao.orderCount(start.equals("") ? "2000-01-01" : start,
+                        end.equals("") ? "2099-12-31" : end, storeNo);
+            } else {
+                totalCount = dao.menuCount(start.equals("") ? "2000-01-01" : start,
+                        end.equals("") ? "2099-12-31" : end, menuName, storeNo);
+                isMenuName = true;
+            }
+            System.out.println("totalCount : " + totalCount);
+            int pageSize = 10;
+            int blockPage = 3;
+            int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+            int pageStart = ((pageNo - 1) / blockPage) * blockPage + 1;
+            int pageEnd = Math.min(pageStart - 1 + blockPage, totalPage);
+            int pStart = (pageNo - 1) * pageSize + 1;
+            int pEnd = Math.min((pageNo * pageSize), totalCount);
+
+            List<OrderVO> orders = null;
+            List<OrderListVO> orderList = null;
+            if (!isMenuName) {
+                orders = dao.orderSelect(start.equals("") ? "2000-01-01" : start,
+                        end.equals("") ? "2099-12-31" : end, storeNo, pStart, pEnd);
+                for (OrderVO order : orders) {
+                    orderList = dao.orderListSelect(order.getNo());
+                    order.setMenuList(orderList);
+                }
+            } else {
+                orders = dao.menuSelect(start.equals("") ? "2000-01-01" : start,
+                        end.equals("") ? "2099-12-31" : end, menuName, pStart, pEnd);
+            }
 
             int totalPrice = 0;
             for (OrderVO order : orders) {
-                List<OrderListVO> orderList = dao.orderListSelect(order.getNo());
-                if (!menuName.equals("")) {
-                    orderList.removeIf(menu -> !menu.getMenuName().equals(menuName));
-                }
-
-                int orderPrice = 0;
-                for (OrderListVO menu : orderList) {
-                    orderPrice += menu.getPrice();
-                }
-                order.setPrice(orderPrice);
-                order.setMenuList(orderList);
-                totalPrice += orderPrice;
+                totalPrice += order.getPrice();
             }
-            orders.removeIf(orderVO -> orderVO.getMenuList().size() == 0);
 
-            //페이징 처리
-            String reqPageNo = request.getParameter("pageNo");
-            int onePageCnt = 2;
-            int pageBlock = 3;
-            int totalCnt = orders.size();
-            int totalPageCnt = (int) Math.ceil((double) totalCnt / onePageCnt);
-            int pageNo = Math.min(reqPageNo.equals("") ? 1 : Integer.parseInt(reqPageNo), totalPageCnt);
-            int pageTemp = ((pageNo - 1) / pageBlock) * pageBlock + 1;
-            int startCnt = Math.max((pageNo - 1) * onePageCnt, 0);
-            int endCnt = Math.min(pageNo * onePageCnt, totalCnt);
-
-            List<OrderVO> pagingOrders = orders.subList(startCnt, endCnt);
-
-            request.setAttribute("list", pagingOrders);
+            request.setAttribute("list", orders);
             request.setAttribute("totalPrice", totalPrice);
-            request.setAttribute("pageTemp", pageTemp);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("pageStart", pageStart);
+            request.setAttribute("pageEnd", pageEnd);
+            request.setAttribute("pageCurrent", pageNo);
 
             forward = new ActionForward();
             forward.setRedirect(false);
-            forward.setPath("/WEB-INF/sale.jsp");
+            forward.setPath("/WEB-INF/component/admin/saleContent.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();

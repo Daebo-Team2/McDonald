@@ -1,7 +1,11 @@
 package servlet;
 
+import service.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+
 import java.io.IOException;
-import service.PostDetailService;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,20 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.Action;
-import service.ActionForward;
-import service.MenuAddService;
-import service.MenuDeleteService;
-import service.MenuDetailService;
-import service.MenuServie;
-import service.StoreAddService;
-import service.StoreDeleteService;
-import service.StoreService;
-import service.StoreUpdateService;
-import service.SuperPostAddService;
-import service.SuperPostListService;
-import service.SuperStockService;
-import service.SuperStockUpdate;
 import vo.UserVO;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
@@ -50,8 +40,9 @@ public class SuperServlet extends HttpServlet {
             action = new StoreService();
             forward = action.execute(request, response);
         }
-        if (url.equals("/super/saleContent.do")) { //매출 관리 페이지
-            forward.setPath("/WEB-INF/component/super/saleContent.jsp");
+        if (url.equals("/super/saleContent.do")) {
+            action = new SuperSalePageService();
+            forward = action.execute(request, response);
         }
         if (url.equals("/super/menuContent.do")) { //메뉴 관리 페이지
         	action = new MenuServie();

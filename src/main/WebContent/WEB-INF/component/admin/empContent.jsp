@@ -26,7 +26,7 @@
         <td>${emp.wTime}</td>
         <td>
           <button class="btn btn-secondary btn-sm" onclick="empUpdateModalOpener(${emp.no})">수정</button>
-          <button class="btn btn-danger btn-sm">삭제</button>
+          <button class="btn btn-danger btn-sm" onclick="empDeleteBtnHandler(${emp.no})">삭제</button>
         </td>
       </tr>
     </c:forEach>
