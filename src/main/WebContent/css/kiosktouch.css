@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
-body{	
+body{
+	background-image: linear-gradient(to bottom, #fffad7, #fff5d7, #fff1d9, #ffeddb, #ffeadd);
 	margin:73px;
 }
 
