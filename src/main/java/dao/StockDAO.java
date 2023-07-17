@@ -49,8 +49,6 @@ public class StockDAO {
 		return list;
 	} //end selectAllStoreStock
 
-
-
 	public int updateStock(int foodno, int quantity, int storeno) { //가맹점재고변경, 본사발주확인->가맹점재고추가
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -75,5 +73,53 @@ public class StockDAO {
 		}
 		return result;
 	} //end updateStock
+	
+	public int selectstockquantity(int foodno, int storeno){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int quantity = 0;
+		
+		try {
+			conn = ConnectionPool.getConnection();
+			String sql = "SELECT QUANTITY FROM STOCK WHERE STORENO = ? AND FOODNO = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, storeno);
+			pstmt.setInt(2, foodno);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				quantity = rs.getInt("quantity");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return quantity;
+	}
 
+	public int setStock(int foodno, int storeno) { //가맹점생성시 재고 기본 세팅
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			conn = ConnectionPool.getConnection();
+			String sql = "insert into stock (foodno, quantity, storeno) values ( ?, 0, ? ) ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, foodno);
+			pstmt.setInt(2, storeno);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return result;
+	}
+	
 }

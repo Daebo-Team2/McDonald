@@ -1,8 +1,12 @@
 @charset "UTF-8";
 
-body{
+body{	
 	background-image: linear-gradient(to bottom, #fffad7, #fff5d7, #fff1d9, #ffeddb, #ffeadd);
-	margin:73px;
+	display: flex;
+	flex-direction: column;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
 }
 
 .di{	
@@ -21,7 +25,6 @@ body{
 	display:flex;
 	justify-content: center;
 }
-
 
 .btn-primary {
     --bs-btn-color: #fff;
@@ -55,16 +58,16 @@ body{
     vertical-align: middle;
     cursor: pointer;
     user-select: none;
-    border: 1px solid #f38177;
+    border: 1px solid #DA291C;
     border-radius: 0.5rem;
-    background-color: #f38177;
+    background-color: #DA291C;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;	
 	
 } 
 
 .btn:hover{	/*마우스 가져갔을때 색깔 변함 */
-	background-color: #0d6efd;
-	border-color: #0d6efd;
-}
+	background-color: #FFCC00;
+	border-color: #FFCC00;
+	}
 
 
