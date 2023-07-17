@@ -46,10 +46,10 @@ public class SuperServlet extends HttpServlet {
             action = new StoreService();
             forward = action.execute(request, response);
         }
-        if (url.equals("/super/saleContent.do")) {
-            action = new SuperSalePageService();
-            forward = action.execute(request, response);
-        }
+//        if (url.equals("/super/saleContent.do")) {
+//            action = new SuperSalePageService();
+//            forward = action.execute(request, response);
+//        }
         if (url.equals("/super/menuContent.do")) { //메뉴 관리 페이지
         	action = new MenuServie();
         	forward = action.execute(request, response);

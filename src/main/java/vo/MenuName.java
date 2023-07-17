@@ -27,7 +27,7 @@ public class MenuName {
 
     static void updateData() {
         MenuDAO dao = new MenuDAO();
-        List<MenuVO> list = dao.selectAll();
+        List<MenuVO> list = dao.selectAllMenu();
         menuMap = new HashMap<>();
         classifiedMap = new HashMap<>();
 
