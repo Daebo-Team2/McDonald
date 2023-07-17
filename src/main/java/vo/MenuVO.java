@@ -58,4 +58,5 @@ public class MenuVO {
 	public void setValid(int valid) {
 		this.valid = valid;
 	}
+	
 }
