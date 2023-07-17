@@ -39,19 +39,23 @@
   <div class="empty"></div>
   <nav>
     <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#">
-          <span aria-hidden="true">&laquo;</span>
+    	<c:if test="${pageStart != 1 }">
+       	  <li class="page-item">
+       	   <a class="page-link" onclick="pageMove('/admin/PostContent.do?pageNo=${pageStart - 1}')">
+          	<span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">
-          <span aria-hidden="true">&raquo;</span>
+    </c:if>
+	<c:forEach var="i" begin = "${pageStart}" end ="${pageEnd}">
+		<li class="page-item ${i==pageCurrent ? 'active' : '' }"><a class="page-link" onclick="pageMove('/admin/postContent.do?pageNo=${i}')">${i}</a></li>
+	</c:forEach>
+    <c:if test = "${pageEnd != totalPage }">
+          <li class="page-item">
+       		 <a class="page-link" onclick="pageMove('/admin/postContent.do?pageNo=${pageEnd+1}')">
+          		<span aria-hidden="true">&raquo;</span>
         </a>
       </li>
+    </c:if>
     </ul>
   </nav>
   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#post-add-modal">글작성</button>
