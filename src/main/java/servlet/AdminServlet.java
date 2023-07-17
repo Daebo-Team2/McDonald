@@ -74,6 +74,7 @@ public class AdminServlet extends HttpServlet {
             action.execute(request, response);
             response.setStatus(200);
             return;
+        }
         if (url.equals("/admin/postadd.do")) { /*문의글 작성 */
             action = new AdminPostAddService();
             forward = action.execute(request, response);

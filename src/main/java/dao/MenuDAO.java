@@ -39,10 +39,6 @@ public class MenuDAO {
         }
         return list;
     }
-
-
-public class MenuDAO {
-	
 	
 	public List<MenuVO> selectAllMenu() { //판매 중인 메뉴전체조회 (valid = 1)
 		
