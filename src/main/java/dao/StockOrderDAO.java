@@ -45,9 +45,9 @@ public class StockOrderDAO {
         }
         return list;
     } //end selectAllStockOrder
+    
 
-
-    public List selectAllStockOrderList(int stockorerno) {
+    public List<StockOrderListVO> selectAllStockOrderList(int stockorerno) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -77,49 +77,6 @@ public class StockOrderDAO {
         }
         return list;
     } //end selectAllStockOrderList
-
-    public List<StockOrderVO> StockOrderPage(Map<String, Object> map) {
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        List<StockOrderVO> list = new Vector<StockOrderVO>(); //결과(게시물 목록)을 담을 변수
-
-        try {
-            conn = ConnectionPool.getConnection();
-            String sql = "select * from ( "
-                    + "select Tb.*, rownum rNum from ( "
-                    + "select * from stockorder "
-                    + "where status = 0 "
-                    + "order by no desc "
-                    + " ) Tb "
-                    + ") "
-                    + "where rNum between ? and ? ";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, map.get("start").toString());
-            pstmt.setString(2, map.get("end").toString());
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                StockOrderVO vo = new StockOrderVO();
-                vo.setNo(rs.getInt("no"));
-                vo.setStoreno(rs.getInt("storeno"));
-                vo.setTime(rs.getTimestamp("time"));
-                vo.setStatus(rs.getInt("status"));
-
-                list.add(vo);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionPool.close(rs);
-            ConnectionPool.close(pstmt);
-            ConnectionPool.close(conn);
-        }
-        return list;
-    }
 
 
     public int confrimStockOder(int stockorderno) { //본사 : 발주 요청 확인-> status 0 -> 1
@@ -205,6 +162,8 @@ public class StockOrderDAO {
 
         return result;
     }
+    
+    
 
 
 }

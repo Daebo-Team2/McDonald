@@ -41,7 +41,7 @@
               </c:forEach>
             </tbody>
           </table>
-          <button class="btn btn-primary" onclick="stockConfirmBtnHandler(${stockOrder.no})">발주</button>
+          <button class="btn btn-primary" onclick="stockConfirmBtnHandler(${stockOrder.no}, ${stockOrder.storeno})">발주</button>
         </div>
       </div>
     </div>
