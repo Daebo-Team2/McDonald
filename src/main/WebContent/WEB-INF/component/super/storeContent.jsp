@@ -95,7 +95,16 @@ aria-hidden="true"
         <label class="form-label">전화번호</label>
         <input type="text" class="form-control" id="storeTel"/>
         <label class="form-label">주소</label>
-        <input type="text" class="form-control" id="storeAddress"/>
+        <!-- <input type="text" class="form-control" id="storeAddress"/> -->
+        <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
+		<input type="button" class="form-control" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+		<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
+		<input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소">
+		<span id="guide" class="form-control" style="color:#999;display:none"></span>
+		<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소">
+		<input type="text" class="form-control" id="sample4_extraAddress" placeholder="참고항목">
+        
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="storeAddBtnHandler()">
@@ -106,3 +115,5 @@ aria-hidden="true"
     </div>
   </div>
 </div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
