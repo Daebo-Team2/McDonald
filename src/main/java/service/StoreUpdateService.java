@@ -16,10 +16,10 @@ public class StoreUpdateService implements Action {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			int no = Integer.parseInt(request.getParameter("no"));
-			String id = request.getParameter("id");
-			String owner = request.getParameter("owner");
-			String tel = request.getParameter("tel");
-			String address = request.getParameter("address");
+			String id = request.getParameter("id").trim();
+			String owner = request.getParameter("owner").trim();
+			String tel = request.getParameter("tel").trim();
+			String address = request.getParameter("address").trim();
 			
 			
 			StoreDAO dao = new StoreDAO();

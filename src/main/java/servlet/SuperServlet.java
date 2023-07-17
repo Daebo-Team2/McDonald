@@ -5,7 +5,17 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import vo.UserVO;
 import javax.servlet.annotation.*;
+
 import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import vo.UserVO;
 
 @WebServlet(name = "SuperServlet", value = "/super/*")
 public class SuperServlet extends HttpServlet {
@@ -27,17 +37,19 @@ public class SuperServlet extends HttpServlet {
             return;
         }
 
-        if (url.equals("/super/storeContent.do")) {
+        if (url.equals("/super/storeContent.do")) { //가맹점 관리 페이지
             action = new StoreService();
             forward = action.execute(request, response);
         }
         if (url.equals("/super/saleContent.do")) {
-            forward.setPath("/WEB-INF/component/super/saleContent.jsp");
+            action = new SuperSalePageService();
+            forward = action.execute(request, response);
         }
-        if (url.equals("/super/menuContent.do")) {
-            forward.setPath("/WEB-INF/component/super/menuContent.jsp");
+        if (url.equals("/super/menuContent.do")) { //메뉴 관리 페이지
+        	action = new MenuServie();
+        	forward = action.execute(request, response);
         }
-        if (url.equals("/super/stockContent.do")) {
+        if (url.equals("/super/stockContent.do")) { //재고 관리 페이지
             action = new SuperStockService();
             forward = action.execute(request, response);
             forward.setPath("/WEB-INF/component/super/stockContent.jsp");
@@ -72,6 +84,15 @@ public class SuperServlet extends HttpServlet {
     		action = new SuperPostAddService();  /*status2인 상태로 답글 + update reno, status=1  */
     		forward = action.execute(request, response);
     	}
+		if(url.equals("/super/menudetail.do")){ //메뉴 상세조회
+			action = new MenuDetailService();
+			forward = action.execute(request, response);
+		}
+		if(url.equals("/super/menudelete.do")){ //메뉴 삭제
+			action = new MenuDeleteService();
+			forward = action.execute(request, response);
+		}
+		
 
         if (forward.getPath() == null) {
             response.sendError(404);

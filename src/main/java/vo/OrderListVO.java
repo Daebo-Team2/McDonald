@@ -1,5 +1,7 @@
 package vo;
 
+import java.sql.SQLException;
+
 public class OrderListVO {
     private int orderNo;
     private int menuNo;
@@ -22,8 +24,10 @@ public class OrderListVO {
         return menuNo;
     }
 
-    public void setMenuNo(int menuNo) {
+    public void setMenuNo(int menuNo) throws SQLException {
         this.menuNo = menuNo;
+        this.menuName = MenuNamePrice.getMenuName(menuNo);
+        this.price = MenuNamePrice.getMenuPrice(menuNo);
     }
 
     public int getQuantity() {
@@ -38,16 +42,8 @@ public class OrderListVO {
         return menuName;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     @Override

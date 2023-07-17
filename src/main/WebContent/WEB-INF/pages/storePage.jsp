@@ -17,6 +17,9 @@
     ></script>
     <title>${sessionScope.login.name}점</title>
     <style>
+	  body {
+		background-image: linear-gradient(to bottom, #fffad7, #fff5d7, #fff1d9, #ffeddb, #ffeadd);
+	  }
       .storeName {
         display: flex;
         flex-direction: row;
@@ -31,7 +34,18 @@
       }
       .buttons > .btn {
         font-size: 60px;
+        border: 1px solid #DA291C;
+  		border-radius: 0.375rem;
+  		background-color: #DA291C;
+  		transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
       }
+	 .btn:hover {
+		background-color: #FFCC00;
+		transition: 0.7s;
+		color: black;
+		border: 1px solid #FFCC00;
+	
+	 }
       #name {
         font-weight: 700;
         font-size: 50px;

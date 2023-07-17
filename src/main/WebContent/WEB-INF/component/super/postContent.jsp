@@ -66,19 +66,23 @@
 <div class="footer">
   <nav>
     <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
+    <c:if test = "${pageStart != 1 }">
+    	<li class="page-item">
+          <a class="page-link" onclick="pageMove('/super/postContent.do?pageNo=${pageStart - 1}')">
+          	<span aria-hidden="true">&laquo;</span>
+          </a>
+      	</li>
+    </c:if>
+	<c:forEach var = "i" begin ="${pageStart}" end = "${pageEnd}">
+		<li class="page-item ${i==pageCurrent ? 'active' : '' }"><a class="page-link" onclick="pageMove('/super/postContent.do?pageNo=${i}')" >${i}</a></li>	
+	</c:forEach>
+    <c:if test = "${pageEnd  != totalPage }">
+    	<li class="page-item">
+        	<a class="page-link" onclick="pageMove('/super/postContent.do?pageNo=${pageEnd + 1}')">
+          	  <span aria-hidden="true">&raquo;</span>
+        	</a>
+      	</li>
+    </c:if>
     </ul>
   </nav>
 </div>

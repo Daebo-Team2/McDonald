@@ -55,13 +55,14 @@ public class StoreDAO { //가맹점
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int result = 0;
+		int storeno = 0;
 
 		try {
 			conn = ConnectionPool.getConnection();
 
 			String sql = "INSERT INTO STORE (NO, NAME, ID, PWD, TEL, OWNER, ADDRESS, OPENINGDAY ) VALUES (STORE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP) ";
-			pstmt = conn.prepareStatement(sql);
+			String[] cols = new String[] {"no"};
+			pstmt = conn.prepareStatement(sql, cols);
 			pstmt.setString(1, name);
 			pstmt.setString(2, id);
 			pstmt.setString(3, pwd);
@@ -69,7 +70,13 @@ public class StoreDAO { //가맹점
 			pstmt.setString(5, owner);
 			pstmt.setString(6, address);
 
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();
+			
+			if( rs.next() ) {
+				storeno = rs.getInt(1);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -78,7 +85,7 @@ public class StoreDAO { //가맹점
 			ConnectionPool.close(conn);
 		}
 		StoreName.isUpdate  = true;
-		return result;
+		return storeno;
 	}
 
 
