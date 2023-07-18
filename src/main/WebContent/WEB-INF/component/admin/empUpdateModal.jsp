@@ -13,6 +13,6 @@
     <input type="text" class="form-control" value="${emp.tel}" id="empUpdateTelInput">
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" onclick="empUpdateBtnHandler(${emp.no})">수정하기</button>
+    <button type="button" class="btn btn-primary green-btn" onclick="empUpdateBtnHandler(${emp.no})">수정하기</button>
     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
 </div>

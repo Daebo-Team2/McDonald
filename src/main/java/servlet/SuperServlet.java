@@ -9,6 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,10 @@ import javax.servlet.http.HttpSession;
 
 import vo.UserVO;
 
+@MultipartConfig(
+		maxFileSize = -1,
+		maxRequestSize = -1,
+		fileSizeThreshold = 1024)
 @WebServlet(name = "SuperServlet", value = "/super/*")
 public class SuperServlet extends HttpServlet {
     @Override
@@ -92,9 +97,13 @@ public class SuperServlet extends HttpServlet {
 			action = new MenuDeleteService();
 			forward = action.execute(request, response);
 		}
+		if(url.equals("/super/menuadd.do")) { //메뉴추가
+			action = new MenuAddService();
+			forward = action.execute(request, response);
+		}
 		
 
-        if (forward.getPath() == null) {
+        if ( forward == null || forward.getPath() == null) {
             response.sendError(404);
             return;
         }

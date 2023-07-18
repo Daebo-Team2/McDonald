@@ -36,7 +36,7 @@
 	<textarea class="form-control" id="reply-content"></textarea>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" onclick=postAddBtnHandler(${post.no})>작성</button>
+  <button type="button" class="btn btn-primary green-btn" onclick=postAddBtnHandler(${post.no})>작성</button>
   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
 </div>
 </c:if>

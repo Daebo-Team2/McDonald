@@ -190,7 +190,7 @@ public class MenuDAO {
 		
 		try {
 			conn = ConnectionPool.getConnection();
-			String sql = "UPDATE SET MENU IMAGE = ? WHERE NO = ? ";
+			String sql = "UPDATE MENU SET IMAGE = ? WHERE NO = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, image);
 			pstmt.setInt(2, no);

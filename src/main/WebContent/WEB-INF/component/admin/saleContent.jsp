@@ -20,7 +20,7 @@
             <input type="text" class="form-control form-control-sm" id="saleMenuNameInput" placeholder="제품명 입력"
                    value="${param.menuName}">
         </div>
-        <button class="btn btn-primary btn-sm" onclick="saleSearchBtnHandler()">검색</button>
+        <button class="btn btn-primary btn-sm red-btn" onclick="saleSearchBtnHandler()">검색</button>
     </div>
 </div>
 <div class="wrapper">
@@ -72,7 +72,8 @@
                 </li>
             </c:if>
             <c:forEach var="i" begin="${pageStart}" end="${pageEnd}">
-                <li class="page-item ${i==pageCurrent ? 'active' : ''}"><a class="page-link" onclick="pageMove('/admin/saleContent.do?start=${param.start}&end=${param.end}&menuName=${param.menuName}&pageNo=${i}')">${i}</a></li>
+                <li class="page-item ${i==pageCurrent ? 'active' : ''}">
+                <a class="page-link ${i==pageCurrent ? 'green-btn' : 'green'}" onclick="pageMove('/admin/saleContent.do?start=${param.start}&end=${param.end}&menuName=${param.menuName}&pageNo=${i}')">${i}</a></li>
             </c:forEach>
             <c:if test="${pageEnd != totalPage}">
                 <li class="page-item">

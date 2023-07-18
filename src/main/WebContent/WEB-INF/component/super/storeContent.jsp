@@ -48,7 +48,8 @@
       </li>
      </c:if>
      <c:forEach var="i" begin="${ pageStart }" end="${ pageEnd }" >
-      <li class="page-item ${i==pageCurrent ? 'active' : '' }"><a class="page-link" onclick="pageMove('/super/storeContent.do?pageNo=${i}')">${i}</a></li>
+      <li class="page-item ${i==pageCurrent ? 'active' : '' }">
+      	<a class="page-link ${i==pageCurrent ? 'green-btn ' : 'green'}" onclick="pageMove('/super/storeContent.do?pageNo=${i}')">${i}</a></li>
 	</c:forEach>
 	<c:if test="${ pageEnd != totalPage }">
       <li class="page-item">
@@ -59,7 +60,7 @@
      </c:if>
     </ul>
   </nav>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#store-modal">
+  <button class="btn btn-primary orange-btn" data-bs-toggle="modal" data-bs-target="#store-modal">
     가맹점 추가
   </button>
   <!-- <button class="btn btn-primary" onclick="">가맹점추가</button> -->
@@ -85,17 +86,16 @@ aria-hidden="true"
       </div>
       <div class="modal-body">
         <label class="form-label">지점명</label>
-        <input type="text" class="form-control" id="storeName"/>
+        <input type="text" class="form-control" id="storeName" placeholder="OOO점"/>
         <label class="form-label">ID</label>
-        <input type="text" class="form-control" id="storeId"/>
+        <input type="text" class="form-control" id="storeId" placeholder="알파벳+숫자 5~18자"/>
         <label class="form-label">비밀번호</label>
         <input type="password" class="form-control" id="storePwd"/>
         <label class="form-label">점주명</label>
         <input type="text" class="form-control" id="storeOwner"/>
         <label class="form-label">전화번호</label>
-        <input type="text" class="form-control" id="storeTel"/>
+        <input type="text" class="form-control" id="storeTel" placeholder="(00)000-0000-0000"/>
         <label class="form-label">주소</label>
-        <!-- <input type="text" class="form-control" id="storeAddress"/> -->
         <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
 		<input type="button" class="form-control" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 		<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
@@ -107,7 +107,7 @@ aria-hidden="true"
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="storeAddBtnHandler()">
+        <button type="button" class="btn btn-primary green-btn" onclick="storeAddBtnHandler()">
           추가
         </button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>

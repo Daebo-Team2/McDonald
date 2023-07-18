@@ -5,6 +5,8 @@
   position: fixed;
   background-color: #fef9eb;
   z-index: 100;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 900;
 }
 
 .section {
@@ -18,10 +20,11 @@
 .side {
   width: 18%;
   height: 100%;
-  border: 1px solid black;
+/*   border: 1px solid black; */
   padding: 10px 5px;
   overflow: auto;
   text-align: center;
+  background-color: #fef9eb;
 }
 
 #content {
@@ -34,6 +37,7 @@
   width: 80%;
   height: 56px;
   margin: auto;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .wrapper {
@@ -56,12 +60,14 @@
   justify-content: space-around;
   font-size: 2rem;
   font-weight: bold;
-  background-color: #fef9eb;
+  background-image: linear-gradient(to bottom, #fffad7, #fff5d7, #fff1d9, #ffeddb, #ffeadd);
 }
 
 .header .nav-link {
   border: none !important;
   color: black;
+  font-weight:700;
+  font-size: 35px;
 }
 
 .header .nav-link:focus {
@@ -97,14 +103,55 @@
   color: #198754;
 }
 
+
+.green-btn {
+	outline:2px solid #198754 !important ;
+	box-shadow:none !important;
+	border-color:#198754 !important;
+	background-color:#198754 !important;
+}
+
+.green-btn:hover{	
+	background-color: #006400 !important;
+}
+
+.green-btn:focus{	
+	outline:4px solid rgba(28, 151, 92, 0.4)!important ;
+}
+
+.red-btn{
+	outline:none !important;
+	box-shadow:none !important;
+	border-color: #DA291C !important;
+	background-color:#DA291C !important;
+}
+
+.red-btn:hover{	
+	background-color: #A52A2A !important;
+}
+
+.red-btn:focus{	
+	outline:4px solid rgba(218, 41, 28, 0.4)!important ;
+}
+
 .yellow {
   color: #ffc107;
+}
+
+.form-control-sm:focus {	
+	outline:4px solid rgba(28, 151, 92, 0.4)!important ;
 }
 
 .modal-body label {
   margin-top: 0.5rem;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: #ffeadd !important ;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
 }
 
 .accordion-item:first-of-type {

@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>키오스크</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
@@ -101,7 +104,7 @@
     <div class="section">
       <div class="side">
         <div class="side-header">
-          <h1>장바구니</h1>
+          <h1 style="font-family: 'Noto Sans KR', sans-serif;">장바구니</h1>
         </div>
         <div class="side-content">
           <table class="table cart">
@@ -117,7 +120,7 @@
               <input type="radio" class="form-check-input" name="place" value="take-out"/><label>포장</label>
             </div>
           </div>
-          <button class="btn btn-primary btn-lg" onclick="orderRequest()">주문하기</button>
+          <button class="btn btn-primary btn-lg red-btn" onclick="orderRequest()">주문하기</button>
         </div>
       </div>
 
@@ -136,7 +139,7 @@
               <div class="card-body">
                 <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${menu.name}">${menu.name}</h5>
                 <p class="card-text">${menu.price}₩</p>
-                <button class="btn btn-primary" onclick="addBtnHandler(event)">장바구니 담기</button>
+                <button class="btn btn-primary green-btn" onclick="addBtnHandler(event)">장바구니 담기</button>
               </div>
             </div>
           </c:forEach>
@@ -156,7 +159,7 @@
               <div class="card-body">
                 <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${menu.name}">${menu.name}</h5>
                 <p class="card-text">${menu.price}₩</p>
-                <button class="btn btn-primary" onclick="addBtnHandler(event)">장바구니 담기</button>
+                <button class="btn btn-primary green-btn" onclick="addBtnHandler(event)">장바구니 담기</button>
               </div>
             </div>
           </c:forEach>
@@ -176,7 +179,7 @@
               <div class="card-body">
                 <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${menu.name}">${menu.name}</h5>
                 <p class="card-text">${menu.price}₩</p>
-                <button class="btn btn-primary" onclick="addBtnHandler(event)">장바구니 담기</button>
+                <button class="btn btn-primary green-btn" onclick="addBtnHandler(event)">장바구니 담기</button>
               </div>
             </div>
           </c:forEach>
@@ -196,7 +199,7 @@
               <div class="card-body">
                 <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${menu.name}">${menu.name}</h5>
                 <p class="card-text">${menu.price}₩</p>
-                <button class="btn btn-primary" onclick="addBtnHandler(event)">장바구니 담기</button>
+                <button class="btn btn-primary green-btn" onclick="addBtnHandler(event)">장바구니 담기</button>
               </div>
             </div>
           </c:forEach>
@@ -216,7 +219,7 @@
               <div class="card-body">
                 <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="${menu.name}">${menu.name}</h5>
                 <p class="card-text">${menu.price}₩</p>
-                <button class="btn btn-primary" onclick="addBtnHandler(event)">장바구니 담기</button>
+                <button class="btn btn-primary green-btn" onclick="addBtnHandler(event)">장바구니 담기</button>
               </div>
             </div>
           </c:forEach>

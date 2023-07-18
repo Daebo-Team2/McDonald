@@ -1,7 +1,7 @@
 .side {
   width: 30%;
   height: 100%;
-  border: 1px solid black;
+/*   border: 1px solid black; */
   padding: 10px 5px;
   overflow: auto;
 }
@@ -128,3 +128,40 @@ td {
   overflow: hidden;
   white-space: nowrap;
 }
+
+/*버튼*/
+.green-btn {
+	outline:2px solid #198754 !important ;
+	box-shadow:none !important;
+	border-color:#198754 !important;
+	background-color:#198754 !important;
+}
+
+.green-btn:hover{	
+	background-color: #006400 !important;
+}
+
+.green-btn:focus{	
+	outline:4px solid rgba(28, 151, 92, 0.4)!important ;
+}
+
+.red-btn{
+	outline:none !important;
+	box-shadow:none !important;
+	border-color: #DA291C !important;
+	background-color:#DA291C !important;
+}
+
+.red-btn:hover{	
+	background-color: #A52A2A !important;
+}
+
+.red-btn:focus{	
+	outline:4px solid rgba(218, 41, 28, 0.4)!important ;
+}
+
+/* .btn-primary {
+    color: #fff;
+	border-color:#198754 !important;
+	background-color:#198754 !important;
+} */

@@ -47,18 +47,20 @@
       </li>
     </c:if>
 	<c:forEach var="i" begin = "${pageStart}" end ="${pageEnd}">
-		<li class="page-item ${i==pageCurrent ? 'active' : '' }"><a class="page-link" onclick="pageMove('/admin/postContent.do?pageNo=${i}')">${i}</a></li>
+		<li class="page-item ${i==pageCurrent ? 'active ' : '' }">
+			<a class="page-link ${i==pageCurrent ? 'green-btn ' : 'green' }" onclick="pageMove('/admin/postContent.do?pageNo=${i}')">${i}</a>
+		</li>
 	</c:forEach>
     <c:if test = "${pageEnd != totalPage }">
-          <li class="page-item">
-       		 <a class="page-link" onclick="pageMove('/admin/postContent.do?pageNo=${pageEnd+1}')">
+          <li class="page-item ">
+       		 <a class="page-link " onclick="pageMove('/admin/postContent.do?pageNo=${pageEnd+1}')">
           		<span aria-hidden="true">&raquo;</span>
         </a>
       </li>
     </c:if>
     </ul>
   </nav>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#post-add-modal">글작성</button>
+  <button class="btn btn-primary red-btn" data-bs-toggle="modal" data-bs-target="#post-add-modal">글작성</button>
 </div>
 <div class="modal fade" id="post-view-modal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
@@ -80,7 +82,7 @@
         <textarea class="form-control" id="post-add-content"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="writePostBtnHandler(event)">작성</button>
+        <button type="button" class="btn btn-primary green-btn" onclick="writePostBtnHandler(event)">작성</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
