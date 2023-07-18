@@ -48,12 +48,9 @@ public class StoreAddService implements Action {
 			if ( storeno == 0) {
 				return null;
 			}
-			
 			List<FoodVO> list = fdao.selectAll();
-			System.out.println(storeno);
-			System.out.println(list.size());
-			for (int i = 1; i <= list.size(); i++ ) {
-				stdao.setStock(i, storeno);
+			for (int i = 0; i < list.size(); i++ ) {
+				stdao.setStock(list.get(i).getNo(), storeno);
 			}
 			forward.setPath("/super/storeContent.do");
 
