@@ -6,6 +6,7 @@
   height: calc(100% - 102px);
 }
 
+
 table[page="post"] {
   font-size: 1.2rem;
   table-layout: fixed;
@@ -69,3 +70,4 @@ textarea.form-control {
 p.post-content {
   white-space: pre-line;
 }
+

@@ -31,7 +31,7 @@ public class PostDAO { // 쿼리만 실행하도록 하는 것이 제일 좋음
 
 			conn = ConnectionPool.getConnection();
 
-			String sql = "SELECT  * FROM POST WHERE STORENO= ?  ";
+			String sql = "SELECT  * FROM POST WHERE STORENO= ? ORDER BY NO DESC   ";
 			// 게시물 정렬 하기 위에서 쿼리문에 orderby절 추가 하면 된다고 함 최근 게시물 상단에 출력 되도록
 
 			pstmt = conn.prepareStatement(sql); // 쿼리문 생성

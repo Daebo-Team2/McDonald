@@ -16,7 +16,7 @@
         <span>07/06 10:18:14</span>
         <span>16,500</span>
         <span>포장</span>
-        <button type="button" class="btn btn-primary delBtn" onclick="orderDelBtnHandler(event)">확인</button>
+        <button type="button" class="btn btn-primary delBtn red-btn" onclick="orderDelBtnHandler(event)">확인</button>
       </div>
     </h2>
     <div class="accordion-collapse collapse show">

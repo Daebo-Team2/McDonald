@@ -28,7 +28,7 @@
   </table>
 </div>
 <div class="footer">
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">발주주문</button>
+  <button class="btn btn-primary red-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">발주주문</button>
 </div>
 <!-- 모달 숨겨놓기-->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -90,7 +90,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="addStock" onclick="addStockOrderBtnHandler()">항목추가</button>
-        <button type="button" class="btn btn-primary" id="stockOrder" onclick="stockOrderBtnHandler()">주문하기</button>
+        <button type="button" class="btn btn-primary green-btn" id="stockOrder" onclick="stockOrderBtnHandler()">주문하기</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
