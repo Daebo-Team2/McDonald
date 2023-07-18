@@ -1,6 +1,7 @@
 package servlet;
 
 import service.*;
+import vo.UserVO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,6 +20,13 @@ public class AdminServlet extends HttpServlet {
         String url = requestURI.substring(contextPath.length());
         ActionForward forward = new ActionForward();
         Action action = null;
+
+        HttpSession session = request.getSession();
+        UserVO vo = (UserVO) session.getAttribute("login");
+        if (vo == null) {
+            response.sendRedirect("/page/login");
+            return;
+        }
 
         if (url.equals("/admin/saleContent.do")) {
             action = new AdminSalePageService();
