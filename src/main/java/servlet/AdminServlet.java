@@ -95,6 +95,14 @@ public class AdminServlet extends HttpServlet {
             action = new EmpDeleteService();
             forward = action.execute(request, response);
         }
+        if (url.equals("/admin/stockorderlist.do")) {
+            action = new AdminStockOrderListService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/stockorderdelete.do")) {
+            action = new AdminStockOrderDeleteService();
+            forward = action.execute(request, response);
+        }
 
         if (forward.getPath() == null) {
             response.sendError(404);
