@@ -38,12 +38,12 @@ function saleSearchBtnHandler() {
 	const start = document.querySelector("#saleStartInput").value;
 	const end = document.querySelector("#saleEndInput").value;
 	const menuName = document.querySelector("#saleMenuNameInput").value;
-	
+
 
 	$.ajax({
 		url: "/admin/saleContent.do",
 		method: "post",
-		data: {start, end, menuName},
+		data: { start, end, menuName },
 		dataType: "text"
 	}).done((text) => {
 		$("#content").html(text);
@@ -56,7 +56,7 @@ function empInoutBtnHandler(num) {
 	// data: {no: num}
 	$.ajax({
 		url: "/admin/empinout.do",
-		data: {no: num},
+		data: { no: num },
 		dataType: "text"
 	}).done((text) => {
 		$("#sideBar").html(text);
@@ -85,7 +85,7 @@ function orderDelBtnHandler(event) {
 function empUpdateModalOpener(num) {
 	$.ajax({
 		url: "/admin/empupdatemodal.do",
-		data: {no: num},
+		data: { no: num },
 		dataType: "text"
 	}).done((text) => {
 		$("#update-modal-content").html(text);
@@ -105,7 +105,7 @@ function empUpdateBtnHandler(num) {
 	$.ajax({
 		url: "/admin/empupdate.do",
 		method: "post",
-		data: {no: num, tel, pay},
+		data: { no: num, tel, pay },
 		dataType: "text"
 	}).done((text) => {
 		alert(`${name}직원이 수정되었습니다.`);
@@ -121,7 +121,7 @@ function empAddBtnHandler() {
 
 	$.ajax({
 		url: "/admin/empadd.do",
-		data: {name, tel, pay},
+		data: { name, tel, pay },
 		dataType: "text",
 		method: "post"
 	}).done((text) => {
@@ -141,7 +141,7 @@ function empDeleteBtnHandler(num) {
 	if (window.confirm("직원 삭제를 진행하시겠습니까?")) {
 		$.ajax({
 			url: "/admin/empdelete.do",
-			data: {no: num},
+			data: { no: num },
 			dataType: "text",
 			method: "post"
 		}).done((text) => {
@@ -155,7 +155,7 @@ function empDeleteBtnHandler(num) {
 			})
 		})
 	}
-	else {}
+	else { }
 }
 
 // stock 페이지
@@ -225,14 +225,14 @@ function stockOrderBtnHandler() {
 	// ajax요청보내기
 
 	const stockorderdata = getStockOrderData();
-	
-	if ( stockorderdata === null ){
+
+	if (stockorderdata === null) {
 		alert("주문을 다시 확인해 주세요.");
-		 return;
+		return;
 	}
-	
+
 	$.ajax({
-		url: "/admin/stockorder.do", 
+		url: "/admin/stockorder.do",
 		data: stockorderdata,
 		dataType: "text",
 		contentType: "application/x-www-form-urlencoded",
@@ -247,10 +247,10 @@ function stockOrderBtnHandler() {
 function getStockOrderData() {
 	let words = [];
 	const trs = document.querySelectorAll("tr.stockOrder");
-	
+
 	for (const tr of trs) {
 		const foodNo = tr.querySelector("select.form-select").value;
-		const quantity = tr.querySelector("input.stock-cnt").value; 
+		const quantity = tr.querySelector("input.stock-cnt").value;
 		if (foodNo === '0' || quantity === "") {
 			return null;
 		}
@@ -317,7 +317,7 @@ function stockOrderElement() {
 function openViewModal(num) {
 	$.ajax({
 		url: "/admin/postmodal.do",
-		data: {no: num},
+		data: { no: num },
 		dataType: "text"
 	}).done((text) => {
 		$("div#post-view-modal-content").html(text);
@@ -333,20 +333,20 @@ function writePostBtnHandler() {
 	// data: {title, content}
 	const title = document.querySelector("input#post-add-title").value;
 	const content = document.querySelector("textarea#post-add-content").value;
-	
-	if(title.trim().length == 0||content.trim().length == 0){	
+
+	if (title.trim().length == 0 || content.trim().length == 0) {
 		alert("작성된 문의글이 없습니다!")
-	}else{	
+	} else {
 		$.ajax({
-		url: "/admin/postadd.do",
-		data: {title, content},
-		dataType: "text",
-		method: "post"
-	}).done((text) => {
-		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
-		alert("문의등록완료!");
-		$("#content").html(text);
-	});
+			url: "/admin/postadd.do",
+			data: { title, content },
+			dataType: "text",
+			method: "post"
+		}).done((text) => {
+			document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+			alert("문의등록완료!");
+			$("#content").html(text);
+		});
 	}
 
 }
@@ -365,11 +365,54 @@ function stockOrderListDeleteBtnHandler(num) {
 	if (window.confirm("정말 재고발주를 취소하시겠습니까?")) {
 		$.ajax({
 			url: "/admin/stockorderdelete.do",
-			data: {num},
+			data: { num },
 			method: "post",
 			dataType: "text"
 		}).done((text) => {
 			$("#content").html(text);
 		})
-	} else {}
+	} else { }
 }
+// sse
+const sseSource = new EventSource("/sse");
+let orderNum = 1;
+let isOrderPage = true;
+sseSource.onmessage = function (e) {
+	console.log(e);
+	console.log(e.data);
+}
+
+// 주문관리
+function renderOrderList() {
+	contentDiv.innerHTML = '';
+	const elements = [];
+	const keys = [];
+	for (let i = 0; i < localStorage.length; i++) {
+		keys.push(localStorage.key(i));
+	}
+	keys.sort((a, b) => Number(a) - Number(b));
+	for (const key of keys) {
+		const msg = localStorage.getItem(key);
+		elements.push(`<div id=${key}>
+      <span>${msg}</span>
+      <button>확인</button>
+    </div>`)
+	}
+
+	if (elements.length === 0) {
+		contentDiv.innerHTML = "<h1>대기중인 주문이 없습니다.</h1>"
+	}
+	else {
+		contentDiv.innerHTML = elements.join("<br>");
+		const btns = contentDiv.querySelectorAll("button");
+		for (const btn of btns) {
+			btn.addEventListener("click", () => {
+				const parent = btn.parentElement;
+				const key = parent.id;
+				localStorage.removeItem(key);
+				renderOrderList();
+			})
+		}
+	}
+}
+
