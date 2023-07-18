@@ -38,6 +38,7 @@ function saleSearchBtnHandler() {
 	const start = document.querySelector("#saleStartInput").value;
 	const end = document.querySelector("#saleEndInput").value;
 	const menuName = document.querySelector("#saleMenuNameInput").value;
+	
 
 	$.ajax({
 		url: "/admin/saleContent.do",
@@ -219,11 +220,17 @@ function stockPlusBtnHandler(event) {
 // 주문하기 버튼 눌렀을 때
 function stockOrderBtnHandler() {
 	// ajax요청보내기
-	// url: /admin/stockorder.do
-	// foodno, quantity
+
+	const stockorderdata = getStockOrderData();
+	
+	if ( stockorderdata === null ){
+		alert("주문을 다시 확인해 주세요.");
+		 return;
+	}
+	
 	$.ajax({
-		url: "/admin/stockorder.do",
-		data: getStockOrderData(),
+		url: "/admin/stockorder.do", 
+		data: stockorderdata,
 		dataType: "text",
 		contentType: "application/x-www-form-urlencoded",
 		method: "post"
@@ -237,13 +244,16 @@ function stockOrderBtnHandler() {
 function getStockOrderData() {
 	let words = [];
 	const trs = document.querySelectorAll("tr.stockOrder");
+	
 	for (const tr of trs) {
 		const foodNo = tr.querySelector("select.form-select").value;
-		const quantity = tr.querySelector("input.stock-cnt").value;
+		const quantity = tr.querySelector("input.stock-cnt").value; 
+		if (foodNo === '0' || quantity === "") {
+			return null;
+		}
 		words.push(`foodno=${foodNo}`);
 		words.push(`quantity=${quantity}`);
 	}
-	console.log(words.join("&"));
 	return words.join("&");
 }
 
