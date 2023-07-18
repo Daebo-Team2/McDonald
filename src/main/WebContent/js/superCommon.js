@@ -57,18 +57,59 @@ function storeDelBtnHandler(num) {
 function storeAddBtnHandler() {
 	// 유효성검사
 	const name = document.querySelector("input#storeName").value;
+	const id= document.querySelector("input#storeId").value;
+	const pwd = document.querySelector("input#storePwd").value;
+	const tel = document.querySelector("input#storeTel").value;
+	const owner = document.querySelector("input#storeOwner").value;
+	const address2 = document.querySelector("input#sample4_roadAddress").value;
+	
+	const regexId = /^[a-zA-Z][0-9a-zA-Z]{4,15}$/g;
+	if ( !id.match(regexId) ){
+		alert('아이디 형식을 다시 확인해 주세요.');
+		document.querySelector("input#storeId").focus();
+		id = '';
+	}
+	
+	const regexName = /[점]$/;
+	if ( !name.match(regexName) ) {
+		alert('가맹점명 형식을 다시 확인해 주세요.');
+		document.querySelector("input#storeName").focus();
+		name = '';
+	}
+	
+	const regexTel = /\d{2,3}-\d{3,4}-\d{4}/g;
+	if ( !tel.match(regexTel) ) {
+		alert('연락처 형식을 다시 확인해 주세요.');
+		document.querySelector("input#storeTel").focus();
+		tel = '';
+	}
+	
+	if ( name.trim().length === 0 ) {
+		alert( "가맹점명을 입력해 주세요.");
+	} else if ( id.trim().length === 0 ) {
+		alert( "아이디를 입력해 주세요.");
+	} else if ( pwd.trim().length === 0 ){
+		alert( "비밀번호를 입력해 주세요.");
+	} else if ( tel.trim().length === 0) {
+		alert( "연락처를 입력해 주세요.");
+	} else if ( owner.trim().length === 0 ) {
+		alert( "점주명을 입력해 주세요.");
+	} else if ( address2.trim().length === 0 ) {
+		alert( "주소를 입력해 주세요.");
+	} else {
+			
 	$.ajax({
 		url:"/super/storeadd.do",
 		data: {
-			name: name,
-			id: document.querySelector("input#storeId").value,
-			pwd: document.querySelector("input#storePwd").value,
-			tel: document.querySelector("input#storeTel").value,
-			owner: document.querySelector("input#storeOwner").value,
-			address1: document.querySelector("input#sample4_postcode").value,
-			address2: document.querySelector("input#sample4_roadAddress").value,
-			address3: document.querySelector("input#sample4_detailAddress").value,
-			address4: document.querySelector("input#sample4_extraAddress").value
+			name: name.trim(),
+			id: id.trim(),
+			pwd: pwd.trim(),
+			tel: tel.trim(),
+			owner: owner.trim(),
+			address1: document.querySelector("input#sample4_postcode").value.trim(),
+			address2: address2.trim(),
+			address3: document.querySelector("input#sample4_detailAddress").value.trim(),
+			address4: document.querySelector("input#sample4_extraAddress").value.trim()
 		},
 		dataType: "text",
 		method: "post"
@@ -76,17 +117,12 @@ function storeAddBtnHandler() {
 		alert(`가맹점 ${name} 추가`)
 		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
 		$("#content").html(text);
+	}).fail(() => {
+		alert("등록이 실패했습니다.");
 	})
+	}
 }
-/*
-<input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
-<input type="button" class="form-control" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
-<input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소">
-<span id="guide" class="form-control" style="color:#999;display:none"></span>
-<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소">
-<input type="text" class="form-control" id="sample4_extraAddress" placeholder="참고항목">
-*/
+
     function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -193,28 +229,67 @@ function menuDelBtnHandler(num) {
 function menuAddBtnHandler() {
 	// 유효성검사
 	const name = document.querySelector("input#menuname").value;
+	const checked = document.querySelectorAll("input[type='checkbox']:checked");
+	const category = document.querySelector("select#category").value;
+	const price = document.querySelector("input#price").value;
+	const file = document.querySelector("input#file-form").files[0];
+	
+	if ( name.trim().length === 0 ) {
+		alert( "메뉴명을 입력해 주세요.");
+	} else if ( category === null ) {
+		alert( "분류를 선택해 주세요.");
+	} else if ( price.trim().length === 0 ){
+		alert( "가격을 입력해 주세요.");
+	} else if ( checked.length === 0) {
+		alert( "재료를 선택해 주세요.");
+	} else if ( document.querySelector("input#file-form").value === '' ) {
+		alert( "사진을 선택해 주세요.");
+	} else {
+		
+	const formData = new FormData();
+	formData.append("category", category.trim());
+	formData.append("name", name.trim());
+	formData.append("price", price.trim());
+	for (const checkbox of checked){
+		formData.append("foodno", checkbox.id);
+	}
+	formData.append("image", file);
+	
 	$.ajax({
 		url: "/super/menuadd.do",
-		data: {
-			name: name,
-			category: document.querySelector("input#category").value,
-			price: document.querySelector("input#price").value
-		},
+		data: formData,
 		dataType: "text",
+		enctype: "multipart/form-data",
+		processData: false,
+		contentType: false,
+		method: "post"
 	}).done((text) => {
 		alert(`${ name } 메뉴가 추가되었습니다.`);
+		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
 		$("#content").html(text);
+	}).fail(() => {
+		alert("등록이 실패했습니다.");
 	});
+	}
+}
+
+function checkNum(event) { //가격입력시 숫자만!
+	const input = event.target;
+	input.value = input.value.replace(/[^0-9]/g,'');
 }
 
 /*
-function getRecipeData() {
+function getStockOrderlistDate() {
 	let words = [];
-	const 
-	
+	const trs = document.querySelectorAll("tr.order-info");
+	for ( const tr of trs ){
+		const foodNo = tr.querySelector("td#foodno");
+		const quantity = tr.querySelector("td.quantity").value;
+		words.push(`foodno=${foodNo}`);
+		words.push(`quantity=${quantity}`);
+	}
 }
 */
-
 
 // stock페이지
 function stockConfirmBtnHandler(num, snum) {
@@ -229,18 +304,6 @@ function stockConfirmBtnHandler(num, snum) {
 		$("#content").html(text);
 	});
 }
-/*
-function getStockOrderlistDate() {
-	let words = [];
-	const trs = document.querySelectorAll("tr.order-info");
-	for ( const tr of trs ){
-		const foodNo = tr.querySelector("td#foodno");
-		const quantity = tr.querySelector("td.quantity").value;
-		words.push(`foodno=${foodNo}`);
-		words.push(`quantity=${quantity}`);
-	}
-}
-*/
 
 // post페이지
 

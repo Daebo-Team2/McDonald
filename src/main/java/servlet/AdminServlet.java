@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import vo.UserVO;
 
 @WebServlet(name = "AdminServlet", value = "/admin/*")
 public class AdminServlet extends HttpServlet {
@@ -19,6 +20,14 @@ public class AdminServlet extends HttpServlet {
         String url = requestURI.substring(contextPath.length());
         ActionForward forward = new ActionForward();
         Action action = null;
+        
+        HttpSession session = request.getSession();
+        UserVO vo = (UserVO) session.getAttribute("login");
+        if ( vo == null || vo.getNo() == 0) {
+        	response.sendRedirect("/page/login");
+        	return;
+        }
+        
 
         if (url.equals("/admin/saleContent.do")) {
             action = new SalePageService();
