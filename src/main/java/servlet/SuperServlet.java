@@ -103,7 +103,7 @@ public class SuperServlet extends HttpServlet {
 		}
 		
 
-        if (forward.getPath() == null) {
+        if ( forward == null || forward.getPath() == null) {
             response.sendError(404);
             return;
         }

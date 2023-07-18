@@ -93,7 +93,7 @@ aria-hidden="true"
       </div>
       <div class="modal-body">
         <label class="form-label">이미지</label><br />
-        <img src="${pageContext.request.contextPath}/image/logo2.png" width="450" height="400" id="preview"/><br /><br />
+        <img src="${pageContext.request.contextPath}/image/noimage.svg" width="450" height="400" id="preview"/><br /><br />
         <input
         type="file"
         id="file-form"
@@ -112,7 +112,7 @@ aria-hidden="true"
                   <option value="음료/카페">음료/카페</option>
                 </select>
         <label class="form-label">가격</label>
-        <input type="number" class="form-control" id="price"/>
+        <input type="text" class="form-control" id="price" onkeyup="checkNum(event)"/>
         <label class="form-label">재료</label>
         <div id="recipe">
         <c:forEach var="foods" items="${ foodlist }" >

@@ -44,6 +44,11 @@ public class StoreAddService implements Action {
 			StockDAO stdao = new StockDAO();
 			FoodDAO fdao = new FoodDAO();
 			int storeno = dao.storeAdd(name, id, pwd, tel, owner, address);
+			
+			if ( storeno == 0) {
+				return null;
+			}
+			
 			List<FoodVO> list = fdao.selectAll();
 			System.out.println(storeno);
 			System.out.println(list.size());

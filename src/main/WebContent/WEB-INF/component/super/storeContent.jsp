@@ -85,17 +85,16 @@ aria-hidden="true"
       </div>
       <div class="modal-body">
         <label class="form-label">지점명</label>
-        <input type="text" class="form-control" id="storeName"/>
+        <input type="text" class="form-control" id="storeName" placeholder="OOO점"/>
         <label class="form-label">ID</label>
-        <input type="text" class="form-control" id="storeId"/>
+        <input type="text" class="form-control" id="storeId" placeholder="알파벳+숫자 5~18자"/>
         <label class="form-label">비밀번호</label>
         <input type="password" class="form-control" id="storePwd"/>
         <label class="form-label">점주명</label>
         <input type="text" class="form-control" id="storeOwner"/>
         <label class="form-label">전화번호</label>
-        <input type="text" class="form-control" id="storeTel"/>
+        <input type="text" class="form-control" id="storeTel" placeholder="(00)000-0000-0000"/>
         <label class="form-label">주소</label>
-        <!-- <input type="text" class="form-control" id="storeAddress"/> -->
         <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
 		<input type="button" class="form-control" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 		<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
