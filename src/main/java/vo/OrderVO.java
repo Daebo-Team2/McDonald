@@ -10,6 +10,7 @@ public class OrderVO {
     private int storeNo;
     private String storeName;
     private List<OrderListVO> menuList;
+    private String place;
 
     public OrderVO() {
     }
@@ -59,14 +60,22 @@ public class OrderVO {
         this.menuList = menuList;
     }
 
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
     @Override
     public String toString() {
-        return "OrderVO{" +
+        return "{" +
                 "no=" + no +
                 ", price=" + price +
                 ", orderTime=" + orderTime +
                 ", storeNo=" + storeNo +
-                ", storeName='" + storeName + '\'' +
+                ", storeName=" + storeName + '\'' +
                 ", menuList=" + menuList +
                 '}';
     }

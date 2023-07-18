@@ -24,6 +24,7 @@ dependencies {
     implementation 'com.oracle.database.security:oraclepki:23.2.0.0'
     implementation 'com.oracle.database.security:osdt_cert:21.10.0.0'
     implementation 'com.oracle.database.security:osdt_core:21.10.0.0'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 war {

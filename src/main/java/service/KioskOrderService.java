@@ -1,11 +1,17 @@
 package service;
 
 import dao.OrderDAO;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import vo.OrderListVO;
+import vo.OrderVO;
 import vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KioskOrderService implements Action{
     @Override
@@ -16,14 +22,21 @@ public class KioskOrderService implements Action{
         String place = request.getParameter("place");
         int price = Integer.parseInt(request.getParameter("price"));
         String[] menus = request.getParameterValues("menuNum");
-        String[] quantitys = request.getParameterValues("cnt");
+        String[] quantities = request.getParameterValues("cnt");
 
         OrderDAO dao = new OrderDAO();
-        int key = dao.insertOrder(price, storeno);
+        OrderVO order = dao.insertOrder(price, storeno);
+        order.setPlace(place);
+        ArrayList<OrderListVO> list = new ArrayList<>();
         for (int i=0; i<menus.length; i++) {
-            dao.insertOrderList(key, Integer.parseInt(menus[i]), Integer.parseInt(quantitys[i]));
+            dao.insertOrderList(order.getNo(), Integer.parseInt(menus[i]), Integer.parseInt(quantities[i]));
+            OrderListVO vo = new OrderListVO();
+            vo.setMenuNo(Integer.parseInt(menus[i]));
+            vo.setQuantity(Integer.parseInt(quantities[i]));
+            list.add(vo);
         }
-
+        order.setMenuList(list);
+        AlarmCenter.getInstance().send(storeno, order);
         return null;
     }
 }

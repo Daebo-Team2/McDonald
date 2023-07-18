@@ -23,7 +23,6 @@
         <jsp:include page="/WEB-INF/component/admin/adminSide.jsp" />
       </div>
       <div id="content">
-        <jsp:include page="/WEB-INF/component/admin/orderContent.jsp" />
       </div>
     </div>
   </body>

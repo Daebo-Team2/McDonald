@@ -23,6 +23,7 @@ class Modal {
 
 const empUpdateModal = new Modal();
 const postViewModal = new Modal();
+renderOrderList();
 
 // 상단 메뉴버튼 눌럿을 때
 function pageMove(url) {
@@ -65,20 +66,6 @@ function empInoutBtnHandler(num) {
 			pageMove("/admin/empContent.do");
 		}
 	})
-}
-
-// order페이지 렌더링, sse
-// 서버로부터 실시간으로 주문 알림을 받아 localstorage에 저장한다.(다른 페이지에 있더라도 주문이 들어오면 저장하기 위해)
-// 메뉴탭의 주문관리버튼이 눌리면 ajax가 아닌 js로 화면을 렌더링한다.
-function renderOrderContent() {
-	// #content.innerHTML 다 삭제
-	// localstorage에서 주문 정보를 얻어서 컴포넌트로 렌더링한다.
-}
-
-// order페이지 확인버튼 핸들러
-function orderDelBtnHandler(event) {
-	// 확인이 눌리면 DOM요소를 삭제하고 localstorage에서도 삭제한다.
-	event.target.parentElement.parentElement.parentElement.remove();
 }
 
 // emp페이지 직원정보 수정모달
@@ -378,41 +365,83 @@ const sseSource = new EventSource("/sse");
 let orderNum = 1;
 let isOrderPage = true;
 sseSource.onmessage = function (e) {
-	console.log(e);
-	console.log(e.data);
+	const order = JSON.parse(e.data);
+	localStorage.setItem(order.no, e.data);
+	renderOrderList();
 }
 
 // 주문관리
 function renderOrderList() {
+	const contentDiv = document.querySelector("div#content");
 	contentDiv.innerHTML = '';
-	const elements = [];
+	const orders = [];
 	const keys = [];
 	for (let i = 0; i < localStorage.length; i++) {
 		keys.push(localStorage.key(i));
 	}
 	keys.sort((a, b) => Number(a) - Number(b));
 	for (const key of keys) {
-		const msg = localStorage.getItem(key);
-		elements.push(`<div id=${key}>
-      <span>${msg}</span>
-      <button>확인</button>
-    </div>`)
+		orders.push(JSON.parse(localStorage.getItem(key)));
 	}
+	contentDiv.innerHTML = orderContent(orders);
+}
 
-	if (elements.length === 0) {
-		contentDiv.innerHTML = "<h1>대기중인 주문이 없습니다.</h1>"
-	}
-	else {
-		contentDiv.innerHTML = elements.join("<br>");
-		const btns = contentDiv.querySelectorAll("button");
-		for (const btn of btns) {
-			btn.addEventListener("click", () => {
-				const parent = btn.parentElement;
-				const key = parent.id;
-				localStorage.removeItem(key);
-				renderOrderList();
-			})
-		}
-	}
+function orderContent(orders) {
+	return `
+	<div class="title">
+		<h1>주문관리</h1>
+	</div>
+	
+	<div class="wrapper">
+	${orders.length === 0 ? "<h2 id=\"no-oreder\">등록된 주문이 없습니다.</h2>" : orders.map(order => orderAccordion(order)).join("")}
+	</div>
+	`
+}
+
+function orderAccordion(order) {
+	console.log(order);
+	return `
+	<div class="accordion-item" order-no="${order.no}">
+		<h2 class="accordion-header">
+			<div class="accordion-button collapsed" type="button" page="order">
+				<span>${order.no}</span>
+				<span>${order.time}</span>
+				<span>${order.price.toLocaleString()}</span>
+				<span>${order.place === "store" ? "매장" : "포장"}</span>
+				<button type="button" class="btn btn-primary delBtn red-btn" onclick="orderDelBtnHandler(event)">확인</button>
+			</div>
+		</h2>
+			<div class="accordion-collapse collapse show">
+				<div class="accordion-body" page="order">
+					<table class="table" page="order">
+						<thead>
+							<tr>
+								<th>제품명</th>
+								<th>수량</th>
+							</tr>
+						</thead>
+						<tbody>
+							${order.list.map((menu) => {
+								return `
+									<tr>
+										<td>${menu.name}</td>
+										<td>${menu.quantity}</td>
+									</tr>
+								`
+							}).join("")}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	`
+}
+
+// order페이지 확인버튼 핸들러
+function orderDelBtnHandler(event) {
+	// 확인이 눌리면 DOM요소를 삭제하고 localstorage에서도 삭제한다.
+	const key = event.target.parentElement.parentElement.parentElement.getAttribute("order-no");
+	localStorage.removeItem(key);
+	renderOrderList();
 }
 

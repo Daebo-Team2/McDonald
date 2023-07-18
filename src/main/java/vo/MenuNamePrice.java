@@ -10,7 +10,7 @@ public class MenuNamePrice {
     static HashMap<Integer, MenuVO> menuMap = null;
     static boolean isUpdate = false;
 
-    static String getMenuName(int no) throws SQLException {
+    static String getMenuName(int no) {
         if (menuMap == null || isUpdate) {
             MenuDAO dao = new MenuDAO();
             List<MenuVO> list = dao.selectAll();
@@ -24,7 +24,7 @@ public class MenuNamePrice {
         MenuVO menu = menuMap.get(no);
         return menu == null ? null : menu.getName();
     }
-    static int getMenuPrice(int no) throws SQLException {
+    static int getMenuPrice(int no) {
         if (menuMap == null || isUpdate) {
             MenuDAO dao = new MenuDAO();
             List<MenuVO> list = dao.selectAll();

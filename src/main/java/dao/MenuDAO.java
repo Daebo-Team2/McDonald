@@ -12,14 +12,17 @@ import java.util.List;
 
 public class MenuDAO {
   
-    public List<MenuVO> selectAll() throws SQLException {
+    public List<MenuVO> selectAll() {
         String sql = "select * from menu";
         Connection conn = ConnectionPool.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql);
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MenuVO> list = null;
 
-        ResultSet rs = pstmt.executeQuery();
-        List<MenuVO> list = new ArrayList<>();
         try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			list = new ArrayList<>();
             while (rs.next()) {
                 MenuVO menu = new MenuVO();
                 menu.setNo(rs.getInt("no"));

@@ -8,7 +8,7 @@
       <img src="${pageContext.request.contextPath}/image/logo2.png" width="80" height="70" />
     </li>
     <li class="nav-item">
-      <button class="nav-link">주문관리</button>
+      <button class="nav-link" onclick="renderOrderList()">주문관리</button>
     </li>
     <li class="nav-item">
       <button class="nav-link" onclick="pageMove('${pageContext.request.contextPath}/admin/saleContent.do')">매출관리</button>
