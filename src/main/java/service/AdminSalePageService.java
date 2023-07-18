@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class SalePageService implements Action {
+public class AdminSalePageService implements Action {
     @Override
     public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
         ActionForward forward = null;
@@ -36,16 +36,21 @@ public class SalePageService implements Action {
         try {
             SaleDAO dao = new SaleDAO();
             int totalCount = 0;
+            int totalPrice = 0;
             boolean isMenuName = false;
             if (menuName.equals("")) {
                 totalCount = dao.orderCount(start.equals("") ? "2000-01-01" : start,
                         end.equals("") ? "2099-12-31" : end, storeNo);
+                totalPrice = dao.getOrderSelectTotalPrice(start.equals("") ? "2000-01-01" : start,
+                        end.equals("") ? "2099-12-31" : end, storeNo);
             } else {
                 totalCount = dao.menuCount(start.equals("") ? "2000-01-01" : start,
                         end.equals("") ? "2099-12-31" : end, menuName, storeNo);
+                totalPrice = dao.getMenuSelectTotalPrice(start.equals("") ? "2000-01-01" : start,
+                        end.equals("") ? "2099-12-31" : end, menuName, storeNo);
                 isMenuName = true;
             }
-            System.out.println("totalCount : " + totalCount);
+
             int pageSize = 10;
             int blockPage = 3;
             int totalPage = (int) Math.ceil((double) totalCount / pageSize);
@@ -65,12 +70,7 @@ public class SalePageService implements Action {
                 }
             } else {
                 orders = dao.menuSelect(start.equals("") ? "2000-01-01" : start,
-                        end.equals("") ? "2099-12-31" : end, menuName, pStart, pEnd);
-            }
-
-            int totalPrice = 0;
-            for (OrderVO order : orders) {
-                totalPrice += order.getPrice();
+                        end.equals("") ? "2099-12-31" : end, menuName, storeNo, pStart, pEnd);
             }
 
             request.setAttribute("list", orders);

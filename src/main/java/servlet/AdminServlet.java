@@ -21,7 +21,7 @@ public class AdminServlet extends HttpServlet {
         Action action = null;
 
         if (url.equals("/admin/saleContent.do")) {
-            action = new SalePageService();
+            action = new AdminSalePageService();
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/empContent.do")) {
@@ -66,7 +66,7 @@ public class AdminServlet extends HttpServlet {
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/salepage.do")) {
-            action = new SalePageService();
+            action = new AdminSalePageService();
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/kioskorder.do")) {
