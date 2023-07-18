@@ -10,6 +10,7 @@
   height: calc(100% - 189px);
 }
 
+
 table[page="sale"] {
   font-size: 1.5rem;
 }
@@ -57,3 +58,6 @@ div.footer {
   display: flex;
   justify-content: center;
 }
+
+
+
