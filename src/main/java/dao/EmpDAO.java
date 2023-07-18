@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EmpDAO {
     public List<EmpVO> empSelectAll(int storeNo) throws SQLException {
-        String sql = "SELECT * FROM EMP WHERE STORENO = ?";
+        String sql = "SELECT * FROM EMP WHERE STORENO = ? order by no";
         Connection conn = ConnectionPool.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
