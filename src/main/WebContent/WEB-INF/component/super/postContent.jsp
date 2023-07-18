@@ -7,9 +7,10 @@
 </div>
 <div class="wrapper">
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
     <li class="nav-item" role="presentation">
       <button
-      class='nav-link ${status == 0 ? "active" : ""}'
+      class='nav-link  ${status == 0 ? "active red-btn " : "red"} '
       type="button"
       data-bs-toggle="pill"
       role="tab"
@@ -19,9 +20,10 @@
         문의 대기
       </button>
     </li>
+
     <li class="nav-item" role="presentation">
       <button
-      class='nav-link ${status == 1 ? "active" : ""}'
+      class='nav-link ${status == 1 ? "active green-btn" : "green"}'
       type="button"
       data-bs-toggle="pill"
       role="tab"
@@ -74,7 +76,8 @@
       	</li>
     </c:if>
 	<c:forEach var = "i" begin ="${pageStart}" end = "${pageEnd}">
-		<li class="page-item ${i==pageCurrent ? 'active' : '' }"><a class="page-link" onclick="pageMove('/super/postContent.do?pageNo=${i}')" >${i}</a></li>	
+		<li class="page-item ${i==pageCurrent ? 'active' : '' }">
+		<a class="page-link ${i==pageCurrent ? 'green-btn' : 'green' }" onclick="pageMove('/super/postContent.do?pageNo=${i}')" >${i}</a></li>	
 	</c:forEach>
     <c:if test = "${pageEnd  != totalPage }">
     	<li class="page-item">

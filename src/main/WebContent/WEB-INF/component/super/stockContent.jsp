@@ -41,7 +41,7 @@
               </c:forEach>
             </tbody>
           </table>
-          <button class="btn btn-primary" onclick="stockConfirmBtnHandler(${stockOrder.no}, ${stockOrder.storeno})">발주</button>
+          <button class="btn btn-primary red-btn" onclick="stockConfirmBtnHandler(${stockOrder.no}, ${stockOrder.storeno})">발주</button>
         </div>
       </div>
     </div>
@@ -59,7 +59,8 @@
         </li>
       </c:if>
       <c:forEach var="i" begin="${pageStart}" end="${pageEnd}">
-        <li class="page-item ${i==pageCurrent ? 'active' : ''}"><a class="page-link" onclick="pageMove('/super/stockContent.do?pageNo=${i}')">${i}</a></li>
+        <li class="page-item ${i==pageCurrent ? 'active' : ''}">
+        <a class="page-link ${i==pageCurrent ? 'green-btn' : 'green'}" onclick="pageMove('/super/stockContent.do?pageNo=${i}')">${i}</a></li>
       </c:forEach>
       <c:if test="${pageEnd != totalPage}">
         <li class="page-item">

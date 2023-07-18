@@ -48,7 +48,8 @@
       </li>
      </c:if>
      <c:forEach var="i" begin="${ pageStart }" end="${ pageEnd }" >
-      <li class="page-item ${i==pageCurrent ? 'active' : '' }"><a class="page-link" onclick="pageMove('/super/storeContent.do?pageNo=${i}')">${i}</a></li>
+      <li class="page-item ${i==pageCurrent ? 'active' : '' }">
+      	<a class="page-link ${i==pageCurrent ? 'green-btn ' : 'green'}" onclick="pageMove('/super/storeContent.do?pageNo=${i}')">${i}</a></li>
 	</c:forEach>
 	<c:if test="${ pageEnd != totalPage }">
       <li class="page-item">
@@ -59,7 +60,7 @@
      </c:if>
     </ul>
   </nav>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#store-modal">
+  <button class="btn btn-primary orange-btn" data-bs-toggle="modal" data-bs-target="#store-modal">
     가맹점 추가
   </button>
   <!-- <button class="btn btn-primary" onclick="">가맹점추가</button> -->
@@ -107,7 +108,7 @@ aria-hidden="true"
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="storeAddBtnHandler()">
+        <button type="button" class="btn btn-primary green-btn" onclick="storeAddBtnHandler()">
           추가
         </button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
