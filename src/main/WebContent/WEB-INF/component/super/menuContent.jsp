@@ -35,21 +35,6 @@
         </td>
       </tr>
     </c:forEach>
-      <!-- <tr>
-        <td>1</td>
-        <td><img src="../../../image/001.png" width="50" height="50" /></td>
-        <td>버거</td>
-        <td>맥 크리스피 핫앤치즈</td>
-        <td>6,000₩</td>
-        <td>
-          <button class="btn btn-secondary btn-sm" onclick="menuViewBtnHandler(event)">
-            상세정보
-          </button>
-          <button class="btn btn-danger btn-sm" onclick="menuDelBtnHandler(event)">
-            삭제
-          </button>
-        </td>
-      </tr> -->
     </tbody>
   </table>
 </div>
@@ -108,7 +93,7 @@ aria-hidden="true"
       </div>
       <div class="modal-body">
         <label class="form-label">이미지</label><br />
-        <img src="${pageContext.request.contextPath}/image/logo2.png" width="450" height="400" id="preview" /><br /><br />
+        <img src="${pageContext.request.contextPath}/image/logo2.png" width="450" height="400" id="preview"/><br /><br />
         <input
         type="file"
         id="file-form"
@@ -118,123 +103,24 @@ aria-hidden="true"
         <label class="form-label">메뉴명</label>
         <input type="text" class="form-control" id="menuname"/>
         <label class="form-label">분류</label>
-        <input type="text" class="form-control" id="category"/>
+        <select class="form-select" aria-label="재료선택" id="category">
+                  <option value = "0" selected>분류선택</option>
+                  <option value="세트">세트</option>
+                  <option value="버거">버거</option>
+                  <option value="사이드">사이드</option>
+                  <option value="디저트">디저트</option>
+                  <option value="음료/카페">음료/카페</option>
+                </select>
         <label class="form-label">가격</label>
         <input type="number" class="form-control" id="price"/>
         <label class="form-label">재료</label>
         <div id="recipe">
+        <c:forEach var="foods" items="${ foodlist }" >
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">빵</label>
+            <input class="form-check-input" type="checkbox" id="${ foods.no }" />
+            <label class="form-check-label" for="1">${ foods.name }</label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">빵</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">빵</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">빵</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">코카콜라 제로</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">빵</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="1" />
-            <label class="form-check-label" for="1">빵</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="2" />
-            <label class="form-check-label" for="2">소고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="3" />
-            <label class="form-check-label" for="3">닭고기패티</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="4" />
-            <label class="form-check-label" for="4">새우패티</label>
-          </div>
+          </c:forEach>
         </div>
       </div>
       <div class="modal-footer">
