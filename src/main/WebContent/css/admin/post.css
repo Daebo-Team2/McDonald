@@ -6,13 +6,6 @@
   height: calc(100% - 102px);
 }
 
-.page-item.active .page-link{
-    z-index: 3;
-    color: #fff;
-    background-color: #198754!important;
-    border-color: #198754!important;
-}
-
 
 table[page="post"] {
   font-size: 1.2rem;
