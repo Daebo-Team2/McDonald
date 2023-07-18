@@ -1,6 +1,7 @@
 package servlet;
 
 import service.*;
+import vo.UserVO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,8 +30,15 @@ public class AdminServlet extends HttpServlet {
         }
         
 
+        HttpSession session = request.getSession();
+        UserVO vo = (UserVO) session.getAttribute("login");
+        if (vo == null) {
+            response.sendRedirect("/page/login");
+            return;
+        }
+
         if (url.equals("/admin/saleContent.do")) {
-            action = new SalePageService();
+            action = new AdminSalePageService();
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/empContent.do")) {
@@ -75,7 +83,7 @@ public class AdminServlet extends HttpServlet {
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/salepage.do")) {
-            action = new SalePageService();
+            action = new AdminSalePageService();
             forward = action.execute(request, response);
         }
         if (url.equals("/admin/kioskorder.do")) {
@@ -94,6 +102,14 @@ public class AdminServlet extends HttpServlet {
         }
         if (url.equals("/admin/empdelete.do")) {
             action = new EmpDeleteService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/stockorderlist.do")) {
+            action = new AdminStockOrderListService();
+            forward = action.execute(request, response);
+        }
+        if (url.equals("/admin/stockorderdelete.do")) {
+            action = new AdminStockOrderDeleteService();
             forward = action.execute(request, response);
         }
 

@@ -64,11 +64,11 @@ public class SaleDAO {
         return list;
     }
 
-    public List<OrderVO> menuSelect(String start, String end, String menuName, int rowS, int rowE) throws SQLException {
+    public List<OrderVO> menuSelect(String start, String end, String menuName, int storeNo, int rowS, int rowE) throws SQLException {
         String sql = "select * from (select rownum rn, x.* from (select ol.*, m.name as menuname, m.price " +
                 "as menuprice, o.ordertime as ordertime, o.storeno as storeno from orderlist ol, orders o, store s, " +
                 "menu m where (ol.orderno = o.no) and (o.storeno = s.no) and (ol.menuno = m.no) and (m.name = ?) " +
-                "and (o.ordertime between ? and ?) order by ol.orderno desc) x) " +
+                "and (o.ordertime between ? and ?) and (o.storeno between ? and ?) order by ol.orderno desc) x) " +
                 "where rn between ? and ?";
         Connection conn = ConnectionPool.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -76,8 +76,10 @@ public class SaleDAO {
         pstmt.setString(1, menuName);
         pstmt.setString(2, start);
         pstmt.setString(3, end);
-        pstmt.setInt(4, rowS);
-        pstmt.setInt(5, rowE);
+        pstmt.setInt(4, storeNo);
+        pstmt.setInt(5, storeNo == 0 ? 9999 : storeNo);
+        pstmt.setInt(6, rowS);
+        pstmt.setInt(7, rowE);
         ResultSet rs = pstmt.executeQuery();
         List<OrderVO> list = new ArrayList<>();
         while (rs.next()) {
@@ -104,8 +106,8 @@ public class SaleDAO {
 
 
     public int orderCount(String start, String end, int storeNo) throws SQLException {
-        String sql = "select count(*) as cnt from orders where (ordertime >= ?) " +
-                    "and (ordertime <= ?) and (storeno >= ?) and (storeno <= ?)";
+        String sql = "select count(*) as cnt from orders where (ordertime between ? and ?) " +
+                "and (storeno between ? and ?)";
         Connection conn = ConnectionPool.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -148,5 +150,52 @@ public class SaleDAO {
         ConnectionPool.close(pstmt);
         ConnectionPool.close(conn);
         return cnt;
+    }
+
+    public int getOrderSelectTotalPrice(String start, String end, int storeNo) throws SQLException {
+        String sql = "select sum(price) as psum from orders where (ordertime between ? and ?) " +
+                "and (storeno between ? and ?)";
+        Connection conn = ConnectionPool.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, start);
+        pstmt.setString(2, end);
+        pstmt.setInt(3, storeNo);
+        pstmt.setInt(4, storeNo == 0 ? 9999 : storeNo);
+        ResultSet rs = pstmt.executeQuery();
+        int totalPrice = 0;
+        if (rs.next()) {
+            totalPrice = rs.getInt("psum");
+        }
+
+        ConnectionPool.close(rs);
+        ConnectionPool.close(pstmt);
+        ConnectionPool.close(conn);
+        return totalPrice;
+    }
+
+    public int getMenuSelectTotalPrice(String start, String end, String menuName, int storeNo) throws SQLException {
+        String sql = "select sum(price) as psum from (select ol.*, m.name, o.ordertime, o.storeno, " +
+                "(m.price * ol.quantity) as price from orderlist ol, orders o, store s, menu m " +
+                "where (ol.orderno = o.no) and (o.storeno = s.no) and (ol.menuno = m.no) and (m.name = ?) " +
+                "and (o.storeno between ? and ?) and (o.ordertime between ? and ?))";
+        Connection conn = ConnectionPool.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+
+        pstmt.setString(1, menuName);
+        pstmt.setInt(2, storeNo);
+        pstmt.setInt(3, storeNo == 0 ? 9999 : storeNo);
+        pstmt.setString(4, start);
+        pstmt.setString(5, end);
+        ResultSet rs = pstmt.executeQuery();
+        int totalPrice = 0;
+        if (rs.next()) {
+            totalPrice = rs.getInt("psum");
+        }
+
+        ConnectionPool.close(rs);
+        ConnectionPool.close(pstmt);
+        ConnectionPool.close(conn);
+        return totalPrice;
     }
 }

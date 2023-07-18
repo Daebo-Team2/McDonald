@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 import vo.StockOrderListVO;
 import vo.StockOrderVO;
@@ -162,8 +160,63 @@ public class StockOrderDAO {
 
         return result;
     }
-    
-    
 
+    public List<StockOrderVO> selectAdminStockOrder(int storeNo) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<StockOrderVO> list = new ArrayList<>();
 
+        try {
+            conn = ConnectionPool.getConnection();
+
+            String sql = "SELECT * FROM STOCKORDER WHERE STATUS = 0 and storeno = ? ORDER BY NO DESC";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, storeNo);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StockOrderVO vo = new StockOrderVO();
+                vo.setNo(rs.getInt("no"));
+                vo.setStoreno(rs.getInt("storeno"));
+                vo.setTime(rs.getTimestamp("time"));
+                vo.setStatus(rs.getInt("status"));
+
+                list.add(vo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.close(rs);
+            ConnectionPool.close(pstmt);
+            ConnectionPool.close(conn);
+        }
+        return list;
+    }
+
+    public int deleteAdminStockOrder(int stockOrderNo, int storeNo) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int row = -1;
+
+        try {
+            conn = ConnectionPool.getConnection();
+
+            // UPDATE STOCKORDER SET STATUS = 1 WHERE NO = ?
+            String sql = "delete from stockorder where no = ? and storeno = ? and status = 0";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, stockOrderNo);
+            pstmt.setInt(2, storeNo);
+
+            row = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.close(pstmt);
+            ConnectionPool.close(conn);
+        }
+
+        return row;
+    }
 }

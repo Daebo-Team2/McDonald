@@ -138,21 +138,24 @@ function empAddBtnHandler() {
 }
 
 function empDeleteBtnHandler(num) {
-	$.ajax({
-		url: "/admin/empdelete.do",
-		data: {no: num},
-		dataType: "text",
-		method: "post"
-	}).done((text) => {
-		alert('삭제가 완료되었습니다.');
-		$("#content").html(text);
+	if (window.confirm("직원 삭제를 진행하시겠습니까?")) {
 		$.ajax({
-			url: "/admin/sidebar.do",
-			dataType: "text"
+			url: "/admin/empdelete.do",
+			data: {no: num},
+			dataType: "text",
+			method: "post"
 		}).done((text) => {
-			$("#sideBar").html(text);
+			alert('삭제가 완료되었습니다.');
+			$("#content").html(text);
+			$.ajax({
+				url: "/admin/sidebar.do",
+				dataType: "text"
+			}).done((text) => {
+				$("#sideBar").html(text);
+			})
 		})
-	})
+	}
+	else {}
 }
 
 // stock 페이지
@@ -348,3 +351,25 @@ function writePostBtnHandler() {
 
 }
 
+function stockOrderListBtnHandler() {
+	$.ajax({
+		url: "/admin/stockorderlist.do",
+		dataType: "text",
+		method: "post"
+	}).done((text) => {
+		$("#content").html(text);
+	})
+}
+
+function stockOrderListDeleteBtnHandler(num) {
+	if (window.confirm("정말 재고발주를 취소하시겠습니까?")) {
+		$.ajax({
+			url: "/admin/stockorderdelete.do",
+			data: {num},
+			method: "post",
+			dataType: "text"
+		}).done((text) => {
+			$("#content").html(text);
+		})
+	} else {}
+}

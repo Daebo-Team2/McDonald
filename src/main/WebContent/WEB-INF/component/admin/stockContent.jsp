@@ -28,7 +28,8 @@
   </table>
 </div>
 <div class="footer">
-  <button class="btn btn-primary red-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">발주주문</button>
+  <button class="btn btn-primary red-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">발주주문</button>&nbsp;&nbsp;
+  <button class="btn btn-primary red-btn" onclick="stockOrderListBtnHandler()">발주목록</button>
 </div>
 <!-- 모달 숨겨놓기-->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
