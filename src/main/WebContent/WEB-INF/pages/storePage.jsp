@@ -20,6 +20,7 @@
 	  body {
 		background-image: linear-gradient(to bottom, #fffad7, #fff5d7, #fff1d9, #ffeddb, #ffeadd);
 	  }
+
       .storeName {
         display: flex;
         flex-direction: row;
@@ -48,7 +49,7 @@
 	 }
       #name {
         font-weight: 700;
-        font-size: 50px;
+        font-size: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
