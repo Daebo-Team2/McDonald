@@ -320,7 +320,11 @@ function writePostBtnHandler() {
 	// data: {title, content}
 	const title = document.querySelector("input#post-add-title").value;
 	const content = document.querySelector("textarea#post-add-content").value;
-	$.ajax({
+	
+	if(title.trim().length == 0||content.trim().length == 0){	
+		alert("작성된 문의글이 없습니다!")
+	}else{	
+		$.ajax({
 		url: "/admin/postadd.do",
 		data: {title, content},
 		dataType: "text",
@@ -330,5 +334,7 @@ function writePostBtnHandler() {
 		alert("문의등록완료!");
 		$("#content").html(text);
 	});
+	}
+
 }
 

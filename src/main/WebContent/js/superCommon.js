@@ -275,7 +275,10 @@ function postAddBtnHandler(num) {
 	// data: {title, content, no}
 	const title = document.querySelector("input#reply-title").value;
 	const content = document.querySelector("textarea#reply-content").value;
-	$.ajax({
+	if(title.trim().length==0||content.trim().length==0){	
+		alert("답변을 등록하지 않았습니다!")
+	}else{	
+		$.ajax({
 		url: "/super/postreply.do",
 		data: {no: num, title, content},
 		dataType: "text"
@@ -284,7 +287,8 @@ function postAddBtnHandler(num) {
 		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
 		$("#content").html(text);
 		
-	})
+		})
+	}
 }
 
 function saleSearchBtnHandler() {
