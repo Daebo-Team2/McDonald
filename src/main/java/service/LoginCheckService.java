@@ -7,6 +7,8 @@ import dao.LoginDAO;
 import vo.StoreVO;
 import vo.UserVO;
 
+import java.io.IOException;
+
 public class LoginCheckService implements Action {
 
 	@Override
@@ -20,8 +22,8 @@ public class LoginCheckService implements Action {
 		StoreVO vo = dao.checkId(id);
 
 		if ( vo == null || vo.getStatus() == 0) {
-			request.setAttribute("msg", "로그인에 실패하였습니다.");
-			forward.setPath("/page/login");
+			forward.setRedirect(false);
+			forward.setPath("/WEB-INF/script/loginFail.html");
 		} else {
 			if (vo.getPwd().equals(password)) {
 				UserVO uservo = new UserVO();
@@ -34,8 +36,8 @@ public class LoginCheckService implements Action {
 					forward.setPath("/page/store");
 				}
 			} else {
-				request.setAttribute("msg", "로그인에 실패햐였습니다.");
-				forward.setPath("/page/login");
+				forward.setRedirect(false);
+				forward.setPath("/WEB-INF/script/loginFail.html");
 			}
 		}
 		return forward;
