@@ -97,9 +97,9 @@ function empUpdateBtnHandler(num) {
 	// url: /admin/empupdate.do
 	// data: {no, tel, pay}
 
-	const name = document.querySelector("#empUpdateNameInput").value;
-	const tel = document.querySelector("#empUpdateTelInput").value;
-	const pay = document.querySelector("#empUpdatePayInput").value;
+	const name = document.querySelector("#empUpdateNameInput").value.trim();
+	const tel = document.querySelector("#empUpdateTelInput").value.trim();
+	const pay = document.querySelector("#empUpdatePayInput").value.trim();
 
 	$.ajax({
 		url: "/admin/empupdate.do",
@@ -114,9 +114,9 @@ function empUpdateBtnHandler(num) {
 }
 
 function empAddBtnHandler() {
-	const name = document.querySelector("#empAddNameInput").value;
-	const tel = document.querySelector("#empAddTelInput").value;
-	const pay = document.querySelector("#empAddPayInput").value;
+	const name = document.querySelector("#empAddNameInput").value.trim();
+	const tel = document.querySelector("#empAddTelInput").value.trim();
+	const pay = document.querySelector("#empAddPayInput").value.trim();
 
 	$.ajax({
 		url: "/admin/empadd.do",
@@ -164,7 +164,7 @@ function stockUpdateBtnHandler(event) {
 
 	// 이미 수정중일때
 	if (isUpdating) {
-		const cnt = quantityTd.querySelector("input").value;
+		const cnt = quantityTd.querySelector("input").value
 		const foodNum = tr.getAttribute("food-num");
 		$.ajax({
 			url: "/admin/stockupdate.do",
