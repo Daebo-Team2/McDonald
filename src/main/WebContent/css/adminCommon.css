@@ -97,6 +97,29 @@
   color: #198754;
 }
 
+
+.green-btn {
+	outline:none !important;
+	box-shadow:none !important;
+	border-color:#198754 !important;
+	background-color:#198754 !important;
+}
+
+.green-btn:hover{	
+	background-color: #006400 !important;
+}
+
+.red-btn{
+	outline:none !important;
+	box-shadow:none !important;
+	border-color: #DA291C !important;
+	background-color:#DA291C !important;
+}
+
+.red-btn:hover{	
+	background-color: #A52A2A !important;
+}
+
 .yellow {
   color: #ffc107;
 }
@@ -105,6 +128,12 @@
   margin-top: 0.5rem;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: #ffe6e6 !important ;
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
 }
 
 .accordion-item:first-of-type {
