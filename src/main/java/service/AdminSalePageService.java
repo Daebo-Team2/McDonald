@@ -21,6 +21,10 @@ public class AdminSalePageService implements Action {
         String start = request.getParameter("start");
         String end = request.getParameter("end");
         String menuName = request.getParameter("menuName");
+        System.out.println("start : " + start);
+        System.out.println("end : " + end);
+        System.out.println("menuName : " + menuName);
+
         if (start == null || end == null || menuName == null) {
             forward.setPath("/WEB-INF/component/admin/saleContent.jsp");
             return forward;
