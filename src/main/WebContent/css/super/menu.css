@@ -75,3 +75,8 @@ div.footer > div.empty {
   display: flex;
   flex-wrap: wrap;
 }
+
+.form-check-input:checked {
+    background-color: red !important;
+    border-color: red;
+}

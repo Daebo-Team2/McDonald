@@ -23,7 +23,7 @@
         </c:forEach>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+        <button type="button" class="btn btn-primary red-btn" data-bs-dismiss="modal">확인</button>
       </div>
     </div>
   </div>

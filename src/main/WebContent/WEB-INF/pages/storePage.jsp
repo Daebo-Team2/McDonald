@@ -54,6 +54,12 @@
         justify-content: center;
         align-items: center;
       }
+      
+      .btn-primary:active{	
+      	background-color: #FFCC00 !important;
+      	border-color: #FFCC00 !important;
+      }
+
     </style>
   </head>
   <body>

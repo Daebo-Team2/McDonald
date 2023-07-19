@@ -34,6 +34,11 @@ body {
 	border: 1px solid #FFCC00;
 }
 
+.btn-primary:active{	
+      	background-color: #FFCC00 !important;
+      	border-color: #FFCC00 !important;
+}
+
 #name {
 	font-weight: 700;
 	font-size: 100px;
