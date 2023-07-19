@@ -58,7 +58,7 @@
       </li>
     </ul>
   </nav>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#menu-add-modal">
+  <button class="btn btn-primary orange-btn" data-bs-toggle="modal" data-bs-target="#menu-add-modal">
     메뉴 추가
   </button>
   <!-- <button class="btn btn-primary" onclick="">가맹점추가</button> -->
@@ -124,7 +124,7 @@ aria-hidden="true"
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="menuAddBtnHandler(event)">추가</button>
+        <button type="button" class="btn btn-primary green-btn" onclick="menuAddBtnHandler(event)">추가</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
       </div>
     </div>

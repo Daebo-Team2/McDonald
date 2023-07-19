@@ -138,6 +138,10 @@
   color: #ffc107;
 }
 
+.yellow:focus{	
+	outline:4px solid rgba(255, 193, 7, 0.4)!important ;
+}
+
 .form-control-sm:focus {	
 	outline:4px solid rgba(28, 151, 92, 0.4)!important ;
 }
@@ -162,4 +166,14 @@
 .accordion-item:last-of-type {
   border-top-left-radius: 0rem;
   border-top-right-radius: 0rem;
+}
+
+.form-select:focus {	
+	outline:4px solid rgba(28, 151, 92, 0.4)!important ;
+	box-shadow: rgba(28, 151, 92, 0.4)!important;
+}
+
+.form-control:focus {	
+	outline:4px solid rgba(28, 151, 92, 0.4)!important ;
+	box-shadow: rgba(28, 151, 92, 0.4)!important;
 }

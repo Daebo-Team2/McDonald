@@ -165,3 +165,14 @@ td {
 	border-color:#198754 !important;
 	background-color:#198754 !important;
 } */
+
+.form-check-input:checked {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.form-check-input:focus{	
+	outline:4px solid rgba(253, 231, 34, 0.4)!important;
+}
+
+
