@@ -24,7 +24,7 @@ public class OrderListVO {
         return menuNo;
     }
 
-    public void setMenuNo(int menuNo) throws SQLException {
+    public void setMenuNo(int menuNo) {
         this.menuNo = menuNo;
         this.menuName = MenuNamePrice.getMenuName(menuNo);
         this.price = MenuNamePrice.getMenuPrice(menuNo);

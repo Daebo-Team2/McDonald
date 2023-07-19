@@ -23,6 +23,7 @@ class Modal {
 
 const empUpdateModal = new Modal();
 const postViewModal = new Modal();
+renderOrderList();
 
 // 상단 메뉴버튼 눌럿을 때
 function pageMove(url) {
@@ -38,12 +39,12 @@ function saleSearchBtnHandler() {
 	const start = document.querySelector("#saleStartInput").value;
 	const end = document.querySelector("#saleEndInput").value;
 	const menuName = document.querySelector("#saleMenuNameInput").value;
-	
+
 
 	$.ajax({
 		url: "/admin/saleContent.do",
 		method: "post",
-		data: {start, end, menuName},
+		data: { start, end, menuName },
 		dataType: "text"
 	}).done((text) => {
 		$("#content").html(text);
@@ -56,7 +57,7 @@ function empInoutBtnHandler(num) {
 	// data: {no: num}
 	$.ajax({
 		url: "/admin/empinout.do",
-		data: {no: num},
+		data: { no: num },
 		dataType: "text"
 	}).done((text) => {
 		$("#sideBar").html(text);
@@ -67,25 +68,11 @@ function empInoutBtnHandler(num) {
 	})
 }
 
-// order페이지 렌더링, sse
-// 서버로부터 실시간으로 주문 알림을 받아 localstorage에 저장한다.(다른 페이지에 있더라도 주문이 들어오면 저장하기 위해)
-// 메뉴탭의 주문관리버튼이 눌리면 ajax가 아닌 js로 화면을 렌더링한다.
-function renderOrderContent() {
-	// #content.innerHTML 다 삭제
-	// localstorage에서 주문 정보를 얻어서 컴포넌트로 렌더링한다.
-}
-
-// order페이지 확인버튼 핸들러
-function orderDelBtnHandler(event) {
-	// 확인이 눌리면 DOM요소를 삭제하고 localstorage에서도 삭제한다.
-	event.target.parentElement.parentElement.parentElement.remove();
-}
-
 // emp페이지 직원정보 수정모달
 function empUpdateModalOpener(num) {
 	$.ajax({
 		url: "/admin/empupdatemodal.do",
-		data: {no: num},
+		data: { no: num },
 		dataType: "text"
 	}).done((text) => {
 		$("#update-modal-content").html(text);
@@ -105,7 +92,7 @@ function empUpdateBtnHandler(num) {
 	$.ajax({
 		url: "/admin/empupdate.do",
 		method: "post",
-		data: {no: num, tel, pay},
+		data: { no: num, tel, pay },
 		dataType: "text"
 	}).done((text) => {
 		alert(`${name}직원이 수정되었습니다.`);
@@ -121,7 +108,7 @@ function empAddBtnHandler() {
 
 	$.ajax({
 		url: "/admin/empadd.do",
-		data: {name, tel, pay},
+		data: { name, tel, pay },
 		dataType: "text",
 		method: "post"
 	}).done((text) => {
@@ -141,7 +128,7 @@ function empDeleteBtnHandler(num) {
 	if (window.confirm("직원 삭제를 진행하시겠습니까?")) {
 		$.ajax({
 			url: "/admin/empdelete.do",
-			data: {no: num},
+			data: { no: num },
 			dataType: "text",
 			method: "post"
 		}).done((text) => {
@@ -155,7 +142,7 @@ function empDeleteBtnHandler(num) {
 			})
 		})
 	}
-	else {}
+	else { }
 }
 
 // stock 페이지
@@ -225,14 +212,14 @@ function stockOrderBtnHandler() {
 	// ajax요청보내기
 
 	const stockorderdata = getStockOrderData();
-	
-	if ( stockorderdata === null ){
+
+	if (stockorderdata === null) {
 		alert("주문을 다시 확인해 주세요.");
-		 return;
+		return;
 	}
-	
+
 	$.ajax({
-		url: "/admin/stockorder.do", 
+		url: "/admin/stockorder.do",
 		data: stockorderdata,
 		dataType: "text",
 		contentType: "application/x-www-form-urlencoded",
@@ -247,10 +234,10 @@ function stockOrderBtnHandler() {
 function getStockOrderData() {
 	let words = [];
 	const trs = document.querySelectorAll("tr.stockOrder");
-	
+
 	for (const tr of trs) {
 		const foodNo = tr.querySelector("select.form-select").value;
-		const quantity = tr.querySelector("input.stock-cnt").value; 
+		const quantity = tr.querySelector("input.stock-cnt").value;
 		if (foodNo === '0' || quantity === "") {
 			return null;
 		}
@@ -317,7 +304,7 @@ function stockOrderElement() {
 function openViewModal(num) {
 	$.ajax({
 		url: "/admin/postmodal.do",
-		data: {no: num},
+		data: { no: num },
 		dataType: "text"
 	}).done((text) => {
 		$("div#post-view-modal-content").html(text);
@@ -333,20 +320,20 @@ function writePostBtnHandler() {
 	// data: {title, content}
 	const title = document.querySelector("input#post-add-title").value;
 	const content = document.querySelector("textarea#post-add-content").value;
-	
-	if(title.trim().length == 0||content.trim().length == 0){	
+
+	if (title.trim().length == 0 || content.trim().length == 0) {
 		alert("작성된 문의글이 없습니다!")
-	}else{	
+	} else {
 		$.ajax({
-		url: "/admin/postadd.do",
-		data: {title, content},
-		dataType: "text",
-		method: "post"
-	}).done((text) => {
-		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
-		alert("문의등록완료!");
-		$("#content").html(text);
-	});
+			url: "/admin/postadd.do",
+			data: { title, content },
+			dataType: "text",
+			method: "post"
+		}).done((text) => {
+			document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+			alert("문의등록완료!");
+			$("#content").html(text);
+		});
 	}
 
 }
@@ -365,11 +352,96 @@ function stockOrderListDeleteBtnHandler(num) {
 	if (window.confirm("정말 재고발주를 취소하시겠습니까?")) {
 		$.ajax({
 			url: "/admin/stockorderdelete.do",
-			data: {num},
+			data: { num },
 			method: "post",
 			dataType: "text"
 		}).done((text) => {
 			$("#content").html(text);
 		})
-	} else {}
+	} else { }
 }
+// sse
+const sseSource = new EventSource("/sse");
+let orderNum = 1;
+let isOrderPage = true;
+sseSource.onmessage = function (e) {
+	const order = JSON.parse(e.data);
+	localStorage.setItem(order.no, e.data);
+	renderOrderList();
+}
+
+// 주문관리
+function renderOrderList() {
+	const contentDiv = document.querySelector("div#content");
+	contentDiv.innerHTML = '';
+	const orders = [];
+	const keys = [];
+	for (let i = 0; i < localStorage.length; i++) {
+		keys.push(localStorage.key(i));
+	}
+	keys.sort((a, b) => Number(a) - Number(b));
+	for (const key of keys) {
+		orders.push(JSON.parse(localStorage.getItem(key)));
+	}
+	contentDiv.innerHTML = orderContent(orders);
+}
+
+function orderContent(orders) {
+	return `
+	<div class="title">
+		<h1>주문관리</h1>
+	</div>
+	
+	<div class="wrapper">
+	${orders.length === 0 ? "<h2 id=\"no-oreder\">등록된 주문이 없습니다.</h2>" : orders.map(order => orderAccordion(order)).join("")}
+	</div>
+	`
+}
+
+function orderAccordion(order) {
+	console.log(order);
+	return `
+	<div class="accordion-item" order-no="${order.no}">
+		<h2 class="accordion-header">
+			<div class="accordion-button collapsed" type="button" page="order">
+				<span>${order.no}</span>
+				<span>${order.time}</span>
+				<span>${order.price.toLocaleString()}</span>
+				<span>${order.place === "store" ? "매장" : "포장"}</span>
+				<button type="button" class="btn btn-primary delBtn red-btn" onclick="orderDelBtnHandler(event)">확인</button>
+			</div>
+		</h2>
+			<div class="accordion-collapse collapse show">
+				<div class="accordion-body" page="order">
+					<table class="table" page="order">
+						<thead>
+							<tr>
+								<th>제품명</th>
+								<th>수량</th>
+							</tr>
+						</thead>
+						<tbody>
+							${order.list.map((menu) => {
+								return `
+									<tr>
+										<td>${menu.name}</td>
+										<td>${menu.quantity}</td>
+									</tr>
+								`
+							}).join("")}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	`
+}
+
+// order페이지 확인버튼 핸들러
+function orderDelBtnHandler(event) {
+	// 확인이 눌리면 DOM요소를 삭제하고 localstorage에서도 삭제한다.
+	const key = event.target.parentElement.parentElement.parentElement.getAttribute("order-no");
+	localStorage.removeItem(key);
+	renderOrderList();
+}
+
