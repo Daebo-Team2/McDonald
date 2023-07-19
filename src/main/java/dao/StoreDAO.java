@@ -8,6 +8,7 @@ import java.util.List;
 
 import vo.StockVO;
 import vo.StoreName;
+import vo.StoreNo;
 import vo.StoreVO;
 
 public class StoreDAO { //가맹점
@@ -17,13 +18,13 @@ public class StoreDAO { //가맹점
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<StoreVO> list = null;
-		
+
 		try {
 			conn = ConnectionPool.getConnection();
 			String sql ="SELECT * FROM STORE WHERE STATUS = 1 ORDER BY NAME";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
+
 			list = new ArrayList<>();
 			while (rs.next() ) {
 				StoreVO vo = new StoreVO();
@@ -36,10 +37,10 @@ public class StoreDAO { //가맹점
 				vo.setAddress(rs.getString("address"));
 				vo.setOpeningday(rs.getTimestamp("openingday"));
 				vo.setStatus(rs.getInt("status"));
-				
+
 				list.add(vo);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -72,11 +73,12 @@ public class StoreDAO { //가맹점
 
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
-			
+
 			if( rs.next() ) {
 				storeno = rs.getInt(1);
 			}
-			
+			StoreName.isUpdate = true;
+			StoreNo.isUpdate = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -84,7 +86,6 @@ public class StoreDAO { //가맹점
 			ConnectionPool.close(pstmt);
 			ConnectionPool.close(conn);
 		}
-		StoreName.isUpdate  = true;
 		return storeno;
 	}
 
@@ -96,9 +97,7 @@ public class StoreDAO { //가맹점
 
 		try {
 			conn = ConnectionPool.getConnection();
-			System.out.println("storeUpdate !!");
-			
-			
+
 			String sql = "UPDATE STORE SET TEL = ?, OWNER = ?, ADDRESSS = ? WHERE ID = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, tel);
@@ -107,16 +106,14 @@ public class StoreDAO { //가맹점
 			pstmt.setString(4, id);
 
 			result = pstmt.executeUpdate();
-			System.out.println("result : " + result);
-
-
+			StoreName.isUpdate  = true;
+			StoreNo.isUpdate = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.close(pstmt);
 			ConnectionPool.close(conn);
 		}
-		StoreName.isUpdate  = true;
 		return result;
 	}
 
@@ -133,16 +130,14 @@ public class StoreDAO { //가맹점
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			result = pstmt.executeUpdate();
+			StoreName.isUpdate  = true;
+			StoreNo.isUpdate = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionPool.close(pstmt);
 			ConnectionPool.close(conn);
 		}
-		StoreName.isUpdate  = true;
 		return result;
 	}
-	
-	
-
 }
