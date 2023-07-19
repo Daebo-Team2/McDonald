@@ -52,7 +52,7 @@ public class AdminSalePageService implements Action {
             }
 
             int pageSize = 10;
-            int blockPage = 3;
+            int blockPage = 5;
             int totalPage = (int) Math.ceil((double) totalCount / pageSize);
             int pageStart = ((pageNo - 1) / blockPage) * blockPage + 1;
             int pageEnd = Math.min(pageStart - 1 + blockPage, totalPage);
