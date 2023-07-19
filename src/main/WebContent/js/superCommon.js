@@ -67,21 +67,24 @@ function storeAddBtnHandler() {
 	if ( !id.match(regexId) ){
 		alert('아이디 형식을 다시 확인해 주세요.');
 		document.querySelector("input#storeId").focus();
-		id = '';
+		document.querySelector("input#storeId").value = '';
+		return;
 	}
 	
 	const regexName = /[점]$/;
 	if ( !name.match(regexName) ) {
 		alert('가맹점명 형식을 다시 확인해 주세요.');
 		document.querySelector("input#storeName").focus();
-		name = '';
+		document.querySelector("input#storeName").value = '';
+		return;
 	}
 	
 	const regexTel = /\d{2,3}-\d{3,4}-\d{4}$/g;
 	if ( !tel.match(regexTel) ) {
 		alert('연락처 형식을 다시 확인해 주세요.');
 		document.querySelector("input#storeTel").focus();
-		tel = '';
+		document.querySelector("input#storeTel").value = '';
+		return;
 	}
 	
 	if ( name.trim().length === 0 ) {
@@ -359,6 +362,10 @@ function saleSearchBtnHandler() {
 	const end = document.querySelector("#saleEndInput").value;
 	const menuName = document.querySelector("#saleMenuNameInput").value;
 	const storeName = document.querySelector("#saleStoreNameInput").value;
+	if (start !== '' && end !== '' && start > end) {
+		alert("시작일자가 종료일자 이전이야합니다.");
+		return;
+	}
 
 	$.ajax({
 		url: "/super/saleContent.do",
