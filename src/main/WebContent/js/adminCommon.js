@@ -88,6 +88,18 @@ function empUpdateBtnHandler(num) {
 	const name = document.querySelector("#empUpdateNameInput").value.trim();
 	const tel = document.querySelector("#empUpdateTelInput").value.trim();
 	const pay = document.querySelector("#empUpdatePayInput").value.trim();
+	
+	if ( tel.length===0 || pay.length===0 ){
+		alert("정보를 모두 적어 주세요.")
+		return
+	}
+	
+		const regexTel = /\d{2,3}-\d{3,4}-\d{4}$/g;
+	if ( !document.querySelector("#empUpdateTelInput").value.match(regexTel) ){
+		alert('연락처 형식을 다시 확인해 주세요.');
+		document.querySelector("#empUpdateTelInput").value = '';
+		return
+	}
 
 	$.ajax({
 		url: "/admin/empupdate.do",
@@ -105,6 +117,20 @@ function empAddBtnHandler() {
 	const name = document.querySelector("#empAddNameInput").value.trim();
 	const tel = document.querySelector("#empAddTelInput").value.trim();
 	const pay = document.querySelector("#empAddPayInput").value.trim();
+	
+	if (name.length===0 || tel.length===0 || pay.length===0) {
+		alert("정보를 모두 입력해 주세요.")
+		return
+	}
+	
+	const regexTel = /\d{2,3}-\d{3,4}-\d{4}$/g;
+	if ( !document.querySelector("#empAddTelInput").value.match(regexTel) ){
+		alert('연락처 형식을 다시 확인해 주세요.');
+		document.querySelector("#empAddTelInput").value = '';
+		document.querySelector("#empAddTelInput").focus();
+		return
+	}
+
 
 	$.ajax({
 		url: "/admin/empadd.do",
@@ -123,6 +149,12 @@ function empAddBtnHandler() {
 		})
 	})
 }
+
+function checkNum(event) { //시급입력시 숫자만!
+	const input = event.target;
+	input.value = input.value.replace(/[^0-9]/g,'');
+}
+
 
 function empDeleteBtnHandler(num) {
 	if (window.confirm("직원 삭제를 진행하시겠습니까?")) {

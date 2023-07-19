@@ -60,9 +60,9 @@
         <label class="form-label">이름</label>
         <input type="text" class="form-control" id="empAddNameInput">
         <label class="form-label">시급</label>
-        <input type="text" class="form-control" id="empAddPayInput">
+        <input type="text" class="form-control" id="empAddPayInput" onkeyup="checkNum(event)">
         <label class="form-label">전화번호</label>
-        <input type="text" class="form-control" id="empAddTelInput">
+        <input type="text" class="form-control" id="empAddTelInput" placeholder="000-0000-0000" >
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary green-btn" onclick="empAddBtnHandler()">등록하기</button>
