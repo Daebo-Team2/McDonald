@@ -44,3 +44,4 @@ bin/
 ### custom ###
 .idea
 context.xml
+*.properties
