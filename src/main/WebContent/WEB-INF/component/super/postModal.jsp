@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="modal-header">
-    <h3 class="modal-title" id="staticBackdropLabel">문의 내역 조회</h3>
+    <h3 class="modal-title" id="staticBackdropLabel"><strong>문의 내역 조회</h3>
     <button
       type="button"
       class="btn-close"
@@ -10,14 +10,14 @@
     ></button>
 </div>
 <div class="modal-body">
-	<h3>문의 내용</h3>
+	<h3><strong>문의 내용</h3>
 	<h5>제목</h5>
 	<p>${post.title}</p>
 	<h5>내용</h5>
 	<p class="post-content">${post.content}</p>
 <c:if test="${requestScope.reply != null}">
-     <hr />
-     <h3>답변</h3>
+     <hr/>
+     <h3><strong>답변</h3>
      <h5>제목</h5>
      <p>${reply.title}</p>
      <h5>내용</h5>
@@ -29,7 +29,7 @@
 </c:if>
 <c:if test="${requestScope.reply == null}">
 	<hr />
-	<h3>답변</h3>
+	<h3><strong>답변</h3>
 	<h5>제목</h5>
 	<input type="text" class="form-control" id="reply-title"/>
 	<h5>내용</h5>
