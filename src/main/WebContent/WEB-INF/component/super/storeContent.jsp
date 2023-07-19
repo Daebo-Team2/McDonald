@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="${pageContext.request.contextPath}/css/super/store.css" rel="stylesheet" />
 <div class="title">
   <h1>가맹점관리</h1>
@@ -23,7 +24,7 @@
           <td>${store.name}</td>
           <td>${store.owner}</td>
           <td>${store.tel}</td>
-          <td>${store.openingday}</td>
+          <td> <fmt:formatDate value="${store.openingday}" type="date" pattern="yyyy-MM-dd"/> </td>
           <td>${store.address}</td>
           <td>
             <button class="btn btn-danger btn-sm" onclick="storeDelBtnHandler(${store.no})">
