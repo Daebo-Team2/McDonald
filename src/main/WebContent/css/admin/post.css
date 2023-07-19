@@ -69,5 +69,11 @@ textarea.form-control {
 
 p.post-content {
   white-space: pre-line;
+  border: 1px solid #bebebe;
+}
+
+p.post-title {
+  white-space: pre-line;
+  border: 1px solid #bebebe;
 }
 

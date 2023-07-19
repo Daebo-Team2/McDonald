@@ -77,7 +77,7 @@ function storeAddBtnHandler() {
 		name = '';
 	}
 	
-	const regexTel = /\d{2,3}-\d{3,4}-\d{4}/g;
+	const regexTel = /\d{2,3}-\d{3,4}-\d{4}$/g;
 	if ( !tel.match(regexTel) ) {
 		alert('연락처 형식을 다시 확인해 주세요.');
 		document.querySelector("input#storeTel").focus();

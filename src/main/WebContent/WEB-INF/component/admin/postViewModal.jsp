@@ -8,14 +8,14 @@
 <div class="modal-body">
 	<h3>문의 내용</h3>
 	<h5>제목</h5>
-	<p>${post.title}</p>
+	<p class="post-title">${post.title}</p>
 	<h5>내용</h5>
 	<p class="post-content">${post.content}	</p>
 	<c:if test="${requestScope.reply != null}">
 			<hr>
 			<h3>답변</h3>
 			<h5>제목</h5>
-			<p>${reply.title}</p>
+			<p class="post-title">${reply.title}</p>
 			<h5>내용</h5>
 			<p class="post-content">${reply.content} </p>
 	</c:if>
