@@ -23,7 +23,7 @@ public class AdminServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         UserVO vo = (UserVO) session.getAttribute("login");
-        if (vo == null) {
+        if (vo == null || vo.getNo() == 0) {
             response.sendRedirect("/page/login");
             return;
         }
