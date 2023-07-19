@@ -30,7 +30,7 @@
                         <span>주문번호: ${stockOrder.no}</span>
                         <span>주문시간: ${stockOrder.time}</span>
                         <c:if test="${stockOrder.status == 0}">
-                            <span class="yellow">접수중</span>
+                            <span class="red">접수중</span>
                         </c:if>
                         <c:if test="${stockOrder.status != 0}">
                             <span class="green">완료</span>
@@ -56,7 +56,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <button class="btn btn-primary"
+                    <button class="btn btn-primary red-btn"
                             onclick="stockOrderListDeleteBtnHandler(${stockOrder.no})">발주취소
                     </button>
                 </div>
@@ -76,8 +76,8 @@
                 </li>
             </c:if>
             <c:forEach var="i" begin="${pageStart}" end="${pageEnd}">
-                <li class="page-item ${i==pageCurrent ? 'active' : ''}"><a class="page-link"
-                                                                           onclick="pageMove('/admin/stockorderlist.do?pageNo=${i}')">${i}</a>
+                <li class="page-item ${i==pageCurrent ? 'active' : ''}">
+                <a class="page-link  ${i==pageCurrent ? 'green-btn' : 'green'}" onclick="pageMove('/admin/stockorderlist.do?pageNo=${i}')">${i}</a>
                 </li>
             </c:forEach>
             <c:if test="${pageEnd != totalPage}">
