@@ -15,7 +15,7 @@ import java.util.List;
 public class MenuDAO {
   
     public List<MenuVO> selectAll() {
-        String sql = "select * from menu";
+        String sql = "select * from menu where valid = 1";
         Connection conn = ConnectionPool.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -45,7 +45,30 @@ public class MenuDAO {
         return list;
     }
 
-	public List<MenuVO> selectAllMenu() { //판매 중인 메뉴전체조회 (valid = 1)
+	public int getMenuCnt() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int cnt = 0;
+
+		try {
+			conn = ConnectionPool.getConnection();
+			pstmt = conn.prepareStatement("select count(*) as cnt from menu where valid = 1");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(rs);
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return cnt;
+	}
+
+	public List<MenuVO> selectMenu(int start, int end) { //판매 중인 메뉴전체조회 (valid = 1)
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -54,9 +77,10 @@ public class MenuDAO {
 
 		try {
 			conn = ConnectionPool.getConnection();
-			String sql = "SELECT * FROM MENU WHERE VALID = 1 ORDER BY NO ";
-			//String sql = "SELECT * FROM MENU WHERE ORDER BY NO ";
+			String sql = "select * from (select rownum as rn, m.* from (select * from menu where valid = 1 order by no asc) m) where rn between ? and ? order by rn asc";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
 
 			while ( rs.next() ) {

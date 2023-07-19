@@ -43,19 +43,25 @@
   <div class="empty"></div>
   <nav>
     <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
+      <c:if test="${pStart != 1}">
+        <li class="page-item">
+          <a class="page-link" onclick="pageMove('/super/menuContent.do?pageNo=${pStart - 1}')">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      </c:if>
+      <c:forEach var="i" begin="${pStart}" end="${pEnd}">
+        <li class="page-item ${i==pageNo ? 'active' : '' }">
+          <a class="page-link ${i==pageNo ? 'green-btn' : 'green' }" onclick="pageMove('/super/menuContent.do?pageNo=${i}')" >${i}</a>
+        </li>
+      </c:forEach>
+      <c:if test = "${pEnd  != totalPage }">
+        <li class="page-item">
+          <a class="page-link" onclick="pageMove('/super/menuContent.do?pageNo=${pEnd + 1}')">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </c:if>
     </ul>
   </nav>
   <button class="btn btn-primary orange-btn" data-bs-toggle="modal" data-bs-target="#menu-add-modal">
@@ -118,7 +124,7 @@ aria-hidden="true"
         <c:forEach var="foods" items="${ foodlist }" >
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="${ foods.no }" />
-            <label class="form-check-label" for="1">${ foods.name }</label>
+            <label class="form-check-label" for="${foods.no}">${ foods.name }</label>
           </div>
           </c:forEach>
         </div>
