@@ -23,7 +23,7 @@
             <span>지점명: </span>
             <input type="text" class="form-control form-control-sm" id="saleStoreNameInput" value="${param.storeName}"
                    placeholder="지점명 입력"/>
-            <button class="btn btn-primary btn-sm" onclick="saleSearchBtnHandler()">검색</button>
+            <button class="btn btn-primary btn-sm red-btn" onclick="saleSearchBtnHandler()">검색</button>
         </div>
     </div>
 </div>
@@ -78,8 +78,8 @@
                 </li>
             </c:if>
             <c:forEach var="i" begin="${pageStart}" end="${pageEnd}">
-                <li class="page-item ${i==pageCurrent ? 'active' : ''}"><a class="page-link"
-                                                                           onclick="pageMove('/super/saleContent.do?start=${param.start}&end=${param.end}&menuName=${param.menuName}&storeName=${storeName}&pageNo=${i}')">${i}</a>
+                <li class="page-item ${i==pageCurrent ? 'active' : ''}">
+                <a class="page-link ${i==pageCurrent ? 'green-btn' : 'green'}" onclick="pageMove('/super/saleContent.do?start=${param.start}&end=${param.end}&menuName=${param.menuName}&storeName=${storeName}&pageNo=${i}')">${i}</a>
                 </li>
             </c:forEach>
             <c:if test="${pageEnd != totalPage}">
