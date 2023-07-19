@@ -162,8 +162,11 @@ public class MenuDAO {
 			MenuName.isUpdate = true;
 			MenuNamePrice.isUpdate = true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(rs);
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
 		}
 		return menuno;
 	}

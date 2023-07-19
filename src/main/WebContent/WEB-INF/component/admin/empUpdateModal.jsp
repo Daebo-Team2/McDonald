@@ -8,7 +8,7 @@
     <label class="form-label">이름</label>
     <input type="text" class="form-control" value="${emp.name}" id="empUpdateNameInput" readonly>
     <label class="form-label">시급</label>
-    <input type="text" class="form-control" value="${emp.pay}" id="empUpdatePayInput">
+    <input type="text" class="form-control" value="${emp.pay}" id="empUpdatePayInput" onkeyup="checkNum(event)">
     <label class="form-label">전화번호</label>
     <input type="text" class="form-control" value="${emp.tel}" id="empUpdateTelInput">
 </div>
