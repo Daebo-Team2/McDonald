@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="${pageContext.request.contextPath}/css/super/store.css" rel="stylesheet" />
 <div class="title">
   <h1>가맹점관리</h1>
@@ -23,7 +24,7 @@
           <td>${store.name}</td>
           <td>${store.owner}</td>
           <td>${store.tel}</td>
-          <td>${store.openingday}</td>
+          <td> <fmt:formatDate value="${store.openingday}" type="date" pattern="yyyy-MM-dd"/> </td>
           <td>${store.address}</td>
           <td>
             <button class="btn btn-danger btn-sm" onclick="storeDelBtnHandler(${store.no})">
@@ -96,13 +97,13 @@ aria-hidden="true"
         <label class="form-label">전화번호</label>
         <input type="text" class="form-control" id="storeTel" placeholder="(00)000-0000-0000"/>
         <label class="form-label">주소</label>
-        <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
+        <input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호" readonly readonly>
 		<input type="button" class="form-control" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소">
-		<input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소">
+		<input type="text" class="form-control" id="sample4_roadAddress" placeholder="도로명주소" readonly>
+		<input type="text" class="form-control" id="sample4_jibunAddress" placeholder="지번주소" readonly>
 		<span id="guide" class="form-control" style="color:#999;display:none"></span>
-		<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소">
-		<input type="text" class="form-control" id="sample4_extraAddress" placeholder="참고항목">
+		<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소" readonly>
+		<input type="text" class="form-control" id="sample4_extraAddress" placeholder="참고항목" readonly>
         
         
       </div>

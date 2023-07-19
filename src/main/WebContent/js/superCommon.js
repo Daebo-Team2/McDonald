@@ -95,7 +95,7 @@ function storeAddBtnHandler() {
 	} else if ( owner.trim().length === 0 ) {
 		alert( "점주명을 입력해 주세요.");
 	} else if ( address2.trim().length === 0 ) {
-		alert( "주소를 입력해 주세요.");
+		alert( "주소를 검색해 주세요.");
 	} else {
 			
 	$.ajax({

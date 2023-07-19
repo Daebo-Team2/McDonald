@@ -12,7 +12,7 @@
       </div>
       <div class="modal-body">
         <label class="form-label">이미지</label>
-        <img src="${pageContext.request.contextPath}/image/logo2.png" width="450" height="400" />
+        <img src="${image}" width="450" height="400" />
         <label class="form-label">분류</label>
         <p>${ category }</p>
         <label class="form-label">가격</label>
