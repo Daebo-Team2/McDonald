@@ -16,10 +16,6 @@ public class SuperSalePageService implements Action {
         String end = request.getParameter("end");
         String storeName = request.getParameter("storeName");
         String menuName = request.getParameter("menuName");
-        System.out.println("start : " + start);
-        System.out.println("end : " + end);
-        System.out.println("storeName : " + storeName);
-        System.out.println("menuName : " + menuName);
 
         int searchStoreNo = StoreNo.getStoreNo(storeName);
         if (start == null || end == null || menuName == null || storeName == null ||

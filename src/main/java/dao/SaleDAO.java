@@ -19,7 +19,7 @@ public class SaleDAO {
 
         try {
             String sql = "select * from (select rownum rn, x.* from (select * from orders " +
-                    "where (ordertime >= ?) and (ordertime <= ?) and (storeno >= ?) " +
+                    "where (ordertime >= TO_DATE(?, 'yyyy-MM-dd')) and (ordertime < TO_DATE(?, 'yyyy-MM-dd') + 1) and (storeno >= ?) " +
                     "and (storeno <= ?) order by no desc) x) where rn between ? and ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, start);
@@ -86,10 +86,21 @@ public class SaleDAO {
         List<OrderVO> list = null;
 
         try {
-            String sql = "select * from (select rownum rn, x.* from (select ol.*, m.name as menuname, m.price " +
-                    "as menuprice, o.ordertime as ordertime, o.storeno as storeno from orderlist ol, orders o, store s, " +
-                    "menu m where (ol.orderno = o.no) and (o.storeno = s.no) and (ol.menuno = m.no) and (m.name = ?) " +
-                    "and (o.ordertime between ? and ?) and (o.storeno between ? and ?) order by ol.orderno desc) x) " +
+            String sql = "select *\n" +
+                    "from (select rownum rn, x.*\n" +
+                    "      from (select ol.*, m.name as menuname, m.price as menuprice, o.ordertime as ordertime, o.storeno as storeno\n" +
+                    "            from orderlist ol,\n" +
+                    "                 orders o,\n" +
+                    "                 store s,\n" +
+                    "                 menu m\n" +
+                    "            where (ol.orderno = o.no)\n" +
+                    "              and (o.storeno = s.no)\n" +
+                    "              and (ol.menuno = m.no)\n" +
+                    "              and (m.name = ?)\n" +
+                    "              and (o.ordertime >= TO_DATE(?, 'yyyy-MM-dd'))\n" +
+                    "              and (o.ordertime < TO_DATE(?, 'yyyy-MM-dd') + 1)\n" +
+                    "              and (o.storeno between ? and ?)\n" +
+                    "            order by ol.orderno desc) x)\n" +
                     "where rn between ? and ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, menuName);
@@ -135,8 +146,8 @@ public class SaleDAO {
         int cnt = -1;
 
         try {
-            String sql = "select count(*) as cnt from orders where (ordertime between ? and ?) " +
-                    "and (storeno between ? and ?)";
+            String sql = "select count(*) as cnt from orders where (ordertime >= TO_DATE(?, 'yyyy-MM-dd')) and" +
+                    "(ordertime < TO_DATE(?, 'yyyy-MM-dd') + 1) and (storeno between ? and ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, start);
             pstmt.setString(2, end);
@@ -166,7 +177,7 @@ public class SaleDAO {
             String sql = "select count(*) as cnt from (select ol.*, m.name, o.ordertime, o.storeno, s.name " +
                     "from orderlist ol, orders o, store s, menu m where (ol.orderno = o.no) and (o.storeno = s.no) " +
                     "and (ol.menuno = m.no) and (o.storeno between ? and ?) and (m.name = ?) " +
-                    "and (o.ordertime between ? and ?))";
+                    "and (o.ordertime >= TO_DATE(?, 'yyyy-MM-dd')) and (o.ordertime < TO_DATE(?, 'yyyy-MM-dd') + 1))";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, storeNo);
             pstmt.setInt(2, storeNo == 0 ? 9999 : storeNo);
@@ -194,8 +205,8 @@ public class SaleDAO {
         int totalPrice = 0;
 
         try {
-            String sql = "select sum(price) as psum from orders where (ordertime between ? and ?) " +
-                    "and (storeno between ? and ?)";
+            String sql = "select sum(price) as psum from orders where (ordertime >= TO_DATE(?, 'yyyy-MM-dd')) " +
+                    "and (ordertime < TO_DATE(?, 'yyyy-MM-dd') + 1) and (storeno between ? and ?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, start);
             pstmt.setString(2, end);
@@ -225,7 +236,7 @@ public class SaleDAO {
             String sql = "select sum(price) as psum from (select ol.*, m.name, o.ordertime, o.storeno, " +
                     "(m.price * ol.quantity) as price from orderlist ol, orders o, store s, menu m " +
                     "where (ol.orderno = o.no) and (o.storeno = s.no) and (ol.menuno = m.no) and (m.name = ?) " +
-                    "and (o.storeno between ? and ?) and (o.ordertime between ? and ?))";
+                    "and (o.storeno between ? and ?) and (o.ordertime >= TO_DATE(?, 'yyyy-MM-dd')) and (o.ordertime < TO_DATE(?, 'yyyy-MM-dd') + 1))";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, menuName);
             pstmt.setInt(2, storeNo);
