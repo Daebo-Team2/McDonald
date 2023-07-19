@@ -28,7 +28,6 @@ public class AlarmCenter {
 
     public void addStore(int storeno, AsyncContext context) {
         this.map.put(storeno, context);
-        System.out.println("in addStore: " + Thread.currentThread());
         if (waiting.containsKey(storeno)) {
             ArrayList<OrderVO> orders = waiting.get(storeno);
             waiting.remove(storeno);
