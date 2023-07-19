@@ -74,8 +74,14 @@ textarea.form-control {
   height: 400px;
 }
 
+
 p.post-content {
   white-space: pre-line;
+  border: 1px solid #bebebe;
 }
 
+p.post-title {
+  white-space: pre-line;
+  border: 1px solid #bebebe;
+}
 
