@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class StoreDAO { //가맹점
 				vo.setAddress(rs.getString("address"));
 				vo.setOpeningday(rs.getTimestamp("openingday"));
 				vo.setStatus(rs.getInt("status"));
+				vo.setSubpwd(rs.getString("subpwd"));
 
 				list.add(vo);
 			}
@@ -51,6 +53,59 @@ public class StoreDAO { //가맹점
 		return list;
 	}
 
+	public StoreVO selectByNo(int no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StoreVO store = null;
+
+		try {
+			conn = ConnectionPool.getConnection();
+			pstmt = conn.prepareStatement("select * from store where no = ?");
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				store = new StoreVO();
+				store.setNo(rs.getInt("no"));
+				store.setName(rs.getString("name"));
+				store.setId(rs.getString("id"));
+				store.setPwd(rs.getString("pwd"));
+				store.setTel(rs.getString("tel"));
+				store.setOwner(rs.getString("owner"));
+				store.setAddress(rs.getString("address"));
+				store.setOpeningday(rs.getTimestamp("openingday"));
+				store.setStatus(rs.getInt("status"));
+				store.setSubpwd(rs.getString("subpwd"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(rs);
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return store;
+	}
+
+	public int updateSubPwd(int storeno, String pwd) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			conn = ConnectionPool.getConnection();
+			pstmt = conn.prepareStatement("update store set subpwd=? where no=?");
+			pstmt.setString(1, pwd);
+			pstmt.setInt(2, storeno);
+			result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return result;
+	}
+
 
 	public int storeAdd( String name, String id, String pwd, String tel, String owner, String address ) { //가맹점추가
 		Connection conn = null;
@@ -61,7 +116,7 @@ public class StoreDAO { //가맹점
 		try {
 			conn = ConnectionPool.getConnection();
 
-			String sql = "INSERT INTO STORE (NO, NAME, ID, PWD, TEL, OWNER, ADDRESS, OPENINGDAY ) VALUES (STORE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP) ";
+			String sql = "INSERT INTO STORE (NO, NAME, ID, PWD, TEL, OWNER, ADDRESS, OPENINGDAY, subpwd ) VALUES (STORE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, '0000') ";
 			String[] cols = new String[] {"no"};
 			pstmt = conn.prepareStatement(sql, cols);
 			pstmt.setString(1, name);

@@ -103,6 +103,18 @@ public class AdminServlet extends HttpServlet {
             action = new AdminStockOrderDeleteService();
             forward = action.execute(request, response);
         }
+        if (url.equals("/admin/checksubpwd.do")) {
+            // 2차 비밀번호 확인
+            action = new AdminCheckSubpwd();
+            action.execute(request, response);
+            return;
+        }
+        if (url.equals("/admin/updatesubpwd.do")) {
+            // 2차 비밀번호 수정
+            action = new AdminUpdateSubpwd();
+            action.execute(request, response);
+            return;
+        }
 
         if (forward.getPath() == null) {
             response.sendError(404);

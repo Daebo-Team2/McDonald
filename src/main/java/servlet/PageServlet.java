@@ -18,33 +18,68 @@ public class PageServlet extends HttpServlet {
         String url = requestURI.substring(contextPath.length());
         ActionForward forward = new ActionForward();
         Action action = null;
+        HttpSession session = request.getSession();
+        UserVO user = (UserVO)session.getAttribute("login");
+
+        if (url.equals("/page/login")){
+            if (user != null && user.getNo() == 0) {
+                response.sendRedirect("/page/super");
+                return;
+            }
+            if (user != null && user.getNo() != 0) {
+                response.sendRedirect("/page/store");
+                return;
+            }
+            forward.setPath("/WEB-INF/pages/loginPage.jsp");
+            RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
+            dis.forward(request, response);
+            return;
+        }
+
+
+        if (user == null) {
+            response.sendRedirect("/page/login");
+            return;
+        }
 
         if (url.equals("/page/admin")) {
+            if (user.getNo() == 0) {
+                response.sendRedirect("/page/super");
+                return;
+            }
             action = new EmpPageService();
             forward = action.execute(request, response);
             forward.setPath("/WEB-INF/pages/adminPage.jsp");
         }
         if (url.equals("/page/super")) {
-            HttpSession session = request.getSession();
-            UserVO vo = (UserVO)session.getAttribute("login");
-            if (vo == null || vo.getNo() != 0) {
-                response.sendRedirect("/page/login");
+            if (user.getNo() != 0) {
+                response.sendRedirect("/page/store");
                 return;
             }
             action = new StoreService();
             forward = action.execute(request, response);
             forward.setPath("/WEB-INF/pages/superPage.jsp");
         }
-        if (url.equals("/page/login")){
-            forward.setPath("/WEB-INF/pages/loginPage.jsp");
-        }
+
         if (url.equals("/page/store")) {
+            if (user.getNo() == 0) {
+                response.sendRedirect("/page/super");
+                return;
+            }
             forward.setPath("/WEB-INF/pages/storePage.jsp");
         }
         if (url.equals("/page/enterkiosk")) {
+            if (user.getNo() == 0) {
+                response.sendRedirect("/page/super");
+                return;
+            }
             forward.setPath("/WEB-INF/pages/enterkioskPage.jsp");
         }
         if (url.equals("/page/kiosk")) {
+            if (user.getNo() == 0) {
+                response.sendRedirect("/page/super");
+                return;
+            }
             KioskPageService kioskPageService = new KioskPageService();
             forward = kioskPageService.execute(request, response);
         }

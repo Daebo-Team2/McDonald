@@ -23,6 +23,9 @@ class Modal {
 
 const empUpdateModal = new Modal();
 const postViewModal = new Modal();
+const checkPwdModal = new Modal();
+const empAddModal = new Modal();
+const updatePwdModal = new Modal();
 renderOrderList();
 
 // 상단 메뉴버튼 눌럿을 때
@@ -44,7 +47,6 @@ function saleSearchBtnHandler() {
 		alert("시작일자가 종료일자 이전이야합니다.");
 		return;
 	}
-
 
 	$.ajax({
 		url: "/admin/saleContent.do",
@@ -75,14 +77,38 @@ function empInoutBtnHandler(num) {
 
 // emp페이지 직원정보 수정모달
 function empUpdateModalOpener(num) {
-	$.ajax({
-		url: "/admin/empupdatemodal.do",
-		data: { no: num },
-		dataType: "text"
-	}).done((text) => {
-		$("#update-modal-content").html(text);
-		empUpdateModal.open();
-	})
+	document.querySelector("input#subpwdInput").value = "";
+	checkPwdModal.open();
+	document.querySelector("button#pwdSubmitBtn").onclick = () => {
+		if (document.querySelector("input#subpwdInput").value === "") {
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}
+		$.ajax({
+			url: "/admin/checksubpwd.do",
+			data: {subpwd: document.querySelector("input#subpwdInput").value},
+			method: "post",
+			statusCode: {
+				200: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					$.ajax({
+						url: "/admin/empupdatemodal.do",
+						data: {no: num},
+						dataType: "text"
+					}).done((text) => {
+						$("#update-modal-content").html(text);
+						empUpdateModal.open();
+					})
+				},
+				403: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					alert("2차 비밀번호가 올바르지 않습니다.");
+				}
+			}
+		})
+	}
 }
 
 function empUpdateBtnHandler(num) {
@@ -116,6 +142,34 @@ function empUpdateBtnHandler(num) {
 		document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
 		$("#content").html(text);
 	})
+}
+
+function empAddModalHandler() {
+	document.querySelector("input#subpwdInput").value = "";
+	checkPwdModal.open();
+	document.querySelector("button#pwdSubmitBtn").onclick = () => {
+		if (document.querySelector("input#subpwdInput").value === "") {
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}
+		$.ajax({
+			url: "/admin/checksubpwd.do",
+			data: {subpwd: document.querySelector("input#subpwdInput").value},
+			method: "post",
+			statusCode: {
+				200: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					empAddModal.open();
+				},
+				403: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					alert("2차 비밀번호가 올바르지 않습니다.");
+				}
+			}
+		})
+	}
 }
 
 function empAddBtnHandler() {
@@ -155,6 +209,57 @@ function empAddBtnHandler() {
 	})
 }
 
+function pwdModalHandler() {
+	document.querySelector("input#subpwdInput").value = "";
+	checkPwdModal.open();
+	document.querySelector("button#pwdSubmitBtn").onclick = () => {
+		if (document.querySelector("input#subpwdInput").value === "") {
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}
+		$.ajax({
+			url: "/admin/checksubpwd.do",
+			data: {subpwd: document.querySelector("input#subpwdInput").value},
+			method: "post",
+			statusCode: {
+				200: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					updatePwdModal.open();
+				},
+				403: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					alert("2차 비밀번호가 올바르지 않습니다.");
+				}
+			}
+		})
+	}
+}
+
+function pwdUpdateHandler() {
+	$.ajax({
+		url: "/admin/updatesubpwd.do",
+		data: {
+			newPwd: document.querySelector("input#newpwdInput").value
+		},
+		method: "post",
+		statusCode: {
+			200: () => {
+				updatePwdModal.close();
+				document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+				alert("2차 비밀번호가 변경되었습니다.");
+			},
+			500: () => {
+				updatePwdModal.close();
+				document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+				alert("2차 비밀번호 변경에 실패했습니다.\n잠시후 다시 시도해주세요.");
+			}
+
+		}
+	})
+}
+
 function checkNum(event) { //시급입력시 숫자만!
 	const input = event.target;
 	input.value = input.value.replace(/[^0-9]/g,'');
@@ -162,24 +267,47 @@ function checkNum(event) { //시급입력시 숫자만!
 
 
 function empDeleteBtnHandler(num) {
-	if (window.confirm("직원 삭제를 진행하시겠습니까?")) {
+	document.querySelector("input#subpwdInput").value = "";
+	checkPwdModal.open();
+	document.querySelector("button#pwdSubmitBtn").onclick = () => {
+		if (document.querySelector("input#subpwdInput").value === "") {
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}
 		$.ajax({
-			url: "/admin/empdelete.do",
-			data: { no: num },
-			dataType: "text",
-			method: "post"
-		}).done((text) => {
-			alert('삭제가 완료되었습니다.');
-			$("#content").html(text);
-			$.ajax({
-				url: "/admin/sidebar.do",
-				dataType: "text"
-			}).done((text) => {
-				$("#sideBar").html(text);
-			})
+			url: "/admin/checksubpwd.do",
+			data: {subpwd: document.querySelector("input#subpwdInput").value},
+			method: "post",
+			statusCode: {
+				200: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					if (window.confirm("직원 삭제를 진행하시겠습니까?")) {
+						$.ajax({
+							url: "/admin/empdelete.do",
+							data: { no: num },
+							dataType: "text",
+							method: "post"
+						}).done((text) => {
+							alert('삭제가 완료되었습니다.');
+							$("#content").html(text);
+							$.ajax({
+								url: "/admin/sidebar.do",
+								dataType: "text"
+							}).done((text) => {
+								$("#sideBar").html(text);
+							})
+						})
+					}
+				},
+				403: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					alert("2차 비밀번호가 올바르지 않습니다.");
+				}
+			}
 		})
 	}
-	else { }
 }
 
 // stock 페이지

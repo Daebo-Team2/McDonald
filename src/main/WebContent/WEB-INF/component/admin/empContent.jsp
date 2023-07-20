@@ -28,6 +28,7 @@
         <td>${emp.tel}</td>
         <td>${emp.wTime}</td>
         <td>
+<%--          <button class="btn btn-secondary btn-sm" onclick="empUpdateModalOpener(${emp.no})">수정</button>--%>
           <button class="btn btn-secondary btn-sm" onclick="empUpdateModalOpener(${emp.no})">수정</button>
           <button class="btn btn-danger btn-sm" onclick="empDeleteBtnHandler(${emp.no})">삭제</button>
         </td>
@@ -37,7 +38,8 @@
   </table>
 </div>
 <div class="footer">
-  <button class="btn btn-primary green-btn" data-bs-toggle="modal" data-bs-target="#emp-add-modal">추가</button>
+  <button class="btn btn-danger custom-btn" onclick="pwdModalHandler()">2차 비밀번호 수정</button>
+  <button class="btn btn-primary green-btn" onclick="empAddModalHandler()">추가</button>
 </div>
 <!-- 모달 숨겨놓기 -->
 <!-- 업데이트 모달(서버로부터 모달 내용받아서 렌더링) -->
@@ -66,11 +68,53 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary green-btn" onclick="empAddBtnHandler()">등록하기</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-danger red-btn" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="checkpwd-modal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content" id="checkpwd-modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel2">2차비밀번호 확인</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body2">
+        <label class="form-label">2차비밀번호</label>
+        <input type="password" class="form-control" id="subpwdInput">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary green-btn" id="pwdSubmitBtn">확인</button>
+        <button type="button" class="btn btn-danger red-btn" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updatepwd-modal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content" id="updatepwd-modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel3">2차비밀번호 변경</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body3">
+        <label class="form-label">새 2차비밀번호</label>
+        <input type="password" class="form-control" id="newpwdInput">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary green-btn" onclick="pwdUpdateHandler()">변경</button>
+        <button type="button" class="btn btn-danger red-btn" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  empUpdateModal.init("div#emp-update-modal")
+  empUpdateModal.init("div#emp-update-modal");
+  checkPwdModal.init("div#checkpwd-modal");
+  updatePwdModal.init("div#updatepwd-modal");
+  empAddModal.init("div#emp-add-modal");
 </script>
