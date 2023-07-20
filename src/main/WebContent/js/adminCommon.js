@@ -25,6 +25,7 @@ const empUpdateModal = new Modal();
 const postViewModal = new Modal();
 const checkPwdModal = new Modal();
 const empAddModal = new Modal();
+const updatePwdModal = new Modal();
 renderOrderList();
 
 // 상단 메뉴버튼 눌럿을 때
@@ -205,6 +206,57 @@ function empAddBtnHandler() {
 		}).done((text) => {
 			$("#sideBar").html(text);
 		})
+	})
+}
+
+function pwdModalHandler() {
+	document.querySelector("input#subpwdInput").value = "";
+	checkPwdModal.open();
+	document.querySelector("button#pwdSubmitBtn").onclick = () => {
+		if (document.querySelector("input#subpwdInput").value === "") {
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}
+		$.ajax({
+			url: "/admin/checksubpwd.do",
+			data: {subpwd: document.querySelector("input#subpwdInput").value},
+			method: "post",
+			statusCode: {
+				200: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					updatePwdModal.open();
+				},
+				403: () => {
+					checkPwdModal.close();
+					document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+					alert("2차 비밀번호가 올바르지 않습니다.");
+				}
+			}
+		})
+	}
+}
+
+function pwdUpdateHandler() {
+	$.ajax({
+		url: "/admin/updatesubpwd.do",
+		data: {
+			newPwd: document.querySelector("input#newpwdInput").value
+		},
+		method: "post",
+		statusCode: {
+			200: () => {
+				updatePwdModal.close();
+				document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+				alert("2차 비밀번호가 변경되었습니다.");
+			},
+			500: () => {
+				updatePwdModal.close();
+				document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+				alert("2차 비밀번호 변경에 실패했습니다.\n잠시후 다시 시도해주세요.");
+			}
+
+		}
 	})
 }
 

@@ -111,6 +111,9 @@ public class AdminServlet extends HttpServlet {
         }
         if (url.equals("/admin/updatesubpwd.do")) {
             // 2차 비밀번호 수정
+            action = new AdminUpdateSubpwd();
+            action.execute(request, response);
+            return;
         }
 
         if (forward.getPath() == null) {

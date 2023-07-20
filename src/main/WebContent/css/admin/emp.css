@@ -21,6 +21,10 @@ table[page="emp"] {
   font-size: 1.2rem;
 }
 
-/* table[page="emp"] button {
-  line-height: 1;
-} */
+.custom-btn {
+  outline:2px solid #dc3545 !important ;
+  box-shadow:none !important;
+  border-color:#dc3545 !important;
+  background-color:#dc3545 !important;
+  margin-right: 15px;
+}

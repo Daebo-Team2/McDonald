@@ -87,6 +87,25 @@ public class StoreDAO { //가맹점
 		return store;
 	}
 
+	public int updateSubPwd(int storeno, String pwd) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			conn = ConnectionPool.getConnection();
+			pstmt = conn.prepareStatement("update store set subpwd=? where no=?");
+			pstmt.setString(1, pwd);
+			pstmt.setInt(2, storeno);
+			result = pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionPool.close(pstmt);
+			ConnectionPool.close(conn);
+		}
+		return result;
+	}
+
 
 	public int storeAdd( String name, String id, String pwd, String tel, String owner, String address ) { //가맹점추가
 		Connection conn = null;
@@ -97,7 +116,7 @@ public class StoreDAO { //가맹점
 		try {
 			conn = ConnectionPool.getConnection();
 
-			String sql = "INSERT INTO STORE (NO, NAME, ID, PWD, TEL, OWNER, ADDRESS, OPENINGDAY ) VALUES (STORE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP) ";
+			String sql = "INSERT INTO STORE (NO, NAME, ID, PWD, TEL, OWNER, ADDRESS, OPENINGDAY, subpwd ) VALUES (STORE_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, '0000') ";
 			String[] cols = new String[] {"no"};
 			pstmt = conn.prepareStatement(sql, cols);
 			pstmt.setString(1, name);
