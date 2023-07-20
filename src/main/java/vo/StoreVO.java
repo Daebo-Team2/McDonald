@@ -21,6 +21,7 @@ public class StoreVO {
 	private String address;
 	private Timestamp openingday;
 	private int status;
+	private String subpwd;
 	
 	//생성자함수
 	public StoreVO() {	}
@@ -90,5 +91,13 @@ public class StoreVO {
 	}
 	public void setOpeningday(Timestamp openingday) {
 		this.openingday = openingday;
+	}
+
+	public String getSubpwd() {
+		return subpwd;
+	}
+
+	public void setSubpwd(String subpwd) {
+		this.subpwd = subpwd;
 	}
 }
