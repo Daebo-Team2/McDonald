@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MenuNamePrice {
     static HashMap<Integer, MenuVO> menuMap = null;
-    static boolean isUpdate = false;
+    static public boolean isUpdate = false;
 
     static String getMenuName(int no) {
         if (menuMap == null || isUpdate) {

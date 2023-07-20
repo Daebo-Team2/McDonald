@@ -27,6 +27,7 @@ renderOrderList();
 
 // 상단 메뉴버튼 눌럿을 때
 function pageMove(url) {
+	isOrderPage = false;
 	$.ajax({
 		url,
 		dataType: "text"
@@ -39,6 +40,10 @@ function saleSearchBtnHandler() {
 	const start = document.querySelector("#saleStartInput").value;
 	const end = document.querySelector("#saleEndInput").value;
 	const menuName = document.querySelector("#saleMenuNameInput").value;
+	if (start !== '' && end !== '' && start > end) {
+		alert("시작일자가 종료일자 이전이야합니다.");
+		return;
+	}
 
 
 	$.ajax({
@@ -399,7 +404,9 @@ let isOrderPage = true;
 sseSource.onmessage = function (e) {
 	const order = JSON.parse(e.data);
 	localStorage.setItem(order.no, e.data);
-	renderOrderList();
+	if (isOrderPage) {
+		renderOrderList();
+	}
 }
 
 // 주문관리
@@ -431,7 +438,6 @@ function orderContent(orders) {
 }
 
 function orderAccordion(order) {
-	console.log(order);
 	return `
 	<div class="accordion-item" order-no="${order.no}">
 		<h2 class="accordion-header">

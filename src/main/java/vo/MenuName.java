@@ -9,7 +9,7 @@ import java.util.List;
 public class MenuName {
     static private HashMap<Integer, MenuVO> menuMap = null;
     static private HashMap<String, ArrayList<MenuVO>> classifiedMap = null;
-    static boolean isUpdate = false;
+    static public boolean isUpdate = false;
 
     public static String getName(int no) {
         if (menuMap == null || isUpdate) {
@@ -27,7 +27,7 @@ public class MenuName {
 
     static void updateData() {
         MenuDAO dao = new MenuDAO();
-        List<MenuVO> list = dao.selectAllMenu();
+        List<MenuVO> list = dao.selectAll();
         menuMap = new HashMap<>();
         classifiedMap = new HashMap<>();
 
