@@ -53,7 +53,7 @@
     <ul class="pagination">
       <c:if test="${pageStart != 1}">
         <li class="page-item">
-          <a class="page-link" onclick="pageMove('/super/stockContent.do?pageNo=${pageStart - 1}')">
+          <a class="page-link green" onclick="pageMove('/super/stockContent.do?pageNo=${pageStart - 1}')">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
@@ -64,7 +64,7 @@
       </c:forEach>
       <c:if test="${pageEnd != totalPage}">
         <li class="page-item">
-          <a class="page-link" onclick="pageMove('/super/stockContent.do?pageNo=${pageEnd+1}')">
+          <a class="page-link green" onclick="pageMove('/super/stockContent.do?pageNo=${pageEnd+1}')">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>

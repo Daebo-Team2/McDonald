@@ -67,11 +67,12 @@
     </c:forEach>
 </div>
 <div class="footer">
+    <c:if test="${pageStart != null && pageEnd != null}">
     <nav>
         <ul class="pagination">
             <c:if test="${pageStart != 1}">
                 <li class="page-item">
-                    <a class="page-link"
+                    <a class="page-link green"
                        onclick="pageMove('/super/saleContent.do?start=${param.start}&end=${param.end}&menuName=${param.menuName}&storeName=${storeName}&pageNo=${pageStart - 1}')">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
@@ -84,7 +85,7 @@
             </c:forEach>
             <c:if test="${pageEnd != totalPage}">
                 <li class="page-item">
-                    <a class="page-link"
+                    <a class="page-link green"
                        onclick="pageMove('/super/saleContent.do?start=${param.start}&end=${param.end}&menuName=${param.menuName}&storeName=${storeName}&pageNo=${pageEnd+1}')">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
@@ -92,4 +93,5 @@
             </c:if>
         </ul>
     </nav>
+    </c:if>
 </div>
