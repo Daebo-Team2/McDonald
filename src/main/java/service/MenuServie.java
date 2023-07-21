@@ -26,7 +26,7 @@ public class MenuServie implements Action {
 		int cnt = dao.getMenuCnt();
 		int pageSize = 10;
 		int blockPage = 5;
-		int totalPage = (cnt / pageSize) + 1;
+		int totalPage = (int)Math.ceil(cnt / (double)pageSize);
 		int pageStart = ((pageNo - 1) / blockPage) * blockPage + 1;
 		int pageEnd = Math.min(pageStart - 1 + blockPage, totalPage);
 		int rowStart = (pageNo - 1) * pageSize + 1;
