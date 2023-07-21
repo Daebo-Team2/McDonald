@@ -253,7 +253,8 @@ public class MenuDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			result = pstmt.executeUpdate();
-
+			MenuName.isUpdate = true;
+			MenuNamePrice.isUpdate = true;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
